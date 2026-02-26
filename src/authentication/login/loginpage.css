@@ -1,0 +1,87 @@
+.loginSection {
+  width: 100%;
+  height: 100vh;
+  background-image: url("https://t3.ftcdn.net/jpg/00/75/93/66/360_F_75936669_0NYQ5j5OMA0F0an1BuVodsZXxrD0Ze7P.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  filter: blur(8px);
+  -webkit-filter: blur(2px);
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.381);
+  background-blend-mode: color;
+}
+
+.login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  aspect-ratio: 8/3;
+  background-color: white;
+  border-radius: 10px;
+}
+.form_title_image img{
+  width: 60%;
+}
+.form_title_image{
+  margin-bottom: 1rem;
+}
+
+.loginField p {
+  color: rgb(179, 176, 176);
+}
+.loginField h1 {
+  color: var(--primary_color);
+}
+
+.loginLogo img {
+  width: 100%;
+aspect-ratio: 6/6;
+  border-radius: 10px 0 0 10px;
+}
+
+.loginField {
+  margin-top: 1rem;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.loginField button {
+  background-color: var(--primary_color);
+  border-style: none;
+  padding: 0 3rem;
+}
+
+.loginField input {
+  width: 100%;
+}
+.login_submit button{
+  padding:  0 3rem !important;
+}
+
+.ant-input-affix-wrapper > input.ant-input {
+  height: 25px;
+}
+
+.user_Icons {
+  font-size: 2rem;
+  margin-right: 1rem;
+  margin-top: .2rem;
+  color: var(--primary_color);
+}
+.form_title {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  height: 10vh;
+}
+

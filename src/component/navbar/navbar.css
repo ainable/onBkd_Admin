@@ -1,0 +1,38 @@
+.icon_navbar {
+    color: black;
+}
+
+.user_icons {
+    background-color: var(--primary_color);
+    color: white;
+    cursor: pointer;
+
+}
+
+.profile {
+    background-color: #eee;
+    border-radius: 8px;
+}
+
+.ant-dropdown-menu .ant-dropdown-menu-item-disabled {
+    padding: 0 !important;
+}
+
+.suport_icons {
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.suport_icons:hover {
+    color: var(--primary_color);
+
+}
+
+/* Only applies to the profile dropdown */
+.custom-profile-dropdown {
+    width: 260px !important;
+}
+
+.menuItem {
+    font-size: 1rem;
+}

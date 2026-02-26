@@ -1,0 +1,130 @@
+.section_title {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.opt_branch_name p {
+    text-transform: lowercase !important;
+}
+
+.section_action {
+    width: 30%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pay_now_btn {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.retunr_amt {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.retunr_amt h1 {
+    color: var(--primary_color);
+}
+
+.pay_now_btn button {
+    padding: 0 3rem !important;
+}
+
+.assign_pin_btn button {
+    padding: 0 2rem !important;
+}
+
+.section_action .ant-form {
+    width: 70%;
+}
+
+.pagination {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.content_head {
+    margin-bottom: 1rem;
+}
+
+.section_actions .ant-form-item {
+    margin-bottom: 0 !important;
+}
+
+.role_data li {
+    list-style: none;
+    margin-left: -2rem;
+}
+
+.check_box {
+    margin-right: 1rem;
+}
+
+.total_order {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+
+}
+
+
+.total_order img {
+    position: absolute;
+    top: -25px;
+    right: -25px;
+    width: 30%;
+
+    aspect-ratio: 4/4;
+    /* border-radius: 30% 70% 33% 67% / 30% 0% 100% 70% ; */
+
+}
+
+.view_added_product {
+    font-size: 1.5rem;
+    color: var(--primary_color);
+    cursor: pointer;
+}
+
+.user_total_count .ant-card {
+    background-image: linear-gradient(to top, #c1dfc4 0%, #deecdd 100%);
+}
+
+.generalSetting {
+    width: 240px;
+}
+
+.add_setting {
+    text-align: center;
+}
+
+.add_setting button {
+    padding: 0 3rem !important;
+    background-color: var(--primary_color);
+    color: white;
+    border-style: none;
+}
+
+.user_total_count {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 10px;
+    /* Space between grid items */
+}
+
+.view_detials button {
+    background-color: var(--primary_color);
+    color: white;
+    border-color: var(--primary_color);
+}
+
+
+
+/* Hover effect for cards */
+.user_total_count .ant-card:hover {
+    transform: translateY(-8px);
+    /* Lift the card on hover */
+}

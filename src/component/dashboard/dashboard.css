@@ -1,0 +1,186 @@
+.booking_chart {
+    margin-top: 2rem;
+}
+
+.reportTable {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* 3 equal columns */
+    gap: 10px;
+    /* spacing between grid items */
+}
+
+.export_report {
+    margin: 1rem 0;
+    background-color: #eee;
+    padding: .5rem;
+    flex: 1;
+    border-radius: 10px;
+}
+
+.reports {
+    padding: 2rem 1rem;
+}
+
+.ant-layout .ant-layout-sider {
+    background-color: white;
+    /* max-width: 280px !important;
+    min-width: 280px !important; */
+}
+
+.ant-menu-light {
+    height: 90vh;
+    overflow-y: auto;
+    padding-bottom: 2rem;
+
+}
+
+.title {
+    background-color: white;
+}
+
+.main_layout {
+    height: 100vh !important;
+}
+
+.head_menu {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+}
+
+.ant-menu-light.ant-menu-inline .ant-menu-item {
+    color: rgb(24, 22, 22);
+    font-size: 1rem;
+}
+
+.show_user_revanue {
+    margin-top: 1rem;
+}
+
+.ant-menu-light.ant-menu-inline .ant-menu-item a {
+    text-decoration: none;
+}
+
+.shoo_recent_order {
+    margin-top: 1rem;
+}
+
+.shoo_recent_order p {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.ant-menu-light.ant-menu-inline .ant-menu-item .ant-menu-selected {
+    background-color: lightgrey;
+}
+
+.ant-menu-light .ant-menu-submenu-selected>.ant-menu-submenu-title {
+    color: rgb(43, 40, 40);
+}
+
+.colorChange {
+    background-color: var(--secondry_color);
+}
+
+.user_chart_logo img {
+    width: 50%;
+    margin-left: .5rem;
+}
+
+.dash_data {
+    display: flex;
+    justify-content: space-between;
+}
+
+.user_data_item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.show_user_chat .ant-card {
+    aspect-ratio: 4/2;
+    background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+}
+
+.show_user_chat {
+    margin-top: 1rem;
+}
+
+.user_chart_text p:first-child {
+    font-size: 1.2rem;
+    font-weight: 600;
+
+}
+
+.user_chart_text p:last-child {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.revanueGraph {
+    margin-top: 1rem;
+}
+
+.header_menu_icon {
+    display: flex;
+    align-items: center;
+}
+
+.hear_icons {
+    margin-right: 1rem;
+}
+
+.icon_navbar {
+    font-size: 1.5rem;
+    margin-right: .5rem;
+    cursor: pointer;
+
+}
+
+.icon_navbar:hover {
+    color: var(--primary_color);
+}
+
+.user_counts {
+    position: relative;
+}
+
+.order_car_design {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.order_car_design img {
+    width: 100%;
+    /* height: 6.4rem; */
+    aspect-ratio: 4/2;
+    object-fit: cover;
+
+    border-radius: 6px 0 0 6px;
+
+}
+
+.piChart,
+.graph_chart {
+    margin-top: 1rem;
+}
+
+@media only screen and (max-width: 768px) {
+    .ant-layout-sider {
+        width: 200px !important;
+        /* Custom width for tablet */
+    }
+}
+
+@media only screen and (max-width: 576px) {
+    .ant-layout-sider {
+        width: 100px !important;
+        /* Custom width for mobile */
+    }
+}

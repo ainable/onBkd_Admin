@@ -1,0 +1,24 @@
+.term_des {
+    width: 40vw;
+    height: 10vh;
+    overflow-y: scroll;
+
+}
+
+.term_icon {
+    font-size: 1.5rem;
+    margin-right: 1rem;
+}
+
+.term_action button {
+    background-color: var(--primary_color);
+    color: white;
+}
+.term_action{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#cover_img{
+    aspect-ratio: 6/2;
+}

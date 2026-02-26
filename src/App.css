@@ -1,0 +1,106 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap");
+
+:root {
+  --primary_color: #5AC268;
+  --secondry_color: #F2F2F3;
+}
+
+p,
+h1,
+h2,
+h3,
+h4 {
+  margin-bottom: 0;
+}
+
+.Add_Addre button,
+.modal_section button,
+.term_action button {
+  padding: 0 2rem !important;
+}
+
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+}
+
+.App {
+  width: 100vw;
+  min-height: 100vh !important;
+  overflow-x: hidden;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+
+
+}
+
+
+
+.show_product_code {
+  width: 240px;
+  overflow-x: auto;
+}
+
+.loader_main {
+  display: flex;
+  justify-content: center;
+}
+
+.loader2 {
+  width: 48px;
+  height: 48px;
+  border: 5px solid var(--secondry_color);
+  border-bottom-color: var(--primary_color);
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .pro_selector .ant-space {
+    display: unset !important;
+
+  }
+
+  .content_head {
+    display: unset !important;
+  }
+
+  .pro_selector {
+    justify-content: center !important;
+  }
+}
+
+/* @media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .ant-layout .ant-layout-sider {
+    max-width: unset !important;
+    min-width: unset !important;
+}
+}  */
+
+.ant-table-wrapper .ant-table-tbody>tr>td {
+  z-index: auto !important;
+}
+
+.ant-table-wrapper .ant-table-container table>thead>tr:first-child>*:last-child {
+  z-index: auto !important;
+}
+
+
+.ck-editor__editable {
+  min-height: 300px;
+}

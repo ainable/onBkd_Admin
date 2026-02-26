@@ -1,0 +1,26 @@
+/* .sidebarMenuItem .ant-layout-sider {
+  min-width: 100% !important;
+  max-width: 100% !important ;
+   width: 240px !important; 
+} */
+
+.ant-menu .ant-menu-item-selected {
+  background-color: #83b98a !important;
+  color: white  !important;
+}
+
+
+
+
+.side_log {
+  padding: 1rem;
+}
+
+.side_sub_menu {
+  font-size: 1rem;
+}
+
+.side_menu_icon {
+  font-size: 1.2rem !important;
+  color: gray ;
+}

@@ -1,0 +1,163 @@
+.content_head {
+  display: flex;
+  justify-content: space-between;
+}
+
+#upload_branch_img {
+  width: 100%;
+  padding: .5rem;
+}
+
+.manager_title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.show_available_Slots h6 {
+  margin-bottom: 1.5rem;
+}
+
+.upload_branch_img {
+  text-align: center;
+}
+
+.upload_branch_img p {
+  margin-bottom: .5rem;
+}
+
+.Branch_content .ant-card {
+  background-color: var(--secondry_color);
+}
+
+.show_available_Slots .ant-card-body {
+  padding: 10px !important;
+}
+
+#branch_img {
+  aspect-ratio: 2/2;
+  padding: 1rem;
+  object-fit: contain;
+}
+
+
+.show_all_branch_list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 10px;
+}
+
+#upload_img {
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+  padding: .5rem;
+}
+
+.content_racipe {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.add_address_btn button {
+  padding: 0 2rem !important;
+}
+
+.ingradient_title {
+  display: flex;
+  justify-content: space-between;
+}
+
+.show_racipes {
+  margin-bottom: 1rem;
+}
+
+.viewMore {
+  color: var(--primary_color);
+}
+
+.add_address_btn {
+  text-align: end;
+}
+
+.add_manager_btn button {
+  background-color: var(--primary_color);
+  color: white;
+  border-style: none;
+}
+
+.drawder_submit {
+  text-align: center;
+}
+
+.showIcon {
+  font-size: 1.2rem;
+  margin-top: -.2rem;
+
+}
+
+.hideIcon {
+  font-size: 1.2rem;
+  margin-top: -.2rem;
+
+}
+
+.drawder_submit button {
+  background-color: var(--primary_color);
+  color: white;
+  border-style: none;
+}
+
+.booking_sub_servicelist .ant-card-cover {
+  background-color: #eeeeeed0;
+  border-radius: 8px 8px 0 0;
+}
+
+/* .booking_sub_servicelist .ant-card {
+  display: flex;
+  margin-bottom: .5rem;
+}
+
+.booking_sub_servicelist .ant-card {
+  display: flex;
+  margin-bottom: .5rem;
+} */
+
+/* .booking_sub_servicelist .ant-card .ant-card-cover {
+  width: 8rem;
+  height: 10rem;
+} */
+
+.booking_sub_servicelist .ant-card-cover img {
+  width: 100%;
+  aspect-ratio: 3/2;
+  /* border-radius: 10px 0 0 10px; */
+  object-fit: contain;
+}
+
+.cook_steps li {
+  /* list-style: "🔹"; */
+  list-style: "💠 ";
+}
+
+.ant-switch.ant-switch-checked .ant-switch-inner {
+  background-color: var(--primary_color) !important;
+}
+
+.shopker_data p {
+  font-size: 1rem;
+}
+
+.branch_auth {
+  display: flex;
+  justify-content: center;
+}
+
+.branch_auth button {
+  background-color: var(--primary_color);
+  color: white;
+  border-style: none;
+  padding: 0 3rem !important;
+}

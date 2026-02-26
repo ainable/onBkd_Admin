@@ -1,0 +1,85 @@
+.banner_list {
+    background-color: var(--secondry_color);
+    padding: 1rem;
+}
+.xls_file_uplaod{
+    text-align: center;
+}
+.banner_card .ant-card {
+    margin-bottom: 1rem;
+    position: relative;
+}
+.banner_card .ant-card-body {
+ padding: .5rem !important;
+}
+.review_img img{
+    width: 100%;
+}
+.add_segment_title{
+    display: flex;
+    justify-content:flex-start;
+    align-items: center;
+}
+
+.banner_card .ant-card img {
+    /* margin-top: 1rem; */
+    width: 100%;
+    aspect-ratio: 3/2;
+    object-fit: cover;
+    /* padding: .5rem; */
+}
+
+.remove_banner {
+    position: absolute;
+    bottom: 16%;
+    right: 5%;
+    z-index: 1;
+}
+
+.remove_icon {
+    color: lightgrey;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.remove_icon:hover {
+    color: black;
+}
+
+.offer_card .ant-card {
+    height: 30vh;
+    margin-top: 1rem;
+}
+
+.image_hold {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    padding: .5rem;
+    border-radius: 100%;
+}
+
+.model_Submit {
+    display: flex;
+    justify-content: space-evenly;
+}
+.model_Submit button {
+   padding: 0 2.5rem !important;
+    
+}
+.model_Submit button:last-child {
+    background-color: var(--primary_color);
+    color: white;
+    border-style: none
+    
+}
+
+.offer_card img {
+    width: 100%;
+    aspect-ratio: 5/3;
+    margin-top: 1rem;
+    border-radius: 12px;
+    -webkit-box-shadow: 3px 4px 4px -2px var(--primary_color);
+    box-shadow: 3px 4px 4px -2px var(--primary_color);
+
+}

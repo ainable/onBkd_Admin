@@ -1,0 +1,282 @@
+/* .content_titles {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+} */
+
+
+
+.pro_selector {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.order_item_list .ant-card .ant-card-body {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.pro_icon {
+    margin-top: -.5rem;
+}
+
+.DefaultDeletedBranch {
+    background-color: lightgreen;
+}
+
+.add_segment_btn {
+    background-color: var(--primary_color);
+    color: white;
+    border-style: none;
+}
+
+.hear_title {
+    margin-right: 1rem;
+}
+
+.DefaultDeletedBranch {
+    display: flex;
+    justify-content: space-between;
+}
+
+.order_send_branch button {
+    background-color: var(--primary_color);
+    color: white;
+    border-style: none;
+}
+
+.product_iten_list {
+    height: 50vh;
+    overflow-y: scroll;
+}
+
+.order_images {
+    background-color: var(--secondry_color);
+    padding: .2rem;
+    object-fit: contain;
+}
+
+
+
+.amount_item {
+    margin-bottom: .5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.offer_product {
+    color: var(--primary_color);
+}
+
+.order_order_img {
+    width: 100%;
+    object-fit: cover;
+    aspect-ratio: 3/3;
+}
+
+.view_details {
+    background-color: var(--primary_color);
+    color: white;
+    border-color: var(--primary_color);
+}
+
+#upload_img {
+    width: 5rem !important;
+    object-fit: contain !important;
+    padding: 1rem !important;
+}
+
+.delivery_free {
+    color: var(--primary_color);
+    font-weight: 500;
+    /* text-decoration:; */
+}
+
+.show_transition_list {
+    margin-top: 1rem;
+}
+
+.product_order_item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.delivery_icons {
+    font-size: 1.2rem;
+}
+
+.debit {
+    background-color: rgb(247, 212, 212);
+    display: grid;
+    align-items: center;
+    color: red;
+}
+
+.credit {
+    background-color: rgb(199, 249, 199);
+    display: grid;
+    align-items: center;
+    color: var(--primary_color);
+}
+
+.return_Accept_btn {
+    background-color: var(--primary_color);
+    color: white;
+    border-color: var(--primary_color);
+}
+
+.debit_icons {
+    font-size: 1rem;
+}
+
+.order_order_img {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+}
+
+.retun_history_filter {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.primary_btns button {
+    padding: 0 2rem !important;
+}
+
+.history_filter_orders {
+    text-align: end;
+}
+
+.show_cat_img img {
+    width: 100%;
+    aspect-ratio: 2/2;
+    object-fit: contain;
+}
+
+.excelpUploder {
+    margin-top: 1rem;
+    border: 1px dashed gray;
+    width: 100%;
+    padding: 3rem;
+    border-radius: 8px;
+}
+
+.excelfile_form {
+    text-align: center;
+}
+
+.return_img img {
+    border-radius: 100%;
+    background-color: #eee;
+    padding: .2rem;
+}
+
+.history_filter {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.history_filter button {
+    background-color: var(--primary_color);
+    color: white;
+    border-color: var(--primary_color);
+}
+
+.show_image img {
+    /* width: 50%; */
+    aspect-ratio: 2/2;
+    object-fit: contain;
+    margin-top: 1rem;
+}
+
+.show_image {
+    text-align: center;
+}
+
+.bags {
+    margin-top: -.2rem;
+    font-size: 1rem;
+}
+
+.ant-alert {
+    padding: 8px 5px;
+}
+
+.show_replacement {
+    margin-top: .3rem;
+}
+
+.show_replacement .ant-alert {
+    padding: 0 !important;
+}
+
+.Alert_amount_item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.submit_btn {
+    display: flex;
+    justify-content: center;
+}
+
+.submit_btn button {
+    padding: 0 2.5rem !important;
+    background-color: var(--primary_color);
+    color: white;
+    border-color: var(--primary_color);
+}
+
+.order_sent_btn {
+    text-align: center;
+}
+
+.user_pro_img {
+    width: 100%;
+    aspect-ratio: 3/2;
+    object-fit: cover;
+}
+
+.user_vendor .ant-card {
+    cursor: pointer;
+}
+
+.order_sent_btn button {
+    background-color: var(--primary_color);
+    color: white;
+    border-style: none;
+    padding: 0 2rem;
+}
+
+#view_order {
+    background-color: var(--primary_color);
+    border-color: var(--primary_color);
+    color: white;
+}
+
+#order_branch {
+    border-color: var(--primary_color);
+    color: var(--primary_color);
+}
+
+.order_code span:first-child {
+    margin-right: .2rem;
+    background-color: #91c998;
+    padding: 0 .5rem;
+    border-radius: 4px;
+    font-size: 1.2rem;
+    color: white;
+}
+
+.order_code a {
+    color: rgb(44, 40, 40);
+}
+
+.order_particuler .ant-card {
+    margin-bottom: 1rem;
+}

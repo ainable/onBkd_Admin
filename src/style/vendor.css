@@ -1,0 +1,138 @@
+.del_boy_image .ant-image-img {
+    width: 10rem;
+    height: 10rem;
+    border-radius: 12px;
+    object-fit: cover;
+
+}
+
+.vendor_details_img {
+    width: 100%;
+    aspect-ratio: 4/3;
+}
+
+.del_boy_image p {
+    margin-left: 1rem;
+    font-size: 1.2vw;
+    font-weight: 600;
+    color: white;
+}
+
+.del_boy_image .ant-image {
+    background-color: white;
+    width: 10rem;
+    height: 10rem;
+    border-radius: 12px;
+}
+
+.hear_title button {
+    background-color: var(--secondry_color);
+}
+
+.back_icon {
+    color: var(--primary_color);
+    margin-top: -.2rem;
+    font-size: 1.2rem;
+}
+
+.delivery_title .ant-card {
+    background-image: linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%);
+}
+
+.delivery_boy_activity {
+    text-align: center;
+
+}
+
+.delivery_boy_activity .ant-card {
+    width: 100%;
+    margin: .5rem;
+    background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%) !important;
+
+}
+
+.delivery_boy_activity .ant-card .ant-card-body {
+    padding: .5rem;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.del_boy_icons {
+    font-size: 2.5rem;
+    color: var(--primary_color);
+
+}
+
+.de_boy_act_title p {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.del_boy_details {
+    margin-top: 1rem;
+}
+
+.ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+    color: var(--primary_color) !important;
+    font-weight: 600;
+}
+
+.del_doc_img {
+    border: 1px dashed lightgray;
+    border-radius: 12px;
+    padding: .2rem;
+}
+
+.vendor_action button:first-child {
+    background-color: var(--primary_color);
+    color: white;
+    border-style: none;
+    margin-right: .5rem;
+
+}
+
+.reassignBranch {
+    margin-left: .5rem;
+}
+
+.assing_branch_title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.delivery_boy_activity {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    /* Space between grid items */
+}
+
+#Approved {
+    background-color: var(--primary_color);
+    color: white;
+    border-color: var(--primary_color);
+}
+
+.disable_btn {
+    background-color: transparent;
+}
+
+.doc_img {
+    width: 5rem !important;
+    aspect-ratio: 3/3 !important;
+}
+
+.export_data {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.export_data button:last-child {
+    background-color: var(--primary_color);
+    color: white;
+    border-color: var(--primary_color);
+    margin-left: .5rem;
+
+}
