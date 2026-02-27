@@ -1,7 +1,7 @@
 import axios from "axios";
 // export const baseURL = "http://13.232.180.187:8080/api/admin";
-export const baseURL = "http://192.168.29.32:4000/api/admin";
-// export const baseURL = "http://122.176.76.91:4000/api/admin";
+// export const baseURL = "http://192.168.29.32:4000/api/admin";
+export const baseURL = "http://122.176.76.91:4000/api/admin";
 
 // export const baseURL = process.env.REACT_APP_BASE_URL;
 
