@@ -275,7 +275,11 @@ export const Services = {
   exportSearchValueUrl: rootUrl('/export-product-wise-search-report'),
   fetchOfferTypeUrl: rootUrl('/export-offer-list'),
   exportSearchKeywordUrl: rootUrl('/export-keyword-wise-search-report'),
-
+  PartialReturnUrl: rootUrl('/partial-return-quantity'),
+  orderCancelUrl: rootUrl('/order-cancel'),
+  actionOrderStatusUrl: rootUrl('/order-status'),
+  vendorAssignUrl: rootUrl('/vendor-assigned'),
+  vendorReassignOTPVerifyUrl: rootUrl('/vendor-reassign-otp-verified'),
 };
 
 //login section
@@ -2029,4 +2033,62 @@ export const updateOfferBanner = async (token, body) => {
     headers: { Authorization: token },
   });
   return banner;
+};
+
+export const PartialReturnAction = async (token, body) => {
+  const partialReturn = await axios.post(Services.PartialReturnUrl, body, {
+    headers: { Authorization: token },
+  });
+  return partialReturn;
+};
+
+export const OrderCacelByBranch = async (body, token) => {
+  const cancel = await axios.post(Services.orderCancelUrl, body, {
+    headers: { Authorization: token },
+  });
+  return cancel;
+};
+
+export const fetchKotAllDetails = async (token, orderId) => {
+  const kot = await axios.get(`${baseURL}/order/${orderId}/kot-details`, {
+    headers: { Authorization: token },
+  });
+  return kot;
+};
+
+export const ActionOrderStatus = async (body, token) => {
+  const orderstatus = await axios.post(Services.actionOrderStatusUrl, body, {
+    headers: { Authorization: token },
+  });
+  return orderstatus;
+};
+
+export const fetchAllDeliveryBoyList = async (token) => {
+  const boy = await axios.get(`${baseURL}/online-vendor-list`, {
+    headers: { Authorization: token },
+  });
+  return boy;
+};
+
+export const OrderAssignToVendor = async (body, token) => {
+  const assign = await axios.put(Services.vendorAssignUrl, body, {
+    headers: { Authorization: token },
+  });
+  return assign;
+};
+
+
+export const vendorReassignVerify = async (body, token) => {
+  const reassignVerify = await axios.put(Services.vendorReassignOTPVerifyUrl, body, {
+    headers: { Authorization: token },
+  });
+  return reassignVerify;
+};
+
+
+export const VendorTrackData = async (token, orderId) => {
+  const vendor = await axios.get(`${baseURL}/order-vendor-reassign-track?userOrderId=${orderId}`, {
+    headers: { Authorization: token },
+  });
+  return vendor;
 };

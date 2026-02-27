@@ -4,7 +4,11 @@
     justify-content: space-between;
 } */
 
-
+.content_header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
 
 .pro_selector {
     display: flex;
@@ -279,4 +283,21 @@
 
 .order_particuler .ant-card {
     margin-bottom: 1rem;
+}
+
+.order_status_titiles {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+}
+
+.order_title {
+    display: flex;
+    align-items: center;
+}
+
+.order_content_title{
+    width: 100%;
 }

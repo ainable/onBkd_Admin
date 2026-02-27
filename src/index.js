@@ -6,6 +6,8 @@ import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./authentication/context/authContext";
 import { UserProvider } from "./authentication/context/userContext";
 import { ConfigProvider } from "antd";
+import { Provider } from "react-redux";
+import store from "./redux-toolkit/Store";
 
 const themeConfig = {
   token: {
@@ -15,16 +17,17 @@ const themeConfig = {
 };
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-
-  <AuthProvider>
-    <UserProvider>
-      <BrowserRouter>
-        <ConfigProvider theme={themeConfig}>
-          <App />
-        </ConfigProvider>
-      </BrowserRouter>
-    </UserProvider>
-  </AuthProvider>
+  <Provider store={store}>
+    <AuthProvider>
+      <UserProvider>
+        <BrowserRouter>
+          <ConfigProvider theme={themeConfig}>
+            <App />
+          </ConfigProvider>
+        </BrowserRouter>
+      </UserProvider>
+    </AuthProvider>
+  </Provider>
 
 );
 
