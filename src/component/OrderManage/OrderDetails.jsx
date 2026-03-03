@@ -20,6 +20,7 @@ import { addItem, fetchCartProducts, removeCartItem, selectCartItems } from "../
 import KotDetails from "./KotDetails";
 import VendorAssignModel from "./VendorAssignModel";
 import LogImng from "../../assest/png/logoIcon.png";
+import OrderSendBranch from "./OrderSendBranch";
 
 function OrderDetails() {
   const navigate = useNavigate()
@@ -422,9 +423,34 @@ function OrderDetails() {
                         Accept Order
                       </Button>
                     ) : (
-                      assingVendorAction(orderData)
+                      <OrderSendBranch
+                        branchCode={orderData?.branchCode}
+                        branchId={orderData?.branchId}
+                        status={orderData?.status}
+                        orderId={orderData?._id}
+                        shhowAllOrderList={showOrderDetials}
+                        deliveryOption={orderData?.deliveryOption}
+                        buttonVariant="button"
+                        buttonType="primary"
+                        buttonShape="round"
+                      />
                     ))
                   }
+                  {/* {!isLoading &&
+                    (orderData?.status === 'PENDING' ? (
+                      <Button
+                        success
+                        type="primary"
+                        shape="round"
+                        loading={isAcceptLoading}
+                        onClick={acceptOrder}
+                      >
+                        Accept Order
+                      </Button>
+                    ) : (
+                      assingVendorAction(orderData)
+                    ))
+                  } */}
                 </Space>
               </div>
             </Card>
@@ -447,7 +473,7 @@ function OrderDetails() {
                   {orderData?.status !== 'PENDING' &&
                     <div className="order_title_actions">
                       <KotDetails orderId={id} />
-                      {orderData?.status !== "DISPATCHED" &&
+                      {/* {orderData?.status !== "DISPATCHED" &&
                         orderData?.status !== "CLOSED" &&
                         orderData?.status !== "DELIVERD" &&
                         <Button
@@ -458,7 +484,7 @@ function OrderDetails() {
                         >
                           Edit Order
                         </Button>
-                      }
+                      } */}
                     </div>
                   }
                 </div>

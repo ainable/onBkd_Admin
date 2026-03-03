@@ -6,7 +6,7 @@ import { useAuth } from '../../authentication/context/authContext';
 import { OrderGotoBranch, fetchAllBranchList } from '../../service/api_services';
 import { CloseSquareFilled } from '@ant-design/icons';
 
-const OrderSendBranch = ({ status, orderId, shhowAllOrderList, branchCode, branchId, deliveryOption ,showOrderCount}) => {
+const OrderSendBranch = ({ status, orderId, shhowAllOrderList, branchCode, branchId, deliveryOption, showOrderCount, buttonType = "link", buttonShape = "default", buttonVariant = "text", }) => {
     const { token } = useAuth()
     const { form } = Form.useForm()
     const [vendrList, setVendorList] = useState([])
@@ -99,8 +99,37 @@ const OrderSendBranch = ({ status, orderId, shhowAllOrderList, branchCode, branc
     return (
         <div className='assign_models'>
 
-            {status == "PENDING" || "ACCEPTED" ?
-                <span onClick={showModal} disabled={deliveryOption != "DELIVERY"}>Send to branch   </span> : <Tooltip title={`Order Assigned to ${branchCode} `}><Button type='link' disabled>Assign {branchCode} </Button>   </Tooltip>}
+            {(status === "PENDING" || status === "ACCEPTED") ? (
+                buttonVariant === "button" ? (
+                    <Button
+                        type={buttonType}
+                        shape={buttonShape}
+                        onClick={showModal}
+                        disabled={deliveryOption !== "DELIVERY"}
+                    >
+                        Send to Branch
+                    </Button>
+                ) : (
+                    <span
+                        onClick={showModal}
+                        disabled={deliveryOption !== "DELIVERY"}
+                    >
+                        Send to Branch
+                    </span>
+                )
+            ) : (
+                <Tooltip title={`Order Assigned to ${branchCode} `}>
+                    <Button
+                        type={buttonType}
+                        shape={buttonShape}
+                        onClick={showModal}
+                        disabled
+                    >
+                        Assign {branchCode}
+                    </Button>
+                </Tooltip>
+            )
+            }
             <Modal width={400} title="Order Send To Branch" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={false}>
                 <div className="vendor_search_form">
                     <Form layout="vertical" form={form} onFinish={submitHandler} onFinishFailed={onFinishFailed}>
@@ -145,7 +174,7 @@ const OrderSendBranch = ({ status, orderId, shhowAllOrderList, branchCode, branc
                     </Form>
                 </div>
             </Modal>
-        </div>
+        </div >
     );
 };
 
