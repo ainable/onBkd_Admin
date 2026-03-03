@@ -413,16 +413,6 @@ function OrderDetails() {
                     )}
                   {!isLoading &&
                     (orderData?.status === 'PENDING' ? (
-                      <Button
-                        success
-                        type="primary"
-                        shape="round"
-                        loading={isAcceptLoading}
-                        onClick={acceptOrder}
-                      >
-                        Accept Order
-                      </Button>
-                    ) : (
                       <OrderSendBranch
                         branchCode={orderData?.branchCode}
                         branchId={orderData?.branchId}
@@ -434,6 +424,14 @@ function OrderDetails() {
                         buttonType="primary"
                         buttonShape="round"
                       />
+                    ) : (
+                      <Button
+                        type={"primary"}
+                        shape={"round"}
+                        disabled
+                      >
+                        Assigned to {orderData?.branchCode}
+                      </Button>
                     ))
                   }
                   {/* {!isLoading &&
@@ -678,7 +676,7 @@ function OrderDetails() {
                 <div className="show_transition_list" style={{ margin: '10px' }}>
                   <Card
                     title="Order Status Action"
-                    // bordered={false}
+                  // bordered={false}
                   >
                     {isLoading ? <div className="loader_main"> <span class="loader2"></span></div> : <Table columns={Statuscolumns} dataSource={orderData?.statusDetails} scroll={{ x: true }} pagination={false}
                     />}
