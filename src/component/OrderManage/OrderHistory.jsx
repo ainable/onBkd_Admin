@@ -9,11 +9,14 @@ import { deliveryTypes, fetchHistoryStatusCount, FetchOrderHistoryList, paymentM
 import { SearchOutlined } from '@ant-design/icons';
 import moment from "moment";
 import ExportOrderHistory from "./ExportOrderHistory";
+import { useScreen } from "../../authentication/context/AuthScreen";
 
 
 
 
 function OrderHistory() {
+    const { screenWidth } = useScreen();
+    const isMobile = screenWidth < 768;
     const { RangePicker } = DatePicker;
     const [form] = Form.useForm();
     const navigate = useNavigate()
@@ -302,65 +305,66 @@ function OrderHistory() {
             />
             <div className="content_title">
                 <div className="content_head">
-                    <div className="hear_title">
-                        <Title level={4}> Order History </Title>
+                    <div className="order_title">
+                        Order History
                     </div>
                     <div className="pro_selector">
-                        <Form
-                            form={form}
-                        >
-
+                        <Form form={form}>
                             <Space>
-
-                                <Form.Item
-                                    name="delivery_type"
-
-                                >
-                                    <Select
-
-                                        allowClear
-                                        placeholder="Select Delivery Type "
-                                        optionFilterProp="children"
-                                        onChange={(value) => setDeliveryType(value)}
-                                        style={{ width: '160px' }}
-
+                                <div style={{ display: 'flex', justifyContent: 'space-between', gap: isMobile ? '' : '8px' }}>
+                                    <Form.Item
+                                        name="delivery_type"
+                                        className="order_filter_input"
                                     >
-                                        {deliveryTypes.map((opt) => (
-                                            <Select.Option key={opt.key} value={opt.values}>{opt.values}</Select.Option>
-                                        ))}
-                                    </Select>
-                                </Form.Item>
+                                        <Select
+                                            allowClear
+                                            placeholder="Select Delivery Type "
+                                            optionFilterProp="children"
+                                            onChange={(value) => setDeliveryType(value)}
+                                            style={{ width: isMobile ? "100%" : '160px' }}
 
-                                <Form.Item
-                                    name="payment_mode"
+                                        >
+                                            {deliveryTypes.map((opt) => (
+                                                <Select.Option key={opt.key} value={opt.values}>{opt.values}</Select.Option>
+                                            ))}
+                                        </Select>
+                                    </Form.Item>
 
-                                >
-                                    <Select
-                                        allowClear
-                                        placeholder="Select Payment Mode"
-                                        optionFilterProp="children"
-                                        onChange={(value) => setPaymentMode(value)}
-                                        style={{ width: '160px' }}
+                                    <Form.Item
+                                        name="payment_mode"
+                                        className="order_filter_input"
                                     >
-                                        {paymentModes.map((opt) => (
-                                            <Select.Option key={opt.key} value={opt.values}>{opt.values}</Select.Option>
-                                        ))}
-                                    </Select>
-                                </Form.Item>
+                                        <Select
+                                            allowClear
+                                            placeholder="Select Payment Mode"
+                                            optionFilterProp="children"
+                                            onChange={(value) => setPaymentMode(value)}
+                                            style={{ width: isMobile ? "100%" : '160px' }}
+
+                                        >
+                                            {paymentModes.map((opt) => (
+                                                <Select.Option key={opt.key} value={opt.values}>{opt.values}</Select.Option>
+                                            ))}
+                                        </Select>
+                                    </Form.Item>
+                                </div>
+
                                 <Form.Item
                                     name="customer"
-
+                                    className="order_filter_input"
                                 >
-                                    <Input allowClear style={{ width: '160px' }} placeholder="Customer Number" suffix={<SearchOutlined />} onChange={(e) => setSearchInput(e.target.value)} />
+                                    <Input allowClear style={{ width: isMobile ? "100%" : '160px' }} placeholder="Customer Number" suffix={<SearchOutlined />} onChange={(e) => setSearchInput(e.target.value)} />
                                 </Form.Item>
-                                <Form.Item>
 
-                                    <RangePicker onChange={handelDatePicker} disabledDate={disabledDate} format="DD/MM/YYYY" style={{ width: '160px' }} />
+                                <Form.Item className="order_filter_input">
+                                    <RangePicker onChange={handelDatePicker} disabledDate={disabledDate} format="DD/MM/YYYY" style={{ width: isMobile ? "100%" : '160px' }} />
                                 </Form.Item>
-                                <Form.Item>
 
-                                    <ExportOrderHistory />
-                                </Form.Item>
+                                {!isMobile &&
+                                    <Form.Item className="order_filter_input">
+                                        <ExportOrderHistory />
+                                    </Form.Item>
+                                }
                             </Space>
                         </Form>
 
@@ -369,8 +373,31 @@ function OrderHistory() {
                 </div>
 
                 <div className="history_filter_orders">
-                    <Space>
-                        {orderStatus != null ? <Button type="link" danger onClick={() => setOrderStatus(null)}>Clear Filter</Button> : null}
+                    {orderStatus != null && (
+                        <Button
+                            type="link"
+                            danger
+                            onClick={() => setOrderStatus(null)}
+                        >
+                            Clear Filter
+                        </Button>
+                    )}
+
+                    {isMobile ? (
+                        <Select
+                            allowClear
+                            placeholder="Select Order Status"
+                            value={orderStatus}
+                            style={{ width: "100%", marginBottom: '12px' }}
+                            onChange={(value) => setOrderStatus(value || null)}
+                        >
+                            {countList.map((opt) => (
+                                <Select.Option key={opt._id} value={opt._id}>
+                                    {capitalize(opt._id)} ({opt.count})
+                                </Select.Option>
+                            ))}
+                        </Select>
+                    ) : (
                         <Radio.Group value={orderStatus} >
                             {countList.map((opt) => (
                                 <Radio.Button onClick={() => {
@@ -379,9 +406,11 @@ function OrderHistory() {
                                 }} key={opt._id} value={opt._id}>{capitalize(opt._id)}-{opt.count}</Radio.Button>
                             ))}
                         </Radio.Group>
-
-                    </Space>
+                    )}
                 </div>
+                {isMobile &&
+                    <ExportOrderHistory />
+                }
                 <div className="content">
                     <div className="shoo_recent_order">
                         {!isLoading ? <div className="loader_main"> <span class="loader2"></span></div> :

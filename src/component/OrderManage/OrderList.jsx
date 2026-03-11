@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Avatar, Breadcrumb, Button, Dropdown, Form, Input, List, Modal, Pagination, Radio, Select, Typography, message, notification } from "antd";
+import { Avatar, Breadcrumb, Button, Col, Dropdown, Form, Input, List, Modal, Pagination, Radio, Row, Select, Typography, message, notification } from "antd";
 import '../../style/product.css'
 import { useLocation, useNavigate } from "react-router-dom";
 import { Space, Table, Tag } from 'antd';
@@ -11,6 +11,7 @@ import Logo from "../../assest/png/bkdlogo.png";
 import { CloseOutlined, EyeOutlined, MoreOutlined, SearchOutlined, SendOutlined } from '@ant-design/icons';
 
 import { ExclamationCircleFilled } from '@ant-design/icons';
+import { useScreen } from "../../authentication/context/AuthScreen";
 // import { onMessage } from "firebase/messaging"; // DISABLED - FIREBASE CAUSING ERRORS
 // import { messaging } from "../../firebase"; // DISABLED - FIREBASE CAUSING ERRORS
 
@@ -18,6 +19,8 @@ import { ExclamationCircleFilled } from '@ant-design/icons';
 
 
 function OrderList() {
+    const { screenWidth } = useScreen();
+    const isMobile = screenWidth < 768;
     const [form] = Form.useForm();
     const navigate = useNavigate()
     const location = useLocation();
@@ -416,33 +419,33 @@ function OrderList() {
             />
             <div className="content_title">
                 <div className="content_head">
-                    <div className="content_titles">
-                        <div className="hear_title">
-                            <Title level={4}>Live Order List</Title>
-                        </div>
-                        <div className="pro_selector">
-                            <Form
-                                form={form}
-                            >
-                                <Space>
+                    <div className="order_title">
+                        Live Order List
+                    </div>
+                    <div className="pro_selector">
+                        <Form form={form}>
+                            <Row gutter={[8, 0]}>
+                                <Col xs={12} sm={12} md={8}>
                                     <Form.Item
                                         name="delivery_type"
+                                        className="order_filter_input"
                                     >
                                         <Select
                                             allowClear
                                             placeholder="Select Delivery Type "
                                             optionFilterProp="children"
                                             onChange={(value) => setDeliveryType(value)}
-                                            style={{ width: '175px' }}
                                         >
                                             {deliveryTypes.map((opt) => (
                                                 <Select.Option key={opt.key} value={opt.values}>{opt.values}</Select.Option>
                                             ))}
                                         </Select>
                                     </Form.Item>
+                                </Col>
+                                <Col xs={12} sm={12} md={8}>
                                     <Form.Item
                                         name="payment_mode"
-
+                                        className="order_filter_input"
                                     >
                                         <Select
                                             allowClear
@@ -451,7 +454,6 @@ function OrderList() {
                                             optionFilterProp="children"
                                             onChange={(value) => setPaymentMode(value)}
 
-                                            style={{ width: '175px' }}
 
                                         >
                                             {paymentModes.map((opt) => (
@@ -459,32 +461,55 @@ function OrderList() {
                                             ))}
                                         </Select>
                                     </Form.Item>
-
-
+                                </Col>
+                                <Col xs={24} sm={24} md={8}>
                                     <Form.Item
                                         name="customer"
-
+                                        className="order_filter_input"
                                     >
-                                        <Input allowClear style={{ width: '175px' }} placeholder="Search Order ID " suffix={<SearchOutlined />} onChange={(e) => setSearchInput(e.target.value)} />
+                                        <Input allowClear placeholder="Search Order ID " suffix={<SearchOutlined />} onChange={(e) => setSearchInput(e.target.value)} />
                                     </Form.Item>
-                                </Space>
-                            </Form>
-
-                        </div>
+                                </Col>
+                            </Row>
+                        </Form>
 
                     </div>
-
                 </div>
                 <div className="pro_selector">
-                    {orderStatus != null ? <Button type="link" danger onClick={() => setOrderStatus(null)}>Clear Filter</Button> : null}
-                    <Radio.Group value={orderStatus} >
-                        {statusCount.map((opt) => (
-                            <Radio.Button onClick={() => {
-                                // Toggle the orderStatus value, if the clicked value is already selected, set to null
-                                setOrderStatus((prevValue) => (prevValue === opt._id ? null : opt._id));
-                            }} key={opt._id} value={opt._id}>{capitalize(opt._id)} ({opt.count})</Radio.Button>
-                        ))}
-                    </Radio.Group>
+                    {orderStatus != null && (
+                        <Button
+                            type="link"
+                            danger
+                            onClick={() => setOrderStatus(null)}
+                        >
+                            Clear Filter
+                        </Button>
+                    )}
+
+                    {isMobile ? (
+                        <Select
+                            allowClear
+                            placeholder="Select Order Status"
+                            value={orderStatus}
+                            style={{ width: "100%" }}
+                            onChange={(value) => setOrderStatus(value || null)}
+                        >
+                            {statusCount.map((opt) => (
+                                <Select.Option key={opt._id} value={opt._id}>
+                                    {capitalize(opt._id)} ({opt.count})
+                                </Select.Option>
+                            ))}
+                        </Select>
+                    ) : (
+                        <Radio.Group value={orderStatus} >
+                            {statusCount.map((opt) => (
+                                <Radio.Button onClick={() => {
+                                    // Toggle the orderStatus value, if the clicked value is already selected, set to null
+                                    setOrderStatus((prevValue) => (prevValue === opt._id ? null : opt._id));
+                                }} key={opt._id} value={opt._id}>{capitalize(opt._id)} ({opt.count})</Radio.Button>
+                            ))}
+                        </Radio.Group>
+                    )}
                 </div>
                 <div className="content">
                     <div className="shoo_recent_order">

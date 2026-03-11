@@ -4,11 +4,14 @@ import '../../style/master.css'
 import { AiOutlineSync } from "react-icons/ai";
 import { elasticSyncBranch, elasticSyncProduct, fetchAllBranchList } from "../../service/api_services";
 import { useAuth } from "../../authentication/context/authContext";
+import { useScreen } from "../../authentication/context/AuthScreen";
 
 
 
 
 function ElasticSearchProduct() {
+    const { screenWidth } = useScreen();
+    const isMobile = screenWidth < 768;
     const { form } = Form.useForm()
 
     const [isProduct, setIsProduct] = useState(false)
@@ -105,9 +108,9 @@ function ElasticSearchProduct() {
 
 
     return (
-        <Space>
-            <Button loading={isProduct} icon={<AiOutlineSync />} size="large" type="primary" ghost onClick={handlleSyncProduct}>Sync Product </Button>
-            <Button icon={<AiOutlineSync />} size="large" type="primary" ghost onClick={showModal}>Sync Branch</Button>
+        <Space className="syn_buttons">
+            <Button loading={isProduct} icon={<AiOutlineSync />} size={isMobile ? "middle" : "large"} type="primary" ghost onClick={handlleSyncProduct}>Sync Product </Button>
+            <Button icon={<AiOutlineSync />} size={isMobile ? "middle" : "large"} type="primary" ghost onClick={showModal}>Sync Branch</Button>
             <>
                 <Modal width={400} footer={false} title="Sync Branch" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
                     <Form

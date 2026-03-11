@@ -22,5 +22,15 @@
 
 .side_menu_icon {
   font-size: 1.2rem !important;
-  color: gray ;
+  color: gray;
+}
+
+.sidebar_container {
+  display: flex;
+  flex-direction: column;
+}
+
+.menu_scroll {
+  flex: 1;
+  overflow-y: auto;
 }

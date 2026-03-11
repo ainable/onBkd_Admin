@@ -128,3 +128,9 @@
     transform: translateY(-8px);
     /* Lift the card on hover */
 }
+
+@media (max-width:768px) {
+    .syn_buttons {
+        margin-left: 20px;
+    }
+}

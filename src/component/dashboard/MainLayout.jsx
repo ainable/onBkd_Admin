@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import "./dashboard.css"
 import { UploadOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
-import { Input, Layout, Menu, Space, theme } from 'antd';
+import { Drawer, Input, Layout, Menu, Space, theme } from 'antd';
 import Logo from "../../assest/chat/logo.png"
 import SideBarList from '../sidebar/SideBarList';
 import { Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom';
@@ -11,6 +11,10 @@ import { useAuth } from '../../authentication/context/authContext';
 import GeneralSetting from '../setting/GeneralSetting';
 import Support from '../navbar/Support';
 import ElasticSearchProduct from '../elasticSearch/ElasticSearchProduct';
+import { useScreen } from '../../authentication/context/AuthScreen';
+import { MenuOutlined } from "@ant-design/icons";
+import SidebarContent from '../sidebar/SidebarContent';
+
 const { Header, Content, Footer, Sider } = Layout;
 const items = [UserOutlined, VideoCameraOutlined, UploadOutlined, UserOutlined].map(
   (icon, index) => ({
@@ -22,13 +26,15 @@ const items = [UserOutlined, VideoCameraOutlined, UploadOutlined, UserOutlined].
 
 
 const MainLayout = () => {
+  const { screenWidth } = useScreen();
+  const isMobile = screenWidth < 768;
   const navigate = useNavigate()
   const location = useLocation()
-
-
   const { Search } = Input;
   const { token, role, permissions } = useAuth()
   const [colorChange, setColorchange] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
   const changeNavbarColor = () => {
     if (window.scrollY >= 20) {
       setColorchange(true);
@@ -53,7 +59,19 @@ const MainLayout = () => {
     return (
       <div className='main_layout'>
         <Layout >
-          <SideBarList />
+          {isMobile ? (
+            <Drawer
+              placement="left"
+              open={drawerOpen}
+              onClose={() => setDrawerOpen(false)}
+              bodyStyle={{ padding: 0 }}
+              width={260}
+            >
+              <SidebarContent setDrawerOpen={setDrawerOpen} />
+            </Drawer>
+          ) : (
+            <SideBarList />
+          )}
           <Layout>
             <Header
               className={
@@ -70,30 +88,41 @@ const MainLayout = () => {
                 padding: 0,
                 background: colorBgContainer,
                 margin: "1rem",
-                borderRadius: 10
+                borderRadius: 10,
+                height: 'auto',
+                padding:'1rem'
               }}
             >
-              <div className="head_menu">
-                <div className="head_title">
-                  <Space>
-                    <h5>Admin Dashboard</h5>
-                    <ElasticSearchProduct />
-                  </Space>
-                </div>
-
-
-                <div className="header_menu_icon">
-                  <div className="hear_icon">
+              <div style={{ width: '100%',lineHeight:'0' }}>
+                <div className="head_menu">
+                  <div>
                     <Space>
-                      {role === "SuperAdmin" ? <Support /> : null}
-                      {role === "SuperAdmin" ? <GeneralSetting /> : null}
-                      <AdminMenu />
+                      {isMobile &&
+                        <div onClick={() => setDrawerOpen(true)}>
+                          <MenuOutlined />
+                        </div>
+                      }
+                      <div className="head_title">Admin Dashboard</div>
+                      {!isMobile &&
+                        <ElasticSearchProduct />
+                      }
                     </Space>
+                  </div>
 
+                  <div className="header_menu_icon">
+                    <div className="hear_icon">
+                      <Space>
+                        {role === "SuperAdmin" ? <Support /> : null}
+                        {role === "SuperAdmin" ? <GeneralSetting /> : null}
+                        <AdminMenu />
+                      </Space>
+                    </div>
                   </div>
                 </div>
 
-
+                {isMobile &&
+                  <ElasticSearchProduct />
+                }
               </div>
             </Header>
             <Content
@@ -104,7 +133,7 @@ const MainLayout = () => {
             >
               <div
                 style={{
-                  padding: 24,
+                  padding: isMobile ? 14 : 24,
                   background: colorBgContainer,
                   borderRadius: borderRadiusLG,
                   minHeight: 500,

@@ -21,8 +21,11 @@ import KotDetails from "./KotDetails";
 import VendorAssignModel from "./VendorAssignModel";
 import LogImng from "../../assest/png/logoIcon.png";
 import OrderSendBranch from "./OrderSendBranch";
+import { useScreen } from "../../authentication/context/AuthScreen";
 
 function OrderDetails() {
+  const { screenWidth } = useScreen();
+  const isMobile = screenWidth < 768;
   const navigate = useNavigate()
   const { confirm } = Modal;
   const location = useLocation();
@@ -390,7 +393,7 @@ function OrderDetails() {
 
         <div className="content_head">
           <div className="order_content_title">
-            <Card>
+            <Card className="card_body">
               <div className="order_status_titiles">
                 <div className="order_title">
                   <Space style={{ alignItems: 'start' }}>
@@ -407,6 +410,7 @@ function OrderDetails() {
                         danger
                         shape="round"
                         onClick={() => error(id)}
+                        size={isMobile ? 'small' : 'middle'}
                       >
                         Cancel Order
                       </Button>
@@ -429,6 +433,7 @@ function OrderDetails() {
                         type={"primary"}
                         shape={"round"}
                         disabled
+                        size={isMobile ? 'small' : 'middle'}
                       >
                         Assigned to {orderData?.branchCode}
                       </Button>
@@ -455,9 +460,9 @@ function OrderDetails() {
           </div>
         </div>
 
-        {isLoading ? <div className="loader_main"> <span class="loader2"></span></div> :
+        {isLoading ? <div className="loader_main" style={{ alignItems: 'center', height: '50vh' }}> <span class="loader2"></span></div> :
           <Row>
-            <Col md={8} style={{ paddingRight: '7px' }}>
+            <Col md={8} style={{ paddingRight: isMobile ? '12px' : '7px', marginTop: isMobile ? '10px' : '' }}>
               <div className="order_details">
                 <div className="order_details_title">
                   <div className="order_del_img">
@@ -533,6 +538,7 @@ function OrderDetails() {
 
                 <Card
                   // bordered={false}
+                  className="card_body card_header"
                   style={{ margin: '10px' }}
                   title={
                     <div className="product_order_item">
@@ -544,7 +550,7 @@ function OrderDetails() {
                     </div>
                   }
                 >
-                  <div className="product_iten_list">
+                  <div className="product_iten_list order_scroll_wrapper">
                     <List
                       itemLayout="horizontal"
                       dataSource={orderData?.productInfo}
@@ -667,6 +673,7 @@ function OrderDetails() {
                 <div className="show_transition_list" style={{ margin: '10px' }}>
                   <Card
                     title="Transaction History"
+                    className="card_body_properties"
                   // bordered={false}
                   >
                     {isLoading ? <div className="loader_main"> <span class="loader2"></span></div> : <Table columns={columns} dataSource={orderData?.userPaymentInfo} scroll={{ x: true }} pagination={false}
@@ -676,6 +683,7 @@ function OrderDetails() {
                 <div className="show_transition_list" style={{ margin: '10px' }}>
                   <Card
                     title="Order Status Action"
+                    className="card_body_properties"
                   // bordered={false}
                   >
                     {isLoading ? <div className="loader_main"> <span class="loader2"></span></div> : <Table columns={Statuscolumns} dataSource={orderData?.statusDetails} scroll={{ x: true }} pagination={false}
@@ -684,7 +692,7 @@ function OrderDetails() {
                 </div>
               </div>
             </Col>
-            <Col md={4} style={{ paddingLeft: '7px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            <Col md={4} style={{ paddingLeft: '7px', display: 'flex', flexDirection: 'column', gap: '10px', marginTop: isMobile ? '10px' : '' }}>
               <Card size="small" title=" Payment Details" style={{ backgroundColor: '#ecf3fe' }}>
                 <div className="amount_item">
                   <p><b>MRP Total Amount  </b></p>

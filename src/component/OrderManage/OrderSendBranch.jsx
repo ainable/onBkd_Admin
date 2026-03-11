@@ -5,8 +5,11 @@ import '../../style/product.css'
 import { useAuth } from '../../authentication/context/authContext';
 import { OrderGotoBranch, fetchAllBranchList } from '../../service/api_services';
 import { CloseSquareFilled } from '@ant-design/icons';
+import { useScreen } from '../../authentication/context/AuthScreen';
 
 const OrderSendBranch = ({ status, orderId, shhowAllOrderList, branchCode, branchId, deliveryOption, showOrderCount, buttonType = "link", buttonShape = "default", buttonVariant = "text", }) => {
+    const { screenWidth } = useScreen();
+    const isMobile = screenWidth < 768;
     const { token } = useAuth()
     const { form } = Form.useForm()
     const [vendrList, setVendorList] = useState([])
@@ -106,6 +109,7 @@ const OrderSendBranch = ({ status, orderId, shhowAllOrderList, branchCode, branc
                         shape={buttonShape}
                         onClick={showModal}
                         disabled={deliveryOption !== "DELIVERY"}
+                        size={isMobile ? 'small' : 'middle'}
                     >
                         Send to Branch
                     </Button>

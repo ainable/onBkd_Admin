@@ -8,6 +8,7 @@ import { UserProvider } from "./authentication/context/userContext";
 import { ConfigProvider } from "antd";
 import { Provider } from "react-redux";
 import store from "./redux-toolkit/Store";
+import { LocationProvider, ScreenProvider } from "./authentication/context/AuthScreen";
 
 const themeConfig = {
   token: {
@@ -19,13 +20,17 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
     <AuthProvider>
-      <UserProvider>
-        <BrowserRouter>
-          <ConfigProvider theme={themeConfig}>
-            <App />
-          </ConfigProvider>
-        </BrowserRouter>
-      </UserProvider>
+      <LocationProvider>
+        <ScreenProvider>
+          <UserProvider>
+            <BrowserRouter>
+              <ConfigProvider theme={themeConfig}>
+                <App />
+              </ConfigProvider>
+            </BrowserRouter>
+          </UserProvider>
+        </ScreenProvider>
+      </LocationProvider>
     </AuthProvider>
   </Provider>
 

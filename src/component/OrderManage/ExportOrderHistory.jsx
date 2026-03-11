@@ -3,11 +3,14 @@ import React, { useState } from 'react';
 import { Button, DatePicker, Form, message, Modal } from 'antd';
 import moment from "moment";
 import { deleteStoreExcel, exportOrderHistory } from '../../service/api_services';
-import {  Row } from 'react-bootstrap';
+import { Row } from 'react-bootstrap';
 import { useAuth } from '../../authentication/context/authContext';
 import "../../style/vendor.css"
+import { useScreen } from '../../authentication/context/AuthScreen';
 
 const ExportOrderHistory = () => {
+    const { screenWidth } = useScreen();
+    const isMobile = screenWidth < 768;
     const { RangePicker } = DatePicker;
     const [form] = Form.useForm();
     const { token, logout } = useAuth()
@@ -28,10 +31,10 @@ const ExportOrderHistory = () => {
         setIsModalOpen(false);
     };
 
-    
+
     const ExportUserData = async () => {
         try {
-            const res = await exportOrderHistory(token,startDate,endDate);
+            const res = await exportOrderHistory(token, startDate, endDate);
             console.log("res", res)
             if (res.status === 200) {
                 const fileUrl = res.data.data.orderHistoryExcel
@@ -71,14 +74,14 @@ const ExportOrderHistory = () => {
 
     return (
         <>
-            <Button type="primary" onClick={showModal}>
+            <Button type="primary" onClick={showModal} style={{ width: isMobile ? '100%' : 'auto' }}>
                 Export
             </Button>
             <Modal title="Export Order History" width={350} footer={false} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
                 <div className="user_export">
                     <Form form={form} onFinish={ExportUserData} onFinishFailed={(value) => console.log(value)}>
                         <Row>
-                            
+
                             <Form.Item
                                 name="rangedate"
                                 rules={[

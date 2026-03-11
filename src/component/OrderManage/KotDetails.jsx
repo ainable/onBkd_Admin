@@ -7,8 +7,11 @@ import { useAuth } from '../../authentication/context/authContext';
 import { useLocation } from 'react-router-dom';
 import '../../style/order.css'
 import { MdLocalPrintshop } from 'react-icons/md';
+import { useScreen } from '../../authentication/context/AuthScreen';
 
 const KotDetails = ({ orderId }) => {
+    const { screenWidth } = useScreen();
+    const isMobile = screenWidth < 768;
     const location = useLocation()
     const { token } = useAuth()
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -66,6 +69,7 @@ const KotDetails = ({ orderId }) => {
                     shape="round"
                     style={{ backgroundColor: "#2671eb" }}
                     icon={<MdLocalPrintshop />}
+                    size={isMobile ? 'small' : 'middle'}
                 >
                     Print KOT
                 </Button>
