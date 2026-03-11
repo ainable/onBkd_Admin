@@ -10,16 +10,27 @@ import '../../style/product.css';
 import { SearchOutlined } from '@ant-design/icons';
 import CategoryFilter from "./CategoryFilter";
 import ExportProductList from "./ExportProductList";
+import { CopyOutlined } from "@ant-design/icons";
 
 const { Title } = Typography;
 
 const columns = [
     {
-        title: 'productCode',
-        dataIndex: 'productCode',
-        key: 'productCode',
+        title: "productCode",
+        dataIndex: "productCode",
+        key: "productCode",
         render: (_, { productCode }) => (
-            <Tag color="blue">{productCode}</Tag>
+            <Space>
+                <Tag style={{ margin: 0 }} color="blue"><strong>{productCode}</strong></Tag>
+
+                <CopyOutlined
+                    style={{ cursor: "pointer", color: "#1677ff" }}
+                    onClick={() => {
+                        navigator.clipboard.writeText(productCode);
+                        message.success("Product code copied!");
+                    }}
+                />
+            </Space>
         ),
     },
     {

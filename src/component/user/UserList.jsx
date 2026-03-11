@@ -44,17 +44,17 @@ function UserList() {
   };
 
   const columns = [
-    {
-      title: ' Customer ID',
-      dataIndex: '_id',
-      key: '_id',
-      ellipsis: true,
-      render: _id => (
-        <Tooltip title={_id}>
-          <strong>...{_id.slice(-6)}</strong>
-        </Tooltip>
-      )
-    },
+    // {
+    //   title: ' Customer ID',
+    //   dataIndex: '_id',
+    //   key: '_id',
+    //   ellipsis: true,
+    //   render: _id => (
+    //     <Tooltip title={_id}>
+    //       <strong>...{_id.slice(-6)}</strong>
+    //     </Tooltip>
+    //   )
+    // },
     {
       title: 'Image',
       dataIndex: 'profilePic',

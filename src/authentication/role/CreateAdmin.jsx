@@ -8,7 +8,8 @@ import { useAuth } from "../context/authContext";
 function CreateAdmin({ ShowAdminUserList, roleData }) {
   const [isLoding, setIsLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { token, logout } = useAuth()
+  const { token, logout, role } = useAuth()
+  const isSuperAdmin = role === "SuperAdmin"
   const [form] = Form.useForm();
 
   console.log("roleData2222", roleData)
@@ -84,8 +85,17 @@ function CreateAdmin({ ShowAdminUserList, roleData }) {
               <Select placeholder="Select Role Type">
                 {roleData.map((item) => (
                   // <Select.Option key={item._id} value={item._id}>{item.roleName}</Select.Option>
-                  <Select.Option disabled={item?.permissions?.length === 0} key={item._id} label={item.roleNameId?.roleName} value={item._id}>
-                    <div style={{ display: "flex", justifyContent: "space-between" }}><span>{item.roleNameId?.roleName}</span> <span>{item?.permissions?.length === 0 ? "Unique" : null}</span></div>
+                  <Select.Option
+                    disabled={!isSuperAdmin}
+                    key={item._id}
+                    label={item.roleNameId?.roleName}
+                    value={item._id}
+                  >
+                    <div style={{ display: "flex", justifyContent: "space-between" }}>
+                      <span>
+                        {item.roleNameId?.roleName}</span> <span>{item?.permissions?.length === 0 ? "Unique" : null}
+                      </span>
+                    </div>
                   </Select.Option>
                 ))}
               </Select>

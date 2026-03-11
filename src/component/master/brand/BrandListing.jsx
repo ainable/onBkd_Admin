@@ -156,6 +156,7 @@ import { useAuth } from "../../../authentication/context/authContext";
 import { FaUser } from "react-icons/fa";
 import { SearchOutlined } from '@ant-design/icons';
 import _ from 'lodash'; // Import lodash
+import { CopyOutlined } from "@ant-design/icons";
 
 const { Title } = Typography;
 
@@ -182,9 +183,20 @@ function BrandListing() {
             title: 'Brand ID',
             dataIndex: 'brandID',
             key: 'brandID',
-            width:"20%",
-            
-            render: brandID => <Tag color="blue"><strong>{brandID}</strong></Tag>
+            width: "20%",
+            render: (_, { brandID }) => (
+                <Space>
+                    <Tag style={{ margin: 0 }} color="blue"><strong>{brandID}</strong></Tag>
+
+                    <CopyOutlined
+                        style={{ cursor: "pointer", color: "#1677ff" }}
+                        onClick={() => {
+                            navigator.clipboard.writeText(brandID);
+                            message.success("Brand id copied!");
+                        }}
+                    />
+                </Space>
+            ),
         },
         {
             title: 'Image',

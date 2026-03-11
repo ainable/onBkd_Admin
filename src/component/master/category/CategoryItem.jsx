@@ -8,7 +8,7 @@ import { CategoryHook } from "../../../pages/CustomHooks";
 import { FetchAllCategorItemList, FetchAllCategorItemListDefault, FetchAllCategoryList } from "../../../service/api_services";
 import { FaRegUser } from "react-icons/fa";
 import { SearchOutlined } from '@ant-design/icons';
-
+import { CopyOutlined } from "@ant-design/icons";
 
 const { Title } = Typography;
 const columns = [
@@ -17,10 +17,19 @@ const columns = [
         dataIndex: 'itemCategoryId',
         key: 'itemCategoryId',
         ellipsis: true,
+        render: (_, { itemCategoryId }) => (
+            <Space>
+                <Tag style={{ margin: 0 }} color="blue"><strong>{itemCategoryId}</strong></Tag>
 
-        // render: (_, { brnadID }) => (<Tag color="blue">{brnadID}</Tag>)
-        render: itemCategoryId => <Tag color="blue"><strong>{itemCategoryId}</strong></Tag>
-
+                <CopyOutlined
+                    style={{ cursor: "pointer", color: "#1677ff" }}
+                    onClick={() => {
+                        navigator.clipboard.writeText(itemCategoryId);
+                        message.success("Product code copied!");
+                    }}
+                />
+            </Space>
+        ),
     },
     {
         title: 'Image',

@@ -125,7 +125,17 @@ function AdminReport() {
         }
     }, [selectTab, startDate, endDate, mobileNumber, categoryId, branchId, brandId, segmentId, offerId]);
 
+    useEffect(() => {
+        const end = dayjs();
+        const start = dayjs().subtract(30, "day");
 
+        form.setFieldsValue({
+            range: [start, end]
+        });
+
+        setStartDate(start.format("YYYY-MM-DD"));
+        setEndDate(end.format("YYYY-MM-DD"));
+    }, []);
 
     const downloadReportHandler = async (value) => {
         // console.log("body", value)

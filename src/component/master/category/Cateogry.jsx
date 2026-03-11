@@ -7,7 +7,7 @@ import { FetchAllBrandList, FetchAllCategoryList } from "../../../service/api_se
 import { useAuth } from "../../../authentication/context/authContext";
 import { FaUser } from "react-icons/fa";
 import { SearchOutlined } from '@ant-design/icons';
-
+import { CopyOutlined } from "@ant-design/icons";
 
 const { Title } = Typography;
 const columns = [
@@ -15,9 +15,19 @@ const columns = [
         title: 'Category ID',
         dataIndex: 'categoryID',
         key: 'categoryID',
-        // render: (_, { brnadID }) => (<Tag color="blue">{brnadID}</Tag>)
-        render: categoryID => <Tag color="blue"><strong>{categoryID}</strong></Tag>
+        render: (_, { categoryID }) => (
+            <Space>
+                <Tag style={{ margin: 0 }} color="blue"><strong>{categoryID}</strong></Tag>
 
+                <CopyOutlined
+                    style={{ cursor: "pointer", color: "#1677ff" }}
+                    onClick={() => {
+                        navigator.clipboard.writeText(categoryID);
+                        message.success("Product code copied!");
+                    }}
+                />
+            </Space>
+        ),
     },
     {
         title: 'Image',
