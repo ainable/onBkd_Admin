@@ -19,6 +19,7 @@ import storePickup from "../../assest/png/storepickup.png";
 import homeDelivery from "../../assest/png/homedelivery.png";
 import pendingOrder from "../../assest/png/pendingOrder.png";
 import CountUp from 'react-countup';
+import BKDLogo from "../../assest/chat/logo.png"
 
 const formatter = (value) => <CountUp end={value} separator="," />;
 
@@ -316,7 +317,13 @@ function BranchDetails() {
                                                             <Button danger loading={isDeleted} shape="round">Delete</Button>
                                                         </Popconfirm>]}
                                                         hoverable
-                                                        cover={<img alt="Cover" src="https://cdn-icons-png.flaticon.com/512/4205/4205906.png" />}
+                                                        cover={
+                                                            <img
+                                                                alt="Cover"
+                                                                src={"https://cdn-icons-png.flaticon.com/512/4205/4205906.png" || BKDLogo}
+                                                                onError={(e) => e.currentTarget.src = BKDLogo}
+                                                            />
+                                                        }
                                                     >
                                                         <Card.Meta
                                                             title={<div className="shopker_data">

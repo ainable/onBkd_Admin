@@ -27,6 +27,7 @@ import SelectProduct from "./SelectProduct";
 import SelectIngradient from "./SelectIngradient";
 import { DeleteRacipeImage, InsertNewRacipe, UpdateRacipe } from "../../service/api_services";
 import UpdateIngradient from "./UpdateIngradient";
+import BKDLogo from "../../assest/chat/logo.png"
 
 
 function EditRacipe({ recipeData, showRacipeDetails }) {
@@ -77,7 +78,7 @@ function EditRacipe({ recipeData, showRacipeDetails }) {
         const step = value.cookingSteps.map((item) => item.steps)
         setIsLoading(true)
         try {
-           
+
             // uploder && fileList.forEach((file) => {
             //     formData.append("recipeImages", file.originFileObj);
             // });
@@ -87,11 +88,11 @@ function EditRacipe({ recipeData, showRacipeDetails }) {
             formData.append("recipeDescription", value.recipeDescription);
             formData.append("cookingSteps", JSON.stringify(step));
             formData.append("recipeId", recipeData._id);
-            
+
             fileList.forEach((file) => {
                 if (!file.url) {
                     formData.append("recipeImages", file.originFileObj);
-                } 
+                }
             })
             await UpdateRacipe(formData, token)
                 .then((res) => {
@@ -128,7 +129,7 @@ function EditRacipe({ recipeData, showRacipeDetails }) {
 
 
 
-    
+
 
 
     const handleChanges = ({ fileList }) => {
@@ -328,7 +329,11 @@ function EditRacipe({ recipeData, showRacipeDetails }) {
                                             onRemove={(file) => handleRemoveImage(file)}
 
                                         >
-                                            <img src="https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg" className="image_hold" />
+                                            <img
+                                                src={"https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg" || BKDLogo}
+                                                onError={(e) => e.currentTarget.src = BKDLogo}
+                                                className="image_hold"
+                                            />
                                         </Upload>
                                     </Form.Item>
 

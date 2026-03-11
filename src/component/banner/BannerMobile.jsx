@@ -10,6 +10,7 @@ import { useAuth } from "../../authentication/context/authContext";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import UpdateBanner from "./UpdateBanner";
 // import AddProduct from "./AddProduct";
+import BKDLogo from "../../assest/chat/logo.png"
 
 
 
@@ -72,7 +73,13 @@ function BannerMobile({ bannerList, ShowAllBannerList, isLoading }) {
                                             <MdOutlineDeleteOutline className="remove_icon" />
                                         </Popconfirm>]}
                                         hoverable
-                                        cover={<img alt="example" src={ban.bannerImage} />} // Replace the image source with your actual image URL
+                                        cover={
+                                            <img
+                                                alt="example"
+                                                src={ban.bannerImage || BKDLogo}
+                                                onError={(e) => e.currentTarget.src = BKDLogo}
+                                            />
+                                        } // Replace the image source with your actual image URL
                                     >
 
                                         <Card.Meta title={<span>{ban.navigateTo}</span>}

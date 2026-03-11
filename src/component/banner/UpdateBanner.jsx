@@ -19,6 +19,7 @@ import BrandSelect from "./BrandSelect";
 import ProductSelect from "./ProductSelect";
 import CategorySelect from "./CategorySelect";
 import { MdOutlineEdit } from "react-icons/md";
+import BKDLogo from "../../assest/chat/logo.png"
 
 
 
@@ -331,7 +332,14 @@ function UpdateBanner({ bannerItem, ShowAllBannerList }) {
                                     beforeUpload={() => false}
 
                                 >
-                                    {uploder?.length != 1 ? <img src={bannerItem?.bannerImage} className="image_hold" /> : null}
+                                    {uploder?.length != 1 ?
+                                        <img
+                                            src={bannerItem?.bannerImage || BKDLogo}
+                                            onError={(e) => e.currentTarget.src = BKDLogo}
+                                            className="image_hold"
+                                        />
+                                        : null
+                                    }
                                 </Upload>
                             </Form.Item>
                         </Col>

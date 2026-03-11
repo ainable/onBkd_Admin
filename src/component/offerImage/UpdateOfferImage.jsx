@@ -4,6 +4,7 @@ import "../../style/banner.css"
 import { useAuth } from "../../authentication/context/authContext";
 import { updateOfferBanner } from "../../service/api_services";
 import { MdOutlineEdit } from "react-icons/md";
+import BKDLogo from "../../assest/chat/logo.png"
 
 function UpdateOfferImage({ bannerItem, ShowAllBannerList }) {
     const { token } = useAuth()
@@ -107,7 +108,15 @@ function UpdateOfferImage({ bannerItem, ShowAllBannerList }) {
                                     onChange={handlerImage}
                                     beforeUpload={() => false}
                                 >
-                                    {uploder?.length != 1 ? <img src={bannerItem?.bannerImage} className="image_hold" /> : null}
+                                    {uploder?.length != 1 ?
+                                        <img
+                                            src={bannerItem?.bannerImage || BKDLogo}
+                                            onError={(e) => e.currentTarget.src = BKDLogo}
+                                            className="image_hold"
+                                        />
+                                        :
+                                        null
+                                    }
                                 </Upload>
                             </Form.Item>
                         </Col>

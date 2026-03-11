@@ -745,6 +745,7 @@ function OrderDetails() {
                       style={{ objectFit: 'contain' }}
                       alt="example"
                       src={orderData?.userId?.profilePic != null ? orderData?.userId?.profilePic : DefaultImg}
+                      onError={(e) => e.currentTarget.src = DefaultImg}
                     />
                   }
                 >
@@ -772,6 +773,7 @@ function OrderDetails() {
                       style={{ objectFit: 'contain' }}
                       alt="example"
                       src={orderData?.vendorId?.profilePic != null ? orderData?.vendorId?.profilePic : DefaultImg}
+                      onError={(e) => e.currentTarget.src = DefaultImg}
                     />
                   }
 

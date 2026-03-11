@@ -6,9 +6,9 @@ import { Space, Table, Tag } from 'antd';
 import { Col, Row } from "react-bootstrap";
 import DefaultImage from "../../assest/png/defaut_img.jpg"
 
-import {  fetchReturnReplaceDetail, ReturnReplaceAction } from "../../service/api_services";
+import { fetchReturnReplaceDetail, ReturnReplaceAction } from "../../service/api_services";
 import { useAuth } from "../../authentication/context/authContext";
-import {  MdOutlineKeyboardBackspace } from "react-icons/md";
+import { MdOutlineKeyboardBackspace } from "react-icons/md";
 import DefaulImg from "../../assest/png/bkdlogo.png"
 import DefaultImg from "../../assest/chat/user.png"
 import { HiOutlineShoppingBag } from "react-icons/hi";
@@ -437,6 +437,7 @@ function ReturnReplaceDetails() {
                           className="order_order_img"
                           alt="example"
                           src={orderData?.userId?.profilePic != null ? orderData?.userId?.profilePic : DefaultImg}
+                          onError={(e) => e.currentTarget.src = DefaultImg}
                         />
                       }
 
@@ -455,12 +456,13 @@ function ReturnReplaceDetails() {
                     </Card>
                     <h6>Delivery Partner Details</h6>
                     {orderData?.vendorId != null ? <Card size="small"
-                     
+
                       cover={
                         <img
                           className="order_order_img"
                           alt="example"
                           src={orderData?.vendorId?.profilePic != null ? orderData?.vendorId?.profilePic : DefaultImg}
+                          onError={(e) => e.currentTarget.src = DefaultImg}
                         />
                       }
 

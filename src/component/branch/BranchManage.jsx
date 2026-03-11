@@ -14,6 +14,7 @@ import ShowMoreText from 'react-show-more-text';
 import { MdKeyboardBackspace } from "react-icons/md";
 import BranchAuthentication from "./BranchAuthentication";
 import EditBranch from "./EditBranch";
+import BKDLogo from "../../assest/chat/logo.png"
 const { Meta } = Card;
 
 
@@ -101,7 +102,8 @@ function BranchManage() {
                                 cover={
                                     <img
                                         alt="example"
-                                        src={item.branchImage}
+                                        src={item.branchImage || BKDLogo}
+                                        onError={(e) => e.currentTarget.src = BKDLogo}
                                         id="branch_img"
                                         onClick={() => navigate(`/dashboard/branch-details/${item._id}`)}
                                     />

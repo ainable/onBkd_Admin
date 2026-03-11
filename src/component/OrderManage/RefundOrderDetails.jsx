@@ -250,9 +250,8 @@ function RefundOrderDetails() {
                                                 <img
                                                     className="user_pro_img"
                                                     alt="example"
-                                                    src={orderData
-                                                        ?.userId?.profilePic != null ? orderData
-                                                            ?.userId?.profilePic : DefaultImg}
+                                                    src={orderData?.userId?.profilePic != null ? orderData?.userId?.profilePic : DefaultImg}
+                                                    onError={(e) => e.currentTarget.src = DefaultImg}
                                                 />
                                             }
 
@@ -265,7 +264,7 @@ function RefundOrderDetails() {
                                                 description={<div>
                                                     <p>Number : {orderData
                                                         ?.mobileNo}</p>
-                                                   
+
                                                 </div>}
                                             />
                                         </Card>

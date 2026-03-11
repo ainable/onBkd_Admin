@@ -8,6 +8,7 @@ import { FcQuestions } from "react-icons/fc";
 import UpdateTerm from "./UpdateTerm";
 import AddTermCondition from "./AddTermCondition";
 import parse from 'html-react-parser';
+import BKDLogo from "../../../assest/chat/logo.png"
 const { Title } = Typography;
 
 
@@ -109,7 +110,8 @@ function TermCondition() {
                     <img
                       id="cover_img"
                       alt="example"
-                      src="https://media.istockphoto.com/id/1336169315/photo/t-c-web-banner-the-abbreviation-for-terms-and-conditions-built-from-letters-on-wooden-cubes.jpg?s=612x612&w=0&k=20&c=-XwQK_SkGJGiu-iTHUPUXXOJD1-ASRfxgZdl9bpRH6A="
+                      src={"https://media.istockphoto.com/id/1336169315/photo/t-c-web-banner-the-abbreviation-for-terms-and-conditions-built-from-letters-on-wooden-cubes.jpg?s=612x612&w=0&k=20&c=-XwQK_SkGJGiu-iTHUPUXXOJD1-ASRfxgZdl9bpRH6A=" || BKDLogo}
+                      onError={(e) => e.currentTarget.src = BKDLogo}
                     />
 
                   }

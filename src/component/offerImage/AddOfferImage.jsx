@@ -3,6 +3,7 @@ import { Button, Col, Drawer, Form, Image, Input, Upload, message } from "antd";
 import "../../style/banner.css"
 import { useAuth } from "../../authentication/context/authContext";
 import { InsertOfferBanner } from "../../service/api_services";
+import BKDLogo from "../../assest/chat/logo.png"
 
 function AddOfferImage({ ShowAllOfferBannerList }) {
     const { token } = useAuth()
@@ -135,7 +136,15 @@ function AddOfferImage({ ShowAllOfferBannerList }) {
                                         fileList={uploder}
                                         onPreview={handlePreview}
                                     >
-                                        {uploder?.length != 1 ? <img src="https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg" className="image_hold" /> : null}
+                                        {uploder?.length != 1 ?
+                                            <img
+                                                src={"https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg" || BKDLogo}
+                                                onError={(e) => e.currentTarget.src = BKDLogo}
+                                                className="image_hold"
+                                            />
+                                            :
+                                            null
+                                        }
                                     </Upload>
                                 </Form.Item>
                             </Col>

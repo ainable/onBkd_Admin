@@ -5,6 +5,8 @@ import './dashboard.css'
 import CountUp from 'react-countup'
 import { fetchDashboardCount } from '../../service/api_services'
 import { useAuth } from '../../authentication/context/authContext'
+import BKDLogo from "../../assest/chat/logo.png"
+import COUNTBG from "../../assest/png/dashboard_card_bg.png"
 
 
 
@@ -37,7 +39,12 @@ function UserData() {
             title: "Revenue",
             count: countData?.totalRevenue,
             url: "https://cdn3d.iconscout.com/3d/premium/thumb/profit-graph-5328524-4445731.png"
-
+        },
+        {
+            id: 5,
+            title: "Products",
+            count: countData?.totalProductCount,
+            url: "https://cdn3d.iconscout.com/3d/premium/thumb/product-5806311-4863043.png"
         },
 
     ]
@@ -59,15 +66,18 @@ function UserData() {
 
     return (
         <div className='show_user_chat'>
-            <Row>
+            <Row gutter={[16, 16]}>
                 {userChartInfo.map((item) => (
-                    <Col md={3}>
+                    <Col className="dashboard_col">
                         <div className="user_counts">
 
                             <Card hoverable>
                                 <div className='user_data_item'>
                                     <div className="user_chart_logo">
-                                        <img src={item.url} />
+                                        <img
+                                            src={item.url || BKDLogo}
+                                            onError={(e) => e.currentTarget.src = BKDLogo}
+                                        />
                                     </div>
                                     <div className="user_chart_text">
                                         <p>{item.title}</p>
@@ -76,7 +86,9 @@ function UserData() {
                                     </div>
                                 </div>
                                 <div className="order_car_design">
-                                    <img src='https://png.pngtree.com/png-vector/20230320/ourmid/pngtree-abstract-poster-background-vector-png-image_6658842.png' />
+                                    <img
+                                        src={COUNTBG}
+                                    />
                                 </div>
                             </Card>
                         </div>

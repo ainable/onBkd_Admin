@@ -20,6 +20,7 @@ import { Col } from "react-bootstrap";
 import ProductSelect from "./SelectProduct";
 import { EyeOutlined, UploadOutlined } from '@ant-design/icons';
 import ViewFormate from "../../../assest/png/segmet-review.jpg"
+import BKDLogo from "../../../assest/chat/logo.png"
 
 function EditSegment({ showAllCustomSegment, editData }) {
     const { token, logout } = useAuth()
@@ -46,7 +47,7 @@ function EditSegment({ showAllCustomSegment, editData }) {
         setFormData(new FormData())
         setUploader(null)
         setBannerUploader(null)
-       
+
     };
 
     const onClose = () => {
@@ -186,7 +187,15 @@ function EditSegment({ showAllCustomSegment, editData }) {
                                     onChange={(e) => handlerBannerImage(e)}
                                 // disabled={uploder?.length == 1}
                                 >
-                                    {bannerUploder?.length != 1 ? <img src={editData?.bigBanner} className="image_hold" /> : null}
+                                    {bannerUploder?.length != 1 ?
+                                        <img
+                                            src={editData?.bigBanner}
+                                            onError={(e) => e.currentTarget.src = BKDLogo}
+                                            className="image_hold"
+                                        />
+                                        :
+                                        null
+                                    }
 
                                 </Upload>
 
@@ -208,7 +217,13 @@ function EditSegment({ showAllCustomSegment, editData }) {
                                         accept="image/jpeg"
                                         onChange={handlerImage}
                                     >
-                                        {uploder?.length !== 1 && <img src={editData?.smallBanner || editData?.middleBanner} className="image_hold" />}
+                                        {uploder?.length !== 1 &&
+                                            <img
+                                                src={editData?.smallBanner || editData?.middleBanner || BKDLogo}
+                                                onError={(e) => e.currentTarget.src = BKDLogo}
+                                                className="image_hold"
+                                            />
+                                        }
                                     </Upload>
                                 </Form.Item>
                             </Col>

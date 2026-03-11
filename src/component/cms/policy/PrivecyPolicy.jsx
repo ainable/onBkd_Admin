@@ -8,6 +8,7 @@ import { FcQuestions } from "react-icons/fc";
 import UpdatePolicy from "./UpdatePolicy";
 import AddPrivacy from "./AddPrivacy";
 import parse from 'html-react-parser';
+import BKDLogo from "../../../assest/chat/logo.png"
 const { Title } = Typography;
 
 
@@ -101,7 +102,8 @@ function PrivecyPolicy() {
                       id="cover_img"
 
                       alt="example"
-                      src="https://www.altosindia.net/public/page/Policies-banner.jpg"
+                      src={"https://www.altosindia.net/public/page/Policies-banner.jpg" || BKDLogo}
+                      onError={(e) => e.currentTarget.src = BKDLogo}
                     />
 
                   }

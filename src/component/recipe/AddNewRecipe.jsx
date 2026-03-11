@@ -26,6 +26,7 @@ import { useAuth } from "../../authentication/context/authContext";
 import SelectProduct from "./SelectProduct";
 import SelectIngradient from "./SelectIngradient";
 import { InsertNewRacipe } from "../../service/api_services";
+import BKDLogo from "../../assest/chat/logo.png"
 
 
 function AddNewRecipe({ showAllRacipeList }) {
@@ -286,7 +287,11 @@ function AddNewRecipe({ showAllRacipeList }) {
                                             maxCount={5}
                                         // disabled={fileList?.length === 5}
                                         >
-                                            <img src="https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg" className="image_hold" />
+                                            <img
+                                                src={"https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg" || BKDLogo}
+                                                onError={(e) => e.currentTarget.src = BKDLogo}
+                                                className="image_hold"
+                                            />
                                         </Upload>
                                     </Form.Item>
 

@@ -6,6 +6,7 @@ import { deleteOfferBanner } from "../../service/api_services";
 import { useAuth } from "../../authentication/context/authContext";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import UpdateOfferImage from "./UpdateOfferImage";
+import BKDLogo from "../../assest/chat/logo.png"
 
 const { Meta } = Card;
 
@@ -59,7 +60,13 @@ function OfferImageList({ bannerList, ShowAllOfferBannerList, isLoading }) {
                                                         <MdOutlineDeleteOutline className="remove_icon" />
                                                     </Popconfirm>]}
                                                 hoverable
-                                                cover={<img alt="example" src={ban.bannerImage} />}
+                                                cover={
+                                                    <img
+                                                        alt="example"
+                                                        src={ban.bannerImage || BKDLogo}
+                                                        onError={(e) => e.currentTarget.src = BKDLogo}
+                                                    />
+                                                }
                                             >
                                                 <Meta
                                                     title={ban.navigateTo}

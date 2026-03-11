@@ -175,6 +175,11 @@
     font-size: 20px;
 }
 
+.dashboard_col {
+    flex: 0 0 20%;
+    max-width: 20%;
+}
+
 @media only screen and (max-width: 768px) {
     .ant-layout-sider {
         width: 200px !important;
@@ -183,6 +188,11 @@
 
     .head_menu {
         margin-bottom: 10px;
+    }
+
+    .dashboard_col {
+        flex: 0 0 50%;
+        max-width: 50%;
     }
 }
 
@@ -194,5 +204,10 @@
 
     .head_menu {
         margin-bottom: 10px;
+    }
+
+    .dashboard_col {
+        flex: 0 0 100%;
+        max-width: 100%;
     }
 }

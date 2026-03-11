@@ -23,6 +23,7 @@ import GooglePlacesAutocomplete, {
 import { useAuth } from "../../authentication/context/authContext";
 import { InsertNewBranch, UpdateBranch } from "../../service/api_services";
 import "../../style/location.css"
+import BKDLogo from "../../assest/chat/logo.png"
 
 
 
@@ -318,7 +319,15 @@ const EditBranch = ({ branchData, shhowAllBranchList }) => {
                                         onChange={(e) => { handlerImage(e) }}
                                     // disabled={uploder?.length == 1}
                                     >
-                                        {uploder?.length != 1 ? <img src={branchData.branchImage} id="upload_branch_img" /> : null}
+                                        {uploder?.length != 1 ?
+                                            <img
+                                                src={branchData.branchImage || BKDLogo}
+                                                onError={(e) => e.currentTarget.src = BKDLogo}
+                                                id="upload_branch_img"
+                                            />
+                                            :
+                                            null
+                                        }
 
                                     </Upload>
 

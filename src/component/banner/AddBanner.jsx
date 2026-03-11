@@ -18,6 +18,7 @@ import { fetchAllBranchList, FetchAllBrandList, FetchAllCategoryList, InsertBann
 import BrandSelect from "./BrandSelect";
 import ProductSelect from "./ProductSelect";
 import CategorySelect from "./CategorySelect";
+import BKDLogo from "../../assest/chat/logo.png"
 
 
 
@@ -290,7 +291,15 @@ function AddBanner({ ShowAllBannerList }) {
                   fileList={uploder}
 
                 >
-                  {uploder?.length != 1 ? <img src="https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg" className="image_hold" /> : null}
+                  {uploder?.length != 1 ?
+                    <img
+                      src={"https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg" || BKDLogo}
+                      onError={(e) => e.currentTarget.src = BKDLogo}
+                      className="image_hold"
+                    />
+                    :
+                    null
+                  }
                 </Upload>
               </Form.Item>
             </Col>

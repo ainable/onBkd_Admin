@@ -226,7 +226,14 @@ function DeliveryPartnerDetails() {
                                     <Row>
                                         <Col md={4}>
                                             <Card cover={
-                                                vendorInfo?.profilePic != null ? <img className="vendor_details_img" src={vendorInfo?.profilePic} /> : <img src="error" fallback={EmptyImage} />
+                                                vendorInfo?.profilePic != null ?
+                                                    <img
+                                                        className="vendor_details_img"
+                                                        src={vendorInfo?.profilePic || EmptyImage}
+                                                        onError={(e) => e.currentTarget.src = EmptyImage}
+                                                    />
+                                                    :
+                                                    <img src="error" fallback={EmptyImage} />
                                             }>
                                                 <Card.Meta
                                                     title={
@@ -458,7 +465,8 @@ function DeliveryPartnerDetails() {
                                             cover={
                                                 <img
                                                     alt="example"
-                                                    src={vendorInfo?.branchId?.branchImage}
+                                                    src={vendorInfo?.branchId?.branchImage || EmptyImage}
+                                                    onError={(e) => e.currentTarget.src = EmptyImage}
                                                     id="branch_img"
                                                     onClick={() => navigate(`/dashboard/branch-details/${vendorInfo?.branchId?._id}`)}
                                                 />
