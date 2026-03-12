@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import {  Breadcrumb, Button,  Image, Popconfirm,  Typography, message } from "antd";
+import { Breadcrumb, Button, Image, Popconfirm, Typography, message } from "antd";
 import '../../../style/master.css'
 import { useLocation } from "react-router-dom";
 import { Space, Table, Tag } from 'antd';
 import { useAuth } from "../../../authentication/context/authContext";
 
-import {   deleteTrendingBrand,  fetchTrendingBrand } from "../../../service/api_services";
+import { deleteTrendingBrand, fetchTrendingBrand } from "../../../service/api_services";
 import DefaultImg from "../../../assest/icon/default-image.jpg"
 import AddTrendingBrand from "./AddTrendingBrand";
 
@@ -29,7 +29,14 @@ function TrendingBrand() {
 
             render: (_, { imageUrl }) => (
                 <div className="show_cat_img" >
-                    {<Image src={imageUrl ? imageUrl : DefaultImg} width={50} height={50} style={{ borderRadius: "8px", objectFit: "contain", }} />}
+                    {<Image
+                        src={imageUrl ? imageUrl : DefaultImg}
+                        onError={(e) => e.currentTarget.src = DefaultImg}
+                        width={50}
+                        height={50}
+                        style={{ borderRadius: "8px", objectFit: "contain", }}
+                    />
+                    }
 
                 </div>
             )
@@ -143,7 +150,7 @@ function TrendingBrand() {
     }, [])
 
 
-   
+
 
     const cancel = () => {
         console.log("you are click no")

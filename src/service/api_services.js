@@ -1255,7 +1255,8 @@ export const fetchSegmentProdcut = async (
   token,
   SegmentId,
   barachCode,
-  current
+  current,
+  limit=25
 ) => {
   const segmentPro = await axios.get(
     `${baseURL}/static-custom-segment-product/${SegmentId}?branchCode=${barachCode}&currentPage=${current}&itemsPerPage=${limit}`,

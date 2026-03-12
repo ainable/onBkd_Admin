@@ -132,7 +132,14 @@ function RefundOrderDetails() {
                                                             actions={[<span><del>₹ {item.price}</del></span>, <span><b>₹ {item.bkdAmount}</b></span>]}
                                                         >
                                                             <List.Item.Meta
-                                                                avatar={item.imageUrl != null ? <Image src={item.imageUrl} className="order_images" width={50} /> : <Avatar size={50} shape="square" src={BKDLogo} className="order_images" />}
+                                                                avatar={item.imageUrl != null ?
+                                                                    <Image
+                                                                        src={item.imageUrl || BKDLogo}
+                                                                        onError={(e) => e.currentTarget.src = BKDLogo}
+                                                                        className="order_images"
+                                                                        width={50}
+                                                                    />
+                                                                    : <Avatar size={50} shape="square" src={BKDLogo} className="order_images" />}
                                                                 title={<span>{item.productName}</span>}
                                                                 description={<div>
                                                                     <p>{item.packSize}</p>

@@ -7,6 +7,7 @@ import AddNewCoupon from "./AddNewCoupon";
 import moment from "moment";
 import { CloseOutlined, EditFilled, MoreOutlined } from '@ant-design/icons';
 import DeleteModal from "../../../kit/DeleteModal/DeleteModal";
+import { CopyOutlined } from "@ant-design/icons";
 
 const { Title, Text } = Typography;
 
@@ -59,9 +60,18 @@ function CoupontList() {
             dataIndex: "couponCode",
             key: "couponCode",
             render: (_, { couponCode }) => (
-                <div className="dis_code">
-                    <Button type="dashed">{couponCode}</Button>
-                </div>
+                <Space
+                    onClick={() => {
+                        navigator.clipboard.writeText(couponCode);
+                        message.success("Coupon code copied!");
+                    }}
+                >
+                    <div className="dis_code">
+                        <Button type="dashed">{couponCode}</Button>
+                    </div>
+
+                    <CopyOutlined style={{ cursor: "pointer", color: "#5AC268" }}/>
+                </Space>
             ),
         },
         {

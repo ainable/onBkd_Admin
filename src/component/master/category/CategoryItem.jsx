@@ -9,6 +9,7 @@ import { FetchAllCategorItemList, FetchAllCategorItemListDefault, FetchAllCatego
 import { FaRegUser } from "react-icons/fa";
 import { SearchOutlined } from '@ant-design/icons';
 import { CopyOutlined } from "@ant-design/icons";
+import BKDLogo from "../../../assest/chat/logo.png"
 
 const { Title } = Typography;
 const columns = [
@@ -18,16 +19,15 @@ const columns = [
         key: 'itemCategoryId',
         ellipsis: true,
         render: (_, { itemCategoryId }) => (
-            <Space>
+            <Space
+                onClick={() => {
+                    navigator.clipboard.writeText(itemCategoryId);
+                    message.success("Caregory Id copied!");
+                }}
+                style={{ cursor: "pointer" }}
+            >
                 <Tag style={{ margin: 0 }} color="blue"><strong>{itemCategoryId}</strong></Tag>
-
-                <CopyOutlined
-                    style={{ cursor: "pointer", color: "#1677ff" }}
-                    onClick={() => {
-                        navigator.clipboard.writeText(itemCategoryId);
-                        message.success("Product code copied!");
-                    }}
-                />
+                <CopyOutlined style={{ color: "#1677ff" }} />
             </Space>
         ),
     },
@@ -37,7 +37,20 @@ const columns = [
         key: 'imageUrl',
         render: (_, { imageUrl }) => (
             <div className="show_cat_img" >
-                {imageUrl != null ? <Image src={imageUrl} width={40} height={40} style={{ borderRadius: "100%", objectFit: "contain", background: "lightGray" }} /> : <Avatar size={40} icon={<FaRegUser style={{ marginTop: "-.5rem" }} />} />}
+                {imageUrl != null ?
+                    <Image
+                        src={imageUrl || BKDLogo}
+                        onError={(e) => e.currentTarget.src = BKDLogo}
+                        width={40}
+                        height={40}
+                        style={{ borderRadius: "100%", objectFit: "contain", background: "lightGray" }}
+                    />
+                    :
+                    <Avatar
+                        size={40}
+                        icon={<FaRegUser style={{ marginTop: "-.5rem" }} />}
+                    />
+                }
 
             </div>
         )

@@ -42,7 +42,16 @@ function RacipeDetails() {
                     >
                         {imageUrl ? <Image src={imageUrl} width={40} height={40} /> : <Avatar size={40} src={DefaultLogo} />}
                     </Image.PreviewGroup> */}
-                    {imageUrl ? <Image src={imageUrl} width={40} height={40} /> : <Avatar size={40} src={DefaultLogo} />}
+                    {imageUrl ?
+                        <Image
+                            src={imageUrl || DefaultLogo}
+                            onError={(e) => e.currentTarget.src = DefaultLogo}
+                            width={40}
+                            height={40}
+                        />
+                        :
+                        <Avatar size={40} src={DefaultLogo}
+                        />}
 
 
                 </div>
@@ -95,7 +104,7 @@ function RacipeDetails() {
             // render: productName => <strong>{productName}</strong>
 
         },
-       
+
         {
             title: 'Category',
             dataIndex: 'categoryName',
@@ -239,9 +248,9 @@ function RacipeDetails() {
                                                     {recipeData.recipeTitle}
                                                 </Descriptions.Item>
                                                 <Descriptions.Item label="Recipe Image">
-                                                    {recipeData?.recipeImages?.length != 0 ? recipeData?.recipeImages?.map((url) => (<Image src={url} width={40} />)) : <Image src={EmptyImg} width={40} />}
+                                                    {recipeData?.recipeImages?.length != 0 ? recipeData?.recipeImages?.map((url) => (<Image src={url || EmptyImg} onError={(e) => e.currentTarget.src = EmptyImg} width={40} />)) : <Image src={EmptyImg} width={40} />}
                                                 </Descriptions.Item>
-                                                
+
                                                 <Descriptions.Item label="Cooking Time">
                                                     {recipeData?.cookingTime}
 
@@ -273,7 +282,7 @@ function RacipeDetails() {
 
                                         <div className="ingradient_title">
                                             <p>Ingredients List</p>
-                                            <UpdateIngradientProduct showRacipeDetails={showRacipeDetails}/>
+                                            <UpdateIngradientProduct showRacipeDetails={showRacipeDetails} />
                                         </div>
 
 

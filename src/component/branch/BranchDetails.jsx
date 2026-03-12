@@ -19,6 +19,7 @@ import storePickup from "../../assest/png/storepickup.png";
 import homeDelivery from "../../assest/png/homedelivery.png";
 import pendingOrder from "../../assest/png/pendingOrder.png";
 import CountUp from 'react-countup';
+import USER from "../../assest/png/user.png"
 import BKDLogo from "../../assest/chat/logo.png"
 
 const formatter = (value) => <CountUp end={value} separator="," />;
@@ -246,7 +247,15 @@ function BranchDetails() {
                                 {/* <Card title="Branch Details" > */}
                                 <Descriptions title="Branch Details" bordered layout="vertical">
                                     <Descriptions.Item label="Branch Image">
-                                        {brandInfo?.branchImage != null ? <Image src={brandInfo?.branchImage} width={40} /> : <Image src={EmptyImg} width={40} />}
+                                        {brandInfo?.branchImage != null ?
+                                            <Image
+                                                src={brandInfo?.branchImage || BKDLogo}
+                                                onError={(e) => e.currentTarget.src = BKDLogo}
+                                                width={40}
+                                            />
+                                            :
+                                            <Image src={EmptyImg} width={40} />
+                                        }
                                     </Descriptions.Item>
                                     <Descriptions.Item label="Branch Code">
                                         {brandInfo?.branchCode}
@@ -320,8 +329,7 @@ function BranchDetails() {
                                                         cover={
                                                             <img
                                                                 alt="Cover"
-                                                                src={"https://cdn-icons-png.flaticon.com/512/4205/4205906.png" || BKDLogo}
-                                                                onError={(e) => e.currentTarget.src = BKDLogo}
+                                                                src={USER}
                                                             />
                                                         }
                                                     >

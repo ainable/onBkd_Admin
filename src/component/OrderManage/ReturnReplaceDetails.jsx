@@ -12,6 +12,7 @@ import { MdOutlineKeyboardBackspace } from "react-icons/md";
 import DefaulImg from "../../assest/png/bkdlogo.png"
 import DefaultImg from "../../assest/chat/user.png"
 import { HiOutlineShoppingBag } from "react-icons/hi";
+import BKDLogo from "../../assest/chat/logo.png"
 
 import { MdLocationPin, MdStorefront } from "react-icons/md";
 import ReturnOrderCancel from "./ReturnOrderCancel";
@@ -315,14 +316,28 @@ function ReturnReplaceDetails() {
                               actions={[
                                 <div className="return_img">
                                   <span>User {orderData?.type === "RETURN" ? "Return" : "Replacement"} Image :</span>
-                                  <Image src={item.returnUserOrderProductImage} width={50} height={50} />
+                                  <Image
+                                    src={item.returnUserOrderProductImage || BKDLogo}
+                                    onError={(e) => e.currentTarget.src = BKDLogo}
+                                    width={50}
+                                    height={50}
+                                  />
                                 </div>
                                 , <span><b>₹ {item.returnUserOrderOfferProductId ? item?.returnUserOrderProductId?.requiredOfferedBillingPrice : item?.returnUserOrderProductId?.bkdAmount}</b></span>
                               ]}
                             >
                               <List.Item.Meta
 
-                                avatar={item?.returnUserOrderProductId?.imageUrl != null ? <Image src={item?.returnUserOrderProductId?.imageUrl} className="order_images" width={50} /> : <Avatar size={50} shape="square" src={DefaulImg} className="order_images" />}
+                                avatar={item?.returnUserOrderProductId?.imageUrl != null ?
+                                  <Image
+                                    src={item?.returnUserOrderProductId?.imageUrl || BKDLogo}
+                                    onError={(e) => e.currentTarget.src = BKDLogo}
+                                    className="order_images"
+                                    width={50}
+                                  />
+                                  :
+                                  <Avatar size={50} shape="square" src={DefaulImg} className="order_images" />
+                                }
                                 title={<p><span>{item?.returnUserOrderProductId?.productName} </span>{item?.returnUserOrderProductId?.isRefridgerator ? <Tag icon={<HiOutlineShoppingBag className="bags" />} color="blue" bordered={false}> Frozen</Tag> : <Tag icon={<HiOutlineShoppingBag className="bags" />} bordered={false}> Normal</Tag>}</p>}
                                 description={<div>
                                   <Space>
@@ -337,7 +352,14 @@ function ReturnReplaceDetails() {
                                       actions={[<span><del>₹ {item?.returnUserOrderProductId?.mrpPrice}</del></span>, <b><span className="offer_product">Free</span> </b>]}
                                     >
                                       <List.Item.Meta
-                                        avatar={item.returnUserOrderOfferProductId.imageUrl != null ? <Image src={item.returnUserOrderOfferProductId.imageUrl} className="order_images" width={50} /> : <Avatar size={50} shape="square" src={DefaulImg} className="order_images" />}
+                                        avatar={item.returnUserOrderOfferProductId.imageUrl != null ?
+                                          <Image
+                                            src={item.returnUserOrderOfferProductId.imageUrl || BKDLogo}
+                                            onError={(e) => e.currentTarget.src = BKDLogo}
+                                            className="order_images" width={50} />
+                                          :
+                                          <Avatar size={50} shape="square" src={DefaulImg} className="order_images" />
+                                        }
                                         title={<span>{item.returnUserOrderOfferProductId.productName}</span>}
                                         description={<div>
                                           <Space>
@@ -503,7 +525,8 @@ function ReturnReplaceDetails() {
                         >
                           <Image
                             height={200}
-                            src={orderData?.vendorReturnImages[0]}
+                            src={orderData?.vendorReturnImages[0] || BKDLogo}
+                            onError={(e) => e.currentTarget.src = BKDLogo}
                           />
                         </Image.PreviewGroup> : <Image
                           // width={200}
@@ -526,7 +549,8 @@ function ReturnReplaceDetails() {
                         >
                           <Image
                             height={200}
-                            src={orderData?.vendorReplacementImages[0]}
+                            src={orderData?.vendorReplacementImages[0] || BKDLogo}
+                            onError={(e) => e.currentTarget.src = BKDLogo}
                           />
                         </Image.PreviewGroup> : <Image
                           // width={200}

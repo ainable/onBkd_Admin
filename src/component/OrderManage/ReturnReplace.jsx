@@ -25,7 +25,7 @@ function ReturnReplace() {
     const [isLoading, setIsLoading] = useState(false)
     const [totalPage, setTotalPage] = useState(null);
     const [current, setCurrent] = useState(1);
-    const [orderStatus, setOrderStatus] = useState(null)
+    const [orderStatus, setOrderStatus] = useState("ALL")
     const [searchInput, setSearchInput] = useState("")
     const [orderAction, setOrderAction] = useState("RETURN")
     const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
@@ -216,7 +216,7 @@ function ReturnReplace() {
 
     const returnReplaceOrderList = async () => {
         try {
-            await fetchReturnReplacement(token, current, searchInput, orderAction, orderStatus)
+            await fetchReturnReplacement(token, current, searchInput, orderAction, orderStatus === "ALL" ? null : orderStatus)
                 .then((res) => {
                     console.log("retune replace", res)
                     if (res.status == 200) {
@@ -325,12 +325,25 @@ function ReturnReplace() {
 
                 <div className="retun_history_filter mt-2">
                     <Space>
-                        {orderStatus ? <Button type="link" danger onClick={() => setOrderStatus(null)}>Clear Filter</Button> : null}
-                        <Radio.Group value={orderStatus} size={width > 1560 ? "large" : "small"}>
+                        {orderStatus !== "ALL" && (
+                            <Button
+                                type="link"
+                                danger
+                                onClick={() => setOrderStatus("ALL")}
+                            >
+                                Clear Filter
+                            </Button>
+                        )}
+                        <Radio.Group
+                            value={orderStatus}
+                            onChange={(e) => setOrderStatus(e.target.value)}
+                        >
+                            <Radio.Button value="ALL">All</Radio.Button>
+
                             {countList.map((opt) => (
-                                <Radio.Button onClick={() => {
-                                    setOrderStatus((prevValue) => (prevValue === opt._id ? null : opt._id));
-                                }} key={opt._id} value={opt._id}>{capitalize(opt._id)}-{opt.count}</Radio.Button>
+                                <Radio.Button key={opt._id} value={opt._id}>
+                                    {capitalize(opt._id)} ({opt.count})
+                                </Radio.Button>
                             ))}
                         </Radio.Group>
                     </Space>

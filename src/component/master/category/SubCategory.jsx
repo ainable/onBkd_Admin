@@ -8,6 +8,7 @@ import { CategoryHook } from "../../../pages/CustomHooks";
 import { FetchAllCategorItemList, FetchAllCategoryList, FetchAllSubCategorList } from "../../../service/api_services";
 import { FaRegUser } from "react-icons/fa";
 import { Col, Row } from "react-bootstrap";
+import BKDLogo from "../../../assest/chat/logo.png"
 
 
 
@@ -29,7 +30,17 @@ const columns = [
         key: 'imageUrl',
         render: (_, { imageUrl }) => (
             <div className="show_cat_img" >
-                {imageUrl != null ? <Image src={imageUrl} width={40} height={40} style={{ borderRadius: "100%", objectFit: "contain", background: "lightGray" }} /> : <Avatar size={40} icon={<FaRegUser style={{ marginTop: "-.5rem" }} />} />}
+                {imageUrl != null ?
+                    <Image
+                        src={imageUrl || BKDLogo}
+                        onError={(e) => e.currentTarget.src = BKDLogo}
+                        width={40}
+                        height={40}
+                        style={{ borderRadius: "100%", objectFit: "contain", background: "lightGray" }}
+                    />
+                    :
+                    <Avatar size={40} icon={<FaRegUser style={{ marginTop: "-.5rem" }} />} />}
+
 
             </div>
         )

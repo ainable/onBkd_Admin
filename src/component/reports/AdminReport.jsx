@@ -337,8 +337,8 @@ function AdminReport() {
 
     const handleTabValue = (key) => {
         setSelectTab(key)
-        setStartDate("")
-        setEndDate("")
+        // setStartDate("")
+        // setEndDate("")
         setCategoryId(null)
         setBranchId(null)
         setBrandId(null)
@@ -346,6 +346,16 @@ function AdminReport() {
         setSegmentId(null)
         setTableData([])
         form.resetFields();
+        
+        const end = dayjs();
+        const start = dayjs().subtract(30, "day");
+
+        form.setFieldsValue({
+            range: [start, end]
+        });
+
+        setStartDate(start.format("YYYY-MM-DD"));
+        setEndDate(end.format("YYYY-MM-DD"));
     }
     return (
         <section className="main_Section">

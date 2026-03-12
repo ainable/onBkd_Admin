@@ -166,13 +166,14 @@ function BranchSlote() {
 
 
     const shhowAllBranchSlote = async () => {
+        setIsLoading(true)
         try {
             await FetchAllbranchSlote(token, branchId, defaultBranchId, filterSlot)
                 .then((res) => {
                     console.log(" branch slote list ", res);
                     if (res.status == 200) {
                         setSloteList(res.data.data);
-                        setIsLoading(true)
+                        setIsLoading(false)
                     } else if (res.data.code == 283) {
                         message.error(res.data.message)
                         logout()
@@ -181,12 +182,12 @@ function BranchSlote() {
                 })
                 .catch((err) => {
                     console.log(err.message);
-                    setIsLoading(true)
+                    setIsLoading(false)
 
                 });
         } catch (error) {
             console.log(error);
-            setIsLoading(true)
+            setIsLoading(false)
 
         }
     };
@@ -210,16 +211,18 @@ function BranchSlote() {
     }
 
     const DeleteSLotHandler = async (id) => {
+        setIsLoading(true);
         try {
             const body = { "branchSlotId": id };
             const res = await deletedSlot(body, token);
             if (res.status === 201) {
                 message.success(res.data.message);
                 shhowAllBranchSlote();
+                setIsLoading(false);
             }
         } catch (error) {
             console.log(error);
-            setIsLoading(true);
+            setIsLoading(false);
         }
     };
 
@@ -301,7 +304,7 @@ function BranchSlote() {
 
                 <div className="content">
                     <div className="shoo_recent_order">
-                        {!isLoading ? <div className="loader_main"> <span class="loader2"></span></div> :
+                        {isLoading ? <div className="loader_main"> <span class="loader2"></span></div> :
                             <Table columns={columns} dataSource={sloteList} scroll={{ x: true }} />}
                     </div>
                 </div>

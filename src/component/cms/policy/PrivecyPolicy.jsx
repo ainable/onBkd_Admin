@@ -8,7 +8,7 @@ import { FcQuestions } from "react-icons/fc";
 import UpdatePolicy from "./UpdatePolicy";
 import AddPrivacy from "./AddPrivacy";
 import parse from 'html-react-parser';
-import BKDLogo from "../../../assest/chat/logo.png"
+import POLICYBANNER from "../../../assest/png/Policies-banner.jpg"
 const { Title } = Typography;
 
 
@@ -97,15 +97,11 @@ function PrivecyPolicy() {
               </div> :
                 <Card
                   cover={
-
                     <img
                       id="cover_img"
-
                       alt="example"
-                      src={"https://www.altosindia.net/public/page/Policies-banner.jpg" || BKDLogo}
-                      onError={(e) => e.currentTarget.src = BKDLogo}
+                      src={POLICYBANNER}
                     />
-
                   }
                 >
                   {<div className="term_action">

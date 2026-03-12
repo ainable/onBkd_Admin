@@ -1,4 +1,4 @@
-import { Button, Card, Collapse, Form, Input, message, Popconfirm, Segmented, Spin, Switch, Tabs } from "antd";
+import { Button, Card, Collapse, Form, Input, message, Popconfirm, Radio, Segmented, Spin, Switch, Tabs } from "antd";
 import React from "react";
 import "../../style/master.css";
 
@@ -23,6 +23,7 @@ function RoleManagement() {
   const [isSelected, setIsSelected] = useState(false);
   const [roleData, setRoleData] = useState([])
   const [isDelete, setIsDeleted] = useState(false)
+  const [tab, setTab] = useState("1");
 
   const columns = [
 
@@ -437,9 +438,54 @@ function RoleManagement() {
 
   return (
     <section className="container">
-
       <div className="content">
-        {isLoading ? <div className="loader_main"> <span class="loader2"></span></div> : <Tabs type="card" defaultActiveKey="1" items={items} onChange={onChange} />}
+        <Radio.Group
+          value={tab}
+          onChange={(e) => setTab(e.target.value)}
+          style={{ marginBottom: 16 }}
+        >
+          <Radio.Button value="1">Role List</Radio.Button>
+          <Radio.Button value="2">Access Keys</Radio.Button>
+          <Radio.Button value="3">Admin User</Radio.Button>
+        </Radio.Group>
+
+        {tab === "1" && (
+          <Card
+            title={<div className="text-end"><AddRole ShowAllRoleList={ShowAllRoleList} /></div>}
+          >
+            {isLoading ? (
+              <div className="loader_main"><span className="loader2"></span></div>
+            ) : (
+              <Table columns={rolecolumns} dataSource={roleData} scroll={{ x: true }} />
+            )}
+          </Card>
+        )}
+
+        {tab === "2" && (
+          <Card
+            title={<div className="text-end"><AdminRoleProvide ShowAdminAccessKeyList={ShowAdminAccessKeyList} /></div>}
+          >
+            {isLoading ? (
+              <div className="loader_main"><span className="loader2"></span></div>
+            ) : (
+              <Table columns={columns} dataSource={accessKeyData} pagination={false} scroll={{ x: true }} />
+            )}
+          </Card>
+        )}
+
+        {tab === "3" && (
+          <Card
+            title={<div className="text-end">
+              <CreateAdmin ShowAdminUserList={ShowAdminUserList} accessKeyData={accessKeyData} roleData={accessKeyData} />
+            </div>}
+          >
+            {isLoading ? (
+              <div className="loader_main"><span className="loader2"></span></div>
+            ) : (
+              <Table columns={adminColumns} dataSource={adminUserList} scroll={{ x: true }} />
+            )}
+          </Card>
+        )}
       </div>
     </section>
   );

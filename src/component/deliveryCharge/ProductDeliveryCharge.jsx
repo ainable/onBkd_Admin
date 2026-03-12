@@ -45,7 +45,13 @@ function ProductDeliveryCharge() {
             key: 'imageUrl',
             render: (_, { imageUrl }) => (
                 <>
-                    <Image src={imageUrl[0] != null ? imageUrl[0] : DefaultImg} width={50} height={50} style={{ borderRadius: "8px", objectFit: "contain" }} />
+                    <Image
+                        src={imageUrl[0] != null ? imageUrl[0] : DefaultImg}
+                        onError={(e) => e.currentTarget.src = DefaultImg}
+                        width={50}
+                        height={50}
+                        style={{ borderRadius: "8px", objectFit: "contain" }}
+                    />
                 </>
             )
         },

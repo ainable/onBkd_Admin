@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Avatar, Breadcrumb, Button, Card, Dropdown, Form, Image, Popconfirm, Select, Statistic, Switch, Typography, message } from "antd";
+import { Avatar, Breadcrumb, Button, Card, Dropdown, Form, Image, Modal, Popconfirm, Select, Statistic, Switch, Typography, message } from "antd";
 import '../../../style/master.css'
 import { useLocation, useNavigate } from "react-router-dom";
 import { Space, Table, Tag } from 'antd';
@@ -11,6 +11,7 @@ import { Icons } from "../../../common/icons";
 import AddNewSegment from "./AddNewSegment";
 import DefaultImg from "../../../assest/icon/default-image.jpg"
 import EditSegment from "./EditSegment";
+import ProductListModal from "./ProductListModal";
 
 
 
@@ -25,6 +26,8 @@ function CustomSegment() {
 
     const [segmentList, setSegmentList] = useState([])
     const [isLoading, setIsLoading] = useState(false)
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [segmentId, setSegmentId] = useState();
     const { Title } = Typography;
 
 
@@ -67,8 +70,14 @@ function CustomSegment() {
 
             render: (_, { smallBanner, middleBanner }) => (
                 <div className="show_cat_img" >
-                    {<Image src={middleBanner || smallBanner ? middleBanner || smallBanner : DefaultImg} width={50} height={50} style={{ borderRadius: "8px", objectFit: "contain", }} />}
-
+                    {<Image
+                        src={middleBanner || smallBanner ? middleBanner || smallBanner : DefaultImg}
+                        onError={(e) => e.currentTarget.src = DefaultImg}
+                        width={50}
+                        height={50}
+                        style={{ borderRadius: "8px", objectFit: "contain", }}
+                    />
+                    }
                 </div>
             )
         },
@@ -80,7 +89,14 @@ function CustomSegment() {
 
             render: (_, { bigBanner }) => (
                 <div className="show_cat_img" >
-                    {<Image src={bigBanner ? bigBanner : DefaultImg} width={50} height={50} style={{ borderRadius: "8px", objectFit: "contain", }} />}
+                    {<Image
+                        src={bigBanner ? bigBanner : DefaultImg}
+                        onError={(e) => e.currentTarget.src = DefaultImg}
+                        width={50}
+                        height={50}
+                        style={{ borderRadius: "8px", objectFit: "contain", }}
+                    />
+                    }
 
                 </div>
             )
@@ -110,7 +126,10 @@ function CustomSegment() {
             ellipsis: true,
 
             render: (_, { _id, totalProduct }) => (
-                <Space>
+                <Space
+                    onClick={() => handleOpen(_id)}
+                    style={{ cursor: 'pointer' }}
+                >
                     <Tag bordered={false} color="blue"><strong>{totalProduct}</strong></Tag>
 
                 </Space>
@@ -245,50 +264,90 @@ function CustomSegment() {
     const cancel = () => {
         message.error("your are click no")
     }
+
+    const handleOpen = (_id) => {
+        setSegmentId(_id)
+        setIsModalOpen(true)
+    }
+
+    const handleClose = () => {
+        setIsModalOpen(false)
+    }
+
     return (
-        <section className="main_Section">
-            <div className="section_title">
-                <div className="section_title_left">
-                    <Breadcrumb
-                        items={[
-                            {
-                                title: "Dashboard",
-                            },
-                            {
-                                title: location.pathname,
-                            },
-                        ]}
-                    />
-                    <div className="section_actions">
-                        <Space>
+        <>
+            <section className="main_Section">
+                <div className="section_title">
+                    <div className="section_title_left">
+                        <Breadcrumb
+                            items={[
+                                {
+                                    title: "Dashboard",
+                                },
+                                {
+                                    title: location.pathname,
+                                },
+                            ]}
+                        />
+                        <div className="section_actions">
+                            <Space>
 
-                            <Title level={4}>Custom Segment  List</Title>
+                                <Title level={4}>Custom Segment  List</Title>
 
 
-                        </Space>
+                            </Space>
+                        </div>
                     </div>
-                </div>
-                <div className="content_add">
-                    <AddNewSegment showAllCustomSegment={showAllCustomSegment} />
+                    <div className="content_add">
+                        <AddNewSegment showAllCustomSegment={showAllCustomSegment} />
 
-                </div>
-
-
-            </div>
-
-            <div className="content_title">
-
-                <div className="content">
-                    <div className="shoo_recent_order">
-                        {!isLoading ? <div className="loader_main"> <span class="loader2"></span></div> :
-                            <Table columns={columns} dataSource={segmentList} scroll={{ x: true }} />}
                     </div>
+
+
                 </div>
 
+                <div className="content_title">
 
-            </div>
+                    <div className="content">
+                        <div className="shoo_recent_order">
+                            {!isLoading ? <div className="loader_main"> <span class="loader2"></span></div> :
+                                <Table columns={columns} dataSource={segmentList} scroll={{ x: true }} />}
+                        </div>
+                    </div>
 
-        </section>
+
+                </div>
+
+            </section>
+
+            {isModalOpen &&
+                <ProductListModal
+                    open={isModalOpen}
+                    onCancel={handleClose}
+                    segmentId={segmentId}
+                />
+            }
+
+            {/* <Modal
+                open={isModalOpen}
+                onCancel={handleClose}
+                style={{ top: 20 }}
+                loading={isLoading}
+                footer={false}
+                title="Product List"
+            >
+                <div style={{ textAlign: "center", padding: "10px 0" }}>
+
+                    <h4 style={{ marginBottom: 10 }}>
+                        Are you sure you want to accept this order?
+                    </h4>
+
+                    <p style={{ color: "#888", marginBottom: 25 }}>
+                        Once accepted, the order will move to the next processing stage.
+                    </p>
+                </div>
+            </Modal> */}
+        </>
     );
 }
 

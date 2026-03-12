@@ -327,6 +327,7 @@ import { FaRegUser } from "react-icons/fa";
 import { fetchAllBranchList, FetchAllProductList } from "../../../service/api_services";
 import '../../../style/product.css';
 import { MdKeyboardBackspace } from "react-icons/md";
+import BKDLogo from "../../../assest/chat/logo.png"
 
 const { Title } = Typography;
 
@@ -344,7 +345,10 @@ const columns = [
         render: (_, { imageUrl }) => (
             <div className="show_cat_img">
                 {imageUrl?.[0] ? (
-                    <Image src={imageUrl[0]} />
+                    <Image
+                        src={imageUrl[0] || BKDLogo}
+                        onError={(e) => e.currentTarget.src = BKDLogo}
+                    />
                 ) : (
                     <Avatar icon={<FaRegUser style={{ marginTop: "-.5rem" }} />} />
                 )}
@@ -511,7 +515,7 @@ function BrandProduct() {
                         </Space>
                     </Form>
                 </div>
-                
+
                 <div className="content">
                     <div className="shoo_recent_order">
                         {isLoading ? (

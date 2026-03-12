@@ -1,4 +1,4 @@
-import { Card } from 'antd'
+import { Card, Skeleton } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { Col, Row } from 'react-bootstrap'
 import './dashboard.css'
@@ -14,6 +14,7 @@ import COUNTBG from "../../assest/png/dashboard_card_bg.png"
 function UserData() {
     const { token } = useAuth()
     const [countData, setCountData] = useState([])
+    const [isCountLoading, setIsCountLoading] = useState(false)
 
     const userChartInfo = [
         {
@@ -49,14 +50,17 @@ function UserData() {
 
     ]
     async function fetchCountData() {
+        setIsCountLoading(true)
         try {
             const response = await fetchDashboardCount(token)
             if (response.status === 200) {
                 console.log(response)
                 setCountData(response.data.data)
+                setIsCountLoading(false)
             }
         } catch (error) {
             console.log(error)
+            setIsCountLoading(false)
         }
     }
 
@@ -71,26 +75,34 @@ function UserData() {
                     <Col className="dashboard_col">
                         <div className="user_counts">
 
-                            <Card hoverable>
-                                <div className='user_data_item'>
-                                    <div className="user_chart_logo">
-                                        <img
-                                            src={item.url || BKDLogo}
-                                            onError={(e) => e.currentTarget.src = BKDLogo}
-                                        />
-                                    </div>
-                                    <div className="user_chart_text">
-                                        <p>{item.title}</p>
-                                        {/* <p>{item.count}</p> */}
-                                        <CountUp delay={1} end={item.count} style={{ fontSize: "1.5rem", fontWeight: "600" }} />
-                                    </div>
+                            {isCountLoading ? (
+                                <div>
+                                    <Skeleton.Button active block style={{ height: 120 }} />
                                 </div>
-                                <div className="order_car_design">
-                                    <img
-                                        src={COUNTBG}
-                                    />
-                                </div>
-                            </Card>
+                            ) : (
+                                <Card hoverable>
+                                    <>
+                                        <div className='user_data_item'>
+                                            <div className="user_chart_logo">
+                                                <img
+                                                    src={item.url || BKDLogo}
+                                                    onError={(e) => e.currentTarget.src = BKDLogo}
+                                                />
+                                            </div>
+                                            <div className="user_chart_text">
+                                                <p>{item.title}</p>
+                                                {/* <p>{item.count}</p> */}
+                                                <CountUp delay={1} end={item.count} style={{ fontSize: "1.5rem", fontWeight: "600" }} />
+                                            </div>
+                                        </div>
+                                        <div className="order_car_design">
+                                            <img
+                                                src={COUNTBG}
+                                            />
+                                        </div>
+                                    </>
+                                </Card>
+                            )}
                         </div>
                     </Col>
                 )

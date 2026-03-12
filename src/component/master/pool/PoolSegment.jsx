@@ -55,7 +55,13 @@ function PoolSegment() {
             key: 'imageUrl',
             render: (_, { imageUrl }) => (
                 <>
-                    <Image src={imageUrl[0] != null ? imageUrl[0] : DefaultLogo} width={50} height={50} style={{ borderRadius: "8px", objectFit: "contain" }} />
+                    <Image
+                        src={imageUrl[0] != null ? imageUrl[0] : DefaultLogo}
+                        onError={(e) => e.currentTarget.src = DefaultLogo}
+                        width={50}
+                        height={50}
+                        style={{ borderRadius: "8px", objectFit: "contain" }}
+                    />
                 </>
             )
         },

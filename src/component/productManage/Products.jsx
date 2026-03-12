@@ -11,6 +11,7 @@ import { SearchOutlined } from '@ant-design/icons';
 import CategoryFilter from "./CategoryFilter";
 import ExportProductList from "./ExportProductList";
 import { CopyOutlined } from "@ant-design/icons";
+import BKDLogo from "../../assest/chat/logo.png"
 
 const { Title } = Typography;
 
@@ -20,16 +21,15 @@ const columns = [
         dataIndex: "productCode",
         key: "productCode",
         render: (_, { productCode }) => (
-            <Space>
+            <Space
+                onClick={() => {
+                    navigator.clipboard.writeText(productCode);
+                    message.success("Product code copied!");
+                }}
+                style={{ cursor: "pointer" }}
+            >
                 <Tag style={{ margin: 0 }} color="blue"><strong>{productCode}</strong></Tag>
-
-                <CopyOutlined
-                    style={{ cursor: "pointer", color: "#1677ff" }}
-                    onClick={() => {
-                        navigator.clipboard.writeText(productCode);
-                        message.success("Product code copied!");
-                    }}
-                />
+                <CopyOutlined style={{ color: "#1677ff" }} />
             </Space>
         ),
     },
@@ -40,7 +40,10 @@ const columns = [
         render: (_, { imageUrl }) => (
             <div className="show_cat_img" >
                 {imageUrl[0] != null ?
-                    <Image src={imageUrl[0]} />
+                    <Image
+                        src={imageUrl[0] || BKDLogo}
+                        onError={(e) => e.currentTarget.src = BKDLogo}
+                    />
                     : <Avatar icon={<FaRegUser style={{ marginTop: "-.5rem" }} />} />}
             </div>
         )

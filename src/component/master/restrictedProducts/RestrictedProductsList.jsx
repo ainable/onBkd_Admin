@@ -7,6 +7,7 @@ import { SearchOutlined } from '@ant-design/icons';
 import { useAuth } from "../../../authentication/context/authContext";
 import { DeleteRestrictedProduct, FetchAllRestrictedProductList } from "../../../service/api_services";
 import AddRestrictedProduct from "./AddRestrictedProduct";
+import BKDLogo from "../../../assest/chat/logo.png"
 
 const { Title } = Typography;
 
@@ -34,8 +35,13 @@ function RestrictedProductsList() {
             render: (_, { imageUrl }) => (
                 <div className="show_cat_img" >
                     {imageUrl[0] != null ?
-                        <Image src={imageUrl[0]} />
-                        : <Avatar icon={<FaRegUser style={{ marginTop: "-.5rem" }} />} />}
+                        <Image
+                            src={imageUrl[0] || BKDLogo}
+                            onError={(e) => e.currentTarget.src = BKDLogo}
+                        />
+                        :
+                        <Avatar icon={<FaRegUser style={{ marginTop: "-.5rem" }} />} />
+                    }
                 </div>
             )
         },

@@ -157,6 +157,7 @@ import { FaUser } from "react-icons/fa";
 import { SearchOutlined } from '@ant-design/icons';
 import _ from 'lodash'; // Import lodash
 import { CopyOutlined } from "@ant-design/icons";
+import BKDLogo from "../../../assest/chat/logo.png"
 
 const { Title } = Typography;
 
@@ -185,16 +186,15 @@ function BrandListing() {
             key: 'brandID',
             width: "20%",
             render: (_, { brandID }) => (
-                <Space>
+                <Space
+                    onClick={() => {
+                        navigator.clipboard.writeText(brandID);
+                        message.success("Brand id copied!");
+                    }}
+                    style={{ cursor: "pointer" }}
+                >
                     <Tag style={{ margin: 0 }} color="blue"><strong>{brandID}</strong></Tag>
-
-                    <CopyOutlined
-                        style={{ cursor: "pointer", color: "#1677ff" }}
-                        onClick={() => {
-                            navigator.clipboard.writeText(brandID);
-                            message.success("Brand id copied!");
-                        }}
-                    />
+                    <CopyOutlined style={{ color: "#1677ff" }} />
                 </Space>
             ),
         },
@@ -202,11 +202,24 @@ function BrandListing() {
             title: 'Image',
             dataIndex: 'imageUrl',
             key: 'imageUrl',
-            width:"20%",
-    
+            width: "20%",
+
             render: (_, { imageUrl }) => (
                 <div className="show_cat_img">
-                    {imageUrl != null ? <Image src={imageUrl} width={50} height={50} style={{ borderRadius: "100%", objectFit: "contain", background: "lightGray" }} /> : <Avatar size={45} icon={<FaUser />} />}
+                    {imageUrl != null ?
+                        <Image
+                            src={imageUrl || BKDLogo}
+                            onError={(e) => e.currentTarget.src = BKDLogo}
+                            width={50}
+                            height={50}
+                            style={{ borderRadius: "100%", objectFit: "contain", background: "lightGray" }}
+                        />
+                        :
+                        <Avatar
+                            size={45}
+                            icon={<FaUser />}
+                        />
+                    }
                 </div>
             )
         },
@@ -214,27 +227,27 @@ function BrandListing() {
             title: 'Brand Name',
             dataIndex: 'brandName',
             key: 'brandName',
-            width:"30%",
-    
-    
+            width: "30%",
+
+
         },
         {
             title: 'Brand Code',
             dataIndex: 'brandCode',
             key: 'brandCode',
-            width:"20%",
+            width: "20%",
             render: brandCode => <strong>{brandCode}</strong>
         },
         {
             title: 'Action',
             dataIndex: 'brandID',
             key: 'brandID',
-            width:"10%",
-            render: brandID =>  <Button type="primary" shape="round" onClick={()=>navigate(`/dashboard/brand-product/${brandID}`)}>View Product</Button>
-            
+            width: "10%",
+            render: brandID => <Button type="primary" shape="round" onClick={() => navigate(`/dashboard/brand-product/${brandID}`)}>View Product</Button>
+
         },
     ];
-    
+
     const fetchAllBrandList = async () => {
         try {
             const res = await FetchAllBrandList(token, current, searchInput);

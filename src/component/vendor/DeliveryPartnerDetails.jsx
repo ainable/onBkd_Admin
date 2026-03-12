@@ -402,26 +402,58 @@ function DeliveryPartnerDetails() {
                                                 <Tabs.TabPane tab="Document" key="2">
                                                     <Descriptions title="Document Details" bordered layout="vertical">
                                                         <Descriptions.Item label="Adhar Card Front">
-                                                            {vendorInfo?.aadharFile != null ? <Image src={vendorInfo?.aadharFile[0]} className="doc_img" /> : <Image src={EmptyImage} width={120} />}
+                                                            {vendorInfo?.aadharFile != null ?
+                                                                <Image
+                                                                    src={vendorInfo?.aadharFile[0] || EmptyImage}
+                                                                    onError={(e) => e.currentTarget.src = EmptyImage}
+                                                                    className="doc_img"
+                                                                />
+                                                                :
+                                                                <Image src={EmptyImage} width={120} />
+                                                            }
 
 
 
 
                                                         </Descriptions.Item>
                                                         <Descriptions.Item label="Adhar Card Back">
-                                                            {vendorInfo?.aadharFile != null ? <Image src={vendorInfo?.aadharFile[1]} className="doc_img" /> : <Image src={EmptyImage} width={120} />}
+                                                            {vendorInfo?.aadharFile != null ?
+                                                                <Image
+                                                                    src={vendorInfo?.aadharFile[1] || EmptyImage}
+                                                                    onError={(e) => e.currentTarget.src = EmptyImage}
+                                                                    className="doc_img"
+                                                                />
+                                                                :
+                                                                <Image src={EmptyImage} width={120} />
+                                                            }
 
 
                                                         </Descriptions.Item>
                                                         <Descriptions.Item label="Pan Card ">
-                                                            {vendorInfo?.panFile != null ? <Image src={vendorInfo?.panFile} className="doc_img" /> : <Image src={EmptyImage} width={120} />}
+                                                            {vendorInfo?.panFile != null ?
+                                                                <Image
+                                                                    src={vendorInfo?.panFile || EmptyImage}
+                                                                    onError={(e) => e.currentTarget.src = EmptyImage}
+                                                                    className="doc_img"
+                                                                />
+                                                                :
+                                                                <Image src={EmptyImage} width={120} />
+                                                            }
 
 
                                                         </Descriptions.Item>
                                                         <Descriptions.Item label="Driver Licencse">
 
 
-                                                            {vendorInfo?.drivingLicenseFile != null ? <Image className="doc_img" src={vendorInfo?.drivingLicenseFile} /> : <Image src={EmptyImage} width={120} />}
+                                                            {vendorInfo?.drivingLicenseFile != null ?
+                                                                <Image
+                                                                    className="doc_img"
+                                                                    src={vendorInfo?.drivingLicenseFile || EmptyImage}
+                                                                    onError={(e) => e.currentTarget.src = EmptyImage}
+                                                                />
+                                                                :
+                                                                <Image src={EmptyImage} width={120} />
+                                                            }
 
                                                         </Descriptions.Item>
 

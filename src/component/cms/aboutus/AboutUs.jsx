@@ -8,7 +8,7 @@ import { FcQuestions } from "react-icons/fc";
 import UpdateAbout from "./UpdateAbout";
 import AddAbout from "./AddAbout";
 import parse from 'html-react-parser';
-import BKDLogo from "../../../assest/chat/logo.png"
+import ABOUT from "../../../assest/png/about.jpg"
 
 const { Title } = Typography;
 
@@ -104,10 +104,8 @@ function AboutUs() {
                   cover={
                     <img
                       id="cover_img"
-
                       alt="example"
-                      src={"https://media.istockphoto.com/id/1335204621/photo/about-web-banner-the-word-about-built-from-letters-on-wooden-cubes-for-the-use-as-a-web-banner.jpg?s=170667a&w=0&k=20&c=XZf4BbzRoF_7-nE-LG4HZwIzM_W2QcPR1ZXwLafdfFU=" || BKDLogo}
-                      onError={(e) => e.currentTarget.src = BKDLogo}
+                      src={ABOUT}
                     />
 
                   }

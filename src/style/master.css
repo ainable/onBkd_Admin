@@ -129,8 +129,27 @@
     /* Lift the card on hover */
 }
 
+.product_table .ant-table-cell{
+    padding: 8px 16px !important;
+}
+
+.productlist_header{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+}
+
 @media (max-width:768px) {
     .syn_buttons {
         margin-left: 20px;
     }
+
+    .productlist_header{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: start;
+    width: 100%;
+}
 }

@@ -56,7 +56,13 @@ function SegmentDetails() {
             key: 'imageUrl',
             render: (_, { imageUrl }) => (
                 <>
-                    <Image src={imageUrl[0] != null ? imageUrl[0] : DefaultLogo} width={50} height={50} style={{ borderRadius: "8px", objectFit: "contain" }} />
+                    <Image
+                        src={imageUrl[0] != null ? imageUrl[0] : DefaultLogo}
+                        onError={(e) => e.currentTarget.src = DefaultLogo}
+                        width={50}
+                        height={50}
+                        style={{ borderRadius: "8px", objectFit: "contain" }}
+                    />
                 </>
             )
         },
@@ -330,7 +336,7 @@ function SegmentDetails() {
                                     ))}
                                 </Select>
                             </Form.Item>
-                             <Form.Item>
+                            <Form.Item>
                                 <ExcelFormate title="segment" />
                             </Form.Item>
                             <Form.Item>
@@ -339,7 +345,7 @@ function SegmentDetails() {
                             <Form.Item>
                                 <Button shape="round" type="primary" loading={isExportData} onClick={() => ExportSemgentData()}>Export Data</Button>
                             </Form.Item>
-                           
+
                         </Space>
                     </Form>
 

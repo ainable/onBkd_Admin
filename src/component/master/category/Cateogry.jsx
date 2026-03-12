@@ -8,6 +8,7 @@ import { useAuth } from "../../../authentication/context/authContext";
 import { FaUser } from "react-icons/fa";
 import { SearchOutlined } from '@ant-design/icons';
 import { CopyOutlined } from "@ant-design/icons";
+import BKDLogo from "../../../assest/chat/logo.png"
 
 const { Title } = Typography;
 const columns = [
@@ -16,16 +17,15 @@ const columns = [
         dataIndex: 'categoryID',
         key: 'categoryID',
         render: (_, { categoryID }) => (
-            <Space>
+            <Space
+                onClick={() => {
+                    navigator.clipboard.writeText(categoryID);
+                    message.success("Category Id copied!");
+                }}
+                style={{ cursor: "pointer" }}
+            >
                 <Tag style={{ margin: 0 }} color="blue"><strong>{categoryID}</strong></Tag>
-
-                <CopyOutlined
-                    style={{ cursor: "pointer", color: "#1677ff" }}
-                    onClick={() => {
-                        navigator.clipboard.writeText(categoryID);
-                        message.success("Product code copied!");
-                    }}
-                />
+                <CopyOutlined style={{ color: "#1677ff" }} />
             </Space>
         ),
     },
@@ -35,7 +35,17 @@ const columns = [
         key: 'imageUrl',
         render: (_, { imageUrl }) => (
             <div className="show_cat_img" >
-                {imageUrl != null ? <Image src={imageUrl} width={50} height={50} style={{ borderRadius: "100%", objectFit: "contain", background: "lightGray" }} /> : <Avatar size={45} icon={<FaUser />} />}
+                {imageUrl != null ?
+                    <Image
+                        src={imageUrl || BKDLogo}
+                        onError={(e) => e.currentTarget.src = BKDLogo}
+                        width={50}
+                        height={50}
+                        style={{ borderRadius: "100%", objectFit: "contain", background: "lightGray" }}
+                    />
+                    :
+                    <Avatar size={45} icon={<FaUser />} />
+                }
 
             </div>
         )
@@ -107,7 +117,7 @@ function Cateogry() {
 
     useEffect(() => {
         shhowAllBrandList();
-    }, [current,searchInput]);
+    }, [current, searchInput]);
 
     return (
         <section className="main_Section">

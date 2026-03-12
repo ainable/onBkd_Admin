@@ -189,7 +189,7 @@ function EditSegment({ showAllCustomSegment, editData }) {
                                 >
                                     {bannerUploder?.length != 1 ?
                                         <img
-                                            src={editData?.bigBanner}
+                                            src={editData?.bigBanner || BKDLogo}
                                             onError={(e) => e.currentTarget.src = BKDLogo}
                                             className="image_hold"
                                         />

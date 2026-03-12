@@ -36,7 +36,14 @@ function ProductStockLimit() {
 
             render: (_, { imageUrl }) => (
                 <div className="show_cat_img" >
-                    {<Image src={imageUrl ? imageUrl : DefaultImg} width={50} height={50} style={{ borderRadius: "8px", objectFit: "contain", }} />}
+                    {<Image
+                        src={imageUrl ? imageUrl : DefaultImg}
+                        onError={(e) => e.currentTarget.src = DefaultImg}
+                        width={50}
+                        height={50}
+                        style={{ borderRadius: "8px", objectFit: "contain", }}
+                    />
+                    }
 
                 </div>
             )
@@ -143,7 +150,7 @@ function ProductStockLimit() {
         showProductStockLimit()
     }, [])
 
-    
+
 
     const deleteStockLimitHandle = async (id) => {
         try {
@@ -190,8 +197,8 @@ function ProductStockLimit() {
                 </div>
                 <div className="content_add">
                     <Space>
-                        <ExcelFormate  title="stock_limit"/>
-                    <AddStockLimit showProductStockLimit={showProductStockLimit} />
+                        <ExcelFormate title="stock_limit" />
+                        <AddStockLimit showProductStockLimit={showProductStockLimit} />
                     </Space>
 
                 </div>

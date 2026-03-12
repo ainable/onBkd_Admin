@@ -27,7 +27,7 @@ import SelectProduct from "./SelectProduct";
 import SelectIngradient from "./SelectIngradient";
 import { DeleteRacipeImage, InsertNewRacipe, UpdateRacipe } from "../../service/api_services";
 import UpdateIngradient from "./UpdateIngradient";
-import BKDLogo from "../../assest/chat/logo.png"
+import EMPTY from "../../assest/png/empty.jpg"
 
 
 function EditRacipe({ recipeData, showRacipeDetails }) {
@@ -330,8 +330,7 @@ function EditRacipe({ recipeData, showRacipeDetails }) {
 
                                         >
                                             <img
-                                                src={"https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg" || BKDLogo}
-                                                onError={(e) => e.currentTarget.src = BKDLogo}
+                                                src={EMPTY}
                                                 className="image_hold"
                                             />
                                         </Upload>

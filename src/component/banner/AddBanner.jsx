@@ -18,7 +18,7 @@ import { fetchAllBranchList, FetchAllBrandList, FetchAllCategoryList, InsertBann
 import BrandSelect from "./BrandSelect";
 import ProductSelect from "./ProductSelect";
 import CategorySelect from "./CategorySelect";
-import BKDLogo from "../../assest/chat/logo.png"
+import EMPTY from "../../assest/png/empty.jpg"
 
 
 
@@ -293,8 +293,7 @@ function AddBanner({ ShowAllBannerList }) {
                 >
                   {uploder?.length != 1 ?
                     <img
-                      src={"https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg" || BKDLogo}
-                      onError={(e) => e.currentTarget.src = BKDLogo}
+                      src={EMPTY}
                       className="image_hold"
                     />
                     :

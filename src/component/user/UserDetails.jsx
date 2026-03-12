@@ -17,6 +17,7 @@ import compltedOrder from "../../assest/png/deliverd.png";
 import cancelOrder from "../../assest/png/pickup.png";
 import _ from 'lodash';
 import { MdKeyboardBackspace } from "react-icons/md";
+import DefaultImg from "../../assest/chat/user.png"
 
 const formatter = (value) => <CountUp end={value} separator="," />;
 
@@ -263,7 +264,17 @@ function UserDetails() {
                                                     })}
                                                 </Descriptions.Item>
                                                 <Descriptions.Item label="Image" span={3}>
-                                                    {userInfo?.profilePic != null ? <Image src={userInfo?.profilePic} width={40} height={40} style={{ borderRadius: "100%", objectFit: "contain", background: "lightGray" }} /> : <Avatar size={40} icon={<FaUser />} />}
+                                                    {userInfo?.profilePic != null ?
+                                                        <Image
+                                                            src={userInfo?.profilePic || DefaultImg}
+                                                            onError={(e) => e.currentTarget.src = DefaultImg}
+                                                            width={40}
+                                                            height={40}
+                                                            style={{ borderRadius: "100%", objectFit: "contain", background: "lightGray" }}
+                                                        />
+                                                        :
+                                                        <Avatar size={40} icon={<FaUser />} />
+                                                    }
                                                 </Descriptions.Item>
                                             </Descriptions>
                                         </Card>

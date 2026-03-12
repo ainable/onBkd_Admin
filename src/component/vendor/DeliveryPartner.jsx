@@ -12,6 +12,7 @@ import { useDebounce } from "use-debounce";
 import { CloseOutlined, EditFilled, EyeOutlined, MoreOutlined, SearchOutlined, StarOutlined } from '@ant-design/icons';
 import VendorRating from "./VendorRating";
 import EditVendor from "./EditVendor";
+import DefaultImg from "../../assest/chat/user.png"
 
 const DocumentUpload = [
     { key: 1, value: true, label: "Uploaded" },
@@ -90,7 +91,17 @@ function DeliveryPartner() {
             key: 'profilePic',
             render: (_, { profilePic }) => (
                 <div className="show_cat_img" >
-                    {profilePic != null ? <Image src={profilePic} width={50} height={50} style={{ borderRadius: "100%", objectFit: "contain", background: "lightGray" }} /> : <Avatar size={45} icon={<FaRegUser className="pro_icon" />} />}
+                    {profilePic != null ?
+                        <Image
+                            src={profilePic || DefaultImg}
+                            onError={(e) => e.currentTarget.src = DefaultImg}
+                            width={50}
+                            height={50}
+                            style={{ borderRadius: "100%", objectFit: "contain", background: "lightGray" }}
+                        />
+                        :
+                        <Avatar size={45} icon={<FaRegUser className="pro_icon" />} />
+                    }
 
                 </div>
             )

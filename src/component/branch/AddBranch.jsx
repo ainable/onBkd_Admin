@@ -19,7 +19,7 @@ import { Col, Row } from "react-bootstrap"
 import DefaultImg from "../../assest/png/NotImg.png"
 import { useAuth } from "../../authentication/context/authContext";
 import { AddNewBranchManager, fetchBranchRole, InsertNewBranch } from "../../service/api_services";
-import BKDLogo from "../../assest/chat/logo.png"
+import EMPTY from "../../assest/png/empty.jpg"
 const AddBranch = ({ shhowAllBranchList }) => {
   const [open, setOpen] = useState(false);
 
@@ -194,11 +194,11 @@ const AddBranch = ({ shhowAllBranchList }) => {
                   onChange={(e) => handlerImage(e)}
                 // disabled={uploder?.length == 1}
                 >
-                  {uploder?.length != 1 ? <img
-                    src={"https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg" || BKDLogo}
-                    onError={(e) => e.currentTarget.src = BKDLogo}
-                    className="image_hold"
-                  />
+                  {uploder?.length != 1 ?
+                    <img
+                      src={EMPTY}
+                      className="image_hold"
+                    />
                     :
                     null
                   }

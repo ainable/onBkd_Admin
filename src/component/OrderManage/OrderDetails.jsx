@@ -22,6 +22,7 @@ import VendorAssignModel from "./VendorAssignModel";
 import LogImng from "../../assest/png/logoIcon.png";
 import OrderSendBranch from "./OrderSendBranch";
 import { useScreen } from "../../authentication/context/AuthScreen";
+import BKDLogo from "../../assest/chat/logo.png"
 
 function OrderDetails() {
   const { screenWidth } = useScreen();
@@ -562,8 +563,34 @@ function OrderDetails() {
                             ]}
                           >
                             <List.Item.Meta
-                              avatar={item.imageUrl != null ? <Image src={item.imageUrl} className="order_images" width={50} height={50} /> : <Avatar size={50} height={50} shape="square" src={DefaulImg} className="order_images" />}
-                              title={<p><span>{item.productName} </span>{item.isRefridgerator ? <Tag icon={<HiOutlineShoppingBag className="bags" />} color="blue" bordered={false}> Frozen</Tag> : <Tag icon={<HiOutlineShoppingBag className="bags" />} bordered={false}> Normal</Tag>}</p>}
+                              avatar={
+                                item.imageUrl != null ?
+                                  <Image
+                                    src={item.imageUrl || BKDLogo}
+                                    onError={(e) => e.currentTarget.src = BKDLogo}
+                                    className="order_images"
+                                    width={50}
+                                    height={50}
+                                  />
+                                  :
+                                  <Avatar
+                                    size={50}
+                                    height={50}
+                                    shape="square"
+                                    src={DefaulImg}
+                                    className="order_images"
+                                  />
+                              }
+                              title={
+                                <p>
+                                  <span>{item.productName} </span>
+                                  {item.isRefridgerator ?
+                                    <Tag icon={<HiOutlineShoppingBag className="bags" />} color="blue" bordered={false}> Frozen</Tag>
+                                    :
+                                    <Tag icon={<HiOutlineShoppingBag className="bags" />} bordered={false}> Normal</Tag>
+                                  }
+                                </p>
+                              }
                               description={<div>
                                 <Space>
                                   <p>{item.packSize}</p>
@@ -585,7 +612,16 @@ function OrderDetails() {
                                     actions={[<span><del>₹ {item.offerProduct.mrpPrice}</del></span>, <span><b> {item.offerProduct.productPrice === 0 ? <span className="offer_product">Free</span> : null}</b></span>]}
                                   >
                                     <List.Item.Meta
-                                      avatar={item.offerProduct.imageUrl != null ? <Image src={item.offerProduct.imageUrl} className="order_images" width={50} height={50} /> : <Avatar size={50} height={50} shape="square" src={DefaulImg} className="order_images" />}
+                                      avatar={item.offerProduct.imageUrl != null ?
+                                        <Image
+                                          src={item.offerProduct.imageUrl || BKDLogo}
+                                          onError={(e) => e.currentTarget.src = BKDLogo}
+                                          className="order_images"
+                                          width={50}
+                                          height={50}
+                                        />
+                                        : <Avatar size={50} height={50} shape="square" src={DefaulImg} className="order_images" />
+                                      }
                                       title={<span>{item.offerProduct.productName}</span>}
                                       description={<div>
                                         <Space>
@@ -815,6 +851,7 @@ function OrderDetails() {
                       <Image
                         height={200}
                         src={orderData?.deliveredImage?.[0]}
+                        onError={(e) => e.currentTarget.src = BKDLogo}
                       />
                     </Image.PreviewGroup> : <Image
                       // width={200}
@@ -932,7 +969,16 @@ function OrderDetails() {
                   ]}
                 >
                   <List.Item.Meta
-                    avatar={item.imageUrl ? <Image src={item.imageUrl} className="order_images" width={50} /> : <Avatar size={50} shape="square" src={DefaulImg} className="order_images" />}
+                    avatar={item.imageUrl ?
+                      <Image
+                        src={item.imageUrl || BKDLogo}
+                        onError={(e) => e.currentTarget.src = BKDLogo}
+                        className="order_images"
+                        width={50}
+                      />
+                      :
+                      <Avatar size={50} shape="square" src={DefaulImg} className="order_images" />
+                    }
                     title={
                       <p>
                         <span>{item.productName} </span>

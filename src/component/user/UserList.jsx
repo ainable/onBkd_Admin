@@ -17,6 +17,7 @@ import _ from 'lodash'; // Import lodash
 import { CSVLink } from 'react-csv'; // Import the CSVLink component
 import ExportData from "./ExportData";
 import ViewRating from "./ViewRating";
+import DefaultImg from "../../assest/chat/user.png"
 
 
 const { Title } = Typography;
@@ -61,7 +62,17 @@ function UserList() {
       key: 'profilePic',
       render: (_, { profilePic }) => (
         <div className="show_cat_img">
-          {profilePic != null ? <Image src={profilePic} width={50} height={50} style={{ borderRadius: "100%", objectFit: "contain", background: "lightGray" }} /> : <Avatar size={45} icon={<FaRegUser className="pro_icon" />} />}
+          {profilePic != null ?
+            <Image
+              src={profilePic || DefaultImg}
+              onError={(e) => e.currentTarget.src = DefaultImg}
+              width={50}
+              height={50}
+              style={{ borderRadius: "100%", objectFit: "contain", background: "lightGray" }}
+            />
+            :
+            <Avatar size={45} icon={<FaRegUser className="pro_icon" />} />
+          }
         </div>
       )
     },

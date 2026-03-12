@@ -31,7 +31,7 @@ function OrderList() {
     const [isLoading, setIsLoading] = useState(false)
     const [totalPage, setTotalPage] = useState(null);
     const [current, setCurrent] = useState(1);
-    const [orderStatus, setOrderStatus] = useState(null)
+    const [orderStatus, setOrderStatus] = useState("ALL")
     const [paymentMode, setPaymentMode] = useState(null)
     const [deliveryType, setDeliveryType] = useState(null)
     const [searchInput, setSearchInput] = useState("")
@@ -327,19 +327,26 @@ function OrderList() {
 
     const shhowAllOrderList = async () => {
         try {
-            await FetchOrderList(token, current, pageSize, deliveryType, paymentMode, orderStatus, searchInput)
-                .then((res) => {
-                    console.log(" order list ", res);
-                    if (res.status == 200) {
-                        seOrderData(res.data.data.data);
-                        setTotalPage(res.data.data.totalPage)
-                        setIsLoading(true)
-                    } else if (res.data.code == 283) {
-                        message.error(res.data.message)
-                        logout()
+            await FetchOrderList(
+                token,
+                current,
+                pageSize,
+                deliveryType,
+                paymentMode,
+                orderStatus === "ALL" ? null : orderStatus,
+                searchInput
+            ).then((res) => {
+                console.log(" order list ", res);
+                if (res.status == 200) {
+                    seOrderData(res.data.data.data);
+                    setTotalPage(res.data.data.totalPage)
+                    setIsLoading(true)
+                } else if (res.data.code == 283) {
+                    message.error(res.data.message)
+                    logout()
 
-                    }
-                })
+                }
+            })
                 .catch((err) => {
                     console.log(err);
                 });
@@ -476,11 +483,11 @@ function OrderList() {
                     </div>
                 </div>
                 <div className="pro_selector">
-                    {orderStatus != null && (
+                    {orderStatus !== "ALL" && (
                         <Button
                             type="link"
                             danger
-                            onClick={() => setOrderStatus(null)}
+                            onClick={() => setOrderStatus("ALL")}
                         >
                             Clear Filter
                         </Button>
@@ -488,12 +495,12 @@ function OrderList() {
 
                     {isMobile ? (
                         <Select
-                            allowClear
                             placeholder="Select Order Status"
                             value={orderStatus}
                             style={{ width: "100%" }}
                             onChange={(value) => setOrderStatus(value || null)}
                         >
+                            <Select.Option value="ALL">All</Select.Option>
                             {statusCount.map((opt) => (
                                 <Select.Option key={opt._id} value={opt._id}>
                                     {capitalize(opt._id)} ({opt.count})
@@ -501,12 +508,16 @@ function OrderList() {
                             ))}
                         </Select>
                     ) : (
-                        <Radio.Group value={orderStatus} >
+                        <Radio.Group
+                            value={orderStatus}
+                            onChange={(e) => setOrderStatus(e.target.value)}
+                        >
+                            <Radio.Button value="ALL">All</Radio.Button>
+
                             {statusCount.map((opt) => (
-                                <Radio.Button onClick={() => {
-                                    // Toggle the orderStatus value, if the clicked value is already selected, set to null
-                                    setOrderStatus((prevValue) => (prevValue === opt._id ? null : opt._id));
-                                }} key={opt._id} value={opt._id}>{capitalize(opt._id)} ({opt.count})</Radio.Button>
+                                <Radio.Button key={opt._id} value={opt._id}>
+                                    {capitalize(opt._id)} ({opt.count})
+                                </Radio.Button>
                             ))}
                         </Radio.Group>
                     )}

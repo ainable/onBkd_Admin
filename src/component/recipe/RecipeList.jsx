@@ -34,7 +34,17 @@ function RecipeList() {
             key: 'recipeImages',
             render: (_, { recipeImages }) => (
                 <div className="show_cat_img" >
-                    {recipeImages ? <Image src={recipeImages[0]} width={40} height={40} style={{ borderRadius: "100%", objectFit: "contain", background: "lightGray" }} /> : <Avatar size={40} src={DefaultLogo} />}
+                    {recipeImages ?
+                        <Image
+                            src={recipeImages[0] || DefaultLogo}
+                            onError={(e) => e.currentTarget.src = DefaultLogo}
+                            width={40}
+                            height={40}
+                            style={{ borderRadius: "100%", objectFit: "contain", background: "lightGray" }}
+                        />
+                        :
+                        <Avatar size={40} src={DefaultLogo} />
+                    }
 
                 </div>
             )
@@ -104,7 +114,7 @@ function RecipeList() {
                     <Popconfirm
                         title="Delete the Recipe"
                         description="Are you sure to delete this Recipe?"
-                        onConfirm={()=>deleteRecipeHandler(_id)}
+                        onConfirm={() => deleteRecipeHandler(_id)}
                         onCancel={cancel}
                         okText="Yes"
                         cancelText="No"
