@@ -2093,3 +2093,13 @@ export const VendorTrackData = async (token, orderId) => {
   });
   return vendor;
 };
+
+export const fetchAnalytics = async (token) => {
+  const customer = await axios.get(
+    `${baseURL}/analytics`,
+    {
+      headers: { Authorization: token },
+    }
+  );
+  return customer;
+};

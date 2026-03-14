@@ -45,6 +45,7 @@ import CoupontList from "../component/master/coupon/CoupontList";
 import RestrictedProductsList from "../component/master/restrictedProducts/RestrictedProductsList";
 import AllowLoginList from "../component/AllowLogin/AllowLoginList";
 import OfferImageManage from "../component/offerImage/OfferImageManage";
+import Analytics from "../component/dashboard/Analytics";
 
 // Main routes object with child routes
 const routes = [
@@ -59,6 +60,10 @@ const routes = [
       {
         path: "/dashboard",
         element: <AdminDashboard />,
+      },
+       {
+        path: "/dashboard/analytics",
+        element: <Analytics />,
       },
       {
         path: "/dashboard/report",

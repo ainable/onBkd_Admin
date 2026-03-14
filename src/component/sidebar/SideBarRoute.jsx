@@ -37,6 +37,7 @@ import CoupontList from "../master/coupon/CoupontList";
 import RestrictedProductsList from "../master/restrictedProducts/RestrictedProductsList";
 import AllowLoginList from "../AllowLogin/AllowLoginList";
 import OfferImageManage from "../offerImage/OfferImageManage";
+import Analytics from "../dashboard/Analytics";
 
 // Main routes object with sub-menu items
 const routes = [
@@ -47,6 +48,13 @@ const routes = [
     label: "Dashboard",
     component: AdminDashboard,
   },
+  // {
+  //   key: uuidv4(),
+  //   path: "/dashboard/analytics",
+  //   icons: Icons.Admin,
+  //   label: "Analytics",
+  //   component: Analytics,
+  // },
   {
     key: uuidv4(),
     path: "/dashboard/report",
