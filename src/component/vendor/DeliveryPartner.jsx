@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { Avatar, Breadcrumb, Button, Card, Checkbox, Descriptions, Dropdown, Form, Image, Input, List, Pagination, Popconfirm, Select, Statistic, Tooltip, Typography, message } from "antd";
+import { Avatar, Breadcrumb, Button, Card, Checkbox, Descriptions, Dropdown, Form, Image, Input, List, Pagination, Popconfirm, Select, Statistic, Switch, Tooltip, Typography, message } from "antd";
 import '../../style/product.css'
 import { useLocation, useNavigate } from "react-router-dom";
 import { Space, Table, Tag } from 'antd';
 import { Col, Row } from "react-bootstrap";
-import { deleteVendor, fetchAllBranchList, fetchAllVendorList } from "../../service/api_services";
+import { AdminVendorBlockAction, deleteVendor, fetchAllBranchList, fetchAllVendorList } from "../../service/api_services";
 import { useAuth } from "../../authentication/context/authContext";
 import { FaRegUser } from "react-icons/fa";
 import AddVendor from "./AddVendor";
 import { useDebounce } from "use-debounce";
-import { CloseOutlined, EditFilled, EyeOutlined, MoreOutlined, SearchOutlined, StarOutlined } from '@ant-design/icons';
+import { CloseOutlined, EditFilled, EyeOutlined, LoadingOutlined, MoreOutlined, SearchOutlined, StarOutlined } from '@ant-design/icons';
 import VendorRating from "./VendorRating";
 import EditVendor from "./EditVendor";
 import DefaultImg from "../../assest/chat/user.png"
+import { MdBlock } from "react-icons/md";
 
 const DocumentUpload = [
     { key: 1, value: true, label: "Uploaded" },
@@ -41,7 +42,7 @@ function DeliveryPartner() {
 
     const { Title } = Typography;
 
-    function DropdownItem(_id) {
+    function DropdownItem(_id, isBlocked, status) {
         return [
             {
                 key: '1',
@@ -64,11 +65,22 @@ function DeliveryPartner() {
                 icon: <CloseOutlined />,
                 label: (
 
-                    <span
-                        onClick={() => DeleteVendor(_id)} // Ensure `error` function is defined
+                    // <span
+                    //     onClick={() => DeleteVendor(_id)} // Ensure `error` function is defined
+                    // >
+                    //     Delete
+                    // </span>
+
+                    <Popconfirm
+                        title="Delete Vendor"
+                        description="Are you sure to delete Vendor?"
+                        onConfirm={() => DeleteVendor(_id)}
+                        onCancel={cancel}
+                        okText="Yes"
+                        cancelText="No"
                     >
                         Delete
-                    </span>
+                    </Popconfirm>
                 ),
 
             },
@@ -80,6 +92,31 @@ function DeliveryPartner() {
                     <EditVendor vendorId={_id} showAllVendorList={showAllVendorList} />
                 ),
 
+            },
+            {
+                key: '5',
+                icon: <MdBlock />,
+                label: status === "ACTIVE" ? (
+                    <div>
+                        <Popconfirm
+                            title={`${isBlocked === true ? "Un-Block" : "Block"} Vendor`}
+                            description={`Are you sure to ${isBlocked === true ? "un block" : "block"} Vendor?`}
+                            onConfirm={() => blockHandle(isBlocked, _id)}
+                            onCancel={cancel}
+                            okText="Yes"
+                            cancelText="No"
+                        >
+                            {isBlocked === true ? "Un-Block" : "Block"}
+                        </Popconfirm>
+                    </div>
+                ) : (
+                    <div
+                        style={{ cursor: "not-allowed", opacity: "30%" }}
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        {isBlocked ? "Un-Block" : "Block"}
+                    </div>
+                ),
             },
         ];
     }
@@ -138,12 +175,17 @@ function DeliveryPartner() {
         {
             title: 'Assign Branch',
             ellipsis: true,
-
             dataIndex: 'branchId',
             key: 'branchId',
-            render: branchId => branchId != null ? <Tooltip title={branchId.branchName}>
-                <Tag color="blue">{branchId.branchCode}</Tag>
-            </Tooltip> : <span>N/A</span>
+            render: branchId => branchId != null ?
+                <Tooltip title={branchId.branchName}>
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                        <Tag style={{ width: 'fit-content', marginInlineEnd: 0 }} color="blue">{branchId.branchCode}</Tag>
+                        <span>{branchId.branchName != null ? <span>{branchId.branchName.substr(0, 24)}...</span> : "N/A"}</span>
+                    </div>
+                </Tooltip>
+                :
+                <span>N/A</span>
 
         },
         {
@@ -197,16 +239,40 @@ function DeliveryPartner() {
             ),
         },
         {
+            title: 'Available',
+            key: 'isOnline',
+            dataIndex: 'isOnline',
+            render: (_, { isOnline }) => (
+                <>
+                    {isOnline ? <Tag color="green">Online</Tag> : <Tag color="red" >Offline</Tag>}
+                </>
+            ),
+        },
+        // {
+        //     title: "Block",
+        //     key: "_id",
+        //     dataIndex: "_id",
+        //     render: (_, { status, isBlocked, _id }) => (
+        //         <Switch
+        //             disabled={status !== "ACTIVE"}
+        //             checkedChildren={isBlocked}
+        //             unCheckedChildren={isBlocked}
+        //             checked={isBlocked}
+        //             onClick={() => blockHandle(isBlocked, _id)}
+        //         />
+        //     ),
+        // },
+        {
             title: 'Action',
             key: '_id',
             fixed: 'right',
-            render: (_, { _id }) => (
+            render: (_, { _id, isBlocked, status }) => (
                 <Space size="middle">
 
                     <Dropdown
                         trigger={["click"]}
                         menu={{
-                            items: DropdownItem(_id), // Ensure this returns valid items
+                            items: DropdownItem(_id, isBlocked, status), // Ensure this returns valid items
 
                         }}
                     >
@@ -217,25 +283,48 @@ function DeliveryPartner() {
         },
     ];
 
+    const blockHandle = async (isBlocked, _id) => {
+        const body = {
+            vendorId: _id,
+            isBlocked: !isBlocked,
+        }
+
+        try {
+            await AdminVendorBlockAction(body, token)
+                .then((res) => {
+                    if (res.status == 200) {
+                        message.success(res.data.message);
+                        showAllVendorList()
+                    }
+                })
+                .catch((err) => {
+                    message.error(err.response.data.message)
+                });
+        } catch (error) {
+            message.error(error);
+        }
+    };
+
     const onChange = (page) => {
         setCurrent(page);
         setIsLoading(true);
     };
 
     const showAllVendorList = async () => {
+        setIsLoading(true);
         try {
             const res = await fetchAllVendorList(token, current, branchId, isDocUpload, isDocApprove, debouncedSearchInput);
             if (res.status === 200) {
                 setBrandList(res.data.data.data);
                 setTotalPage(res.data.data.totalPage);
-                setIsLoading(true);
+                setIsLoading(false);
             } else if (res.data.code === 283) {
                 message.error(res.data.message);
                 logout();
             }
         } catch (error) {
             console.log(error);
-            setIsLoading(true);
+            setIsLoading(false);
         }
     };
 
@@ -248,16 +337,18 @@ function DeliveryPartner() {
     };
 
     const DeleteVendor = async (id) => {
+        setIsLoading(true);
         try {
             const body = { "vendorId": id };
             const res = await deleteVendor(body, token);
             if (res.status === 201) {
                 message.success(res.data.message);
+                setIsLoading(false);
                 showAllVendorList();
             }
         } catch (error) {
             console.log(error);
-            setIsLoading(true);
+            setIsLoading(false);
         }
     };
 
@@ -288,13 +379,24 @@ function DeliveryPartner() {
                 <div className="content_head">
                     <div className="content_titles">
                         <div className="hear_title">
-                            <Title level={4}>Delivery Partner</Title>
+                            <Title level={4}>Vendor</Title>
                         </div>
                     </div>
 
-                    <div className="content_add mx-2">
-                        <AddVendor showAllVendorList={showAllVendorList} />
-                    </div>
+                    <Space>
+                        <div className="content_add">
+                            <AddVendor showAllVendorList={showAllVendorList} />
+                        </div>
+                        <Button
+                            type="primary"
+                            shape="round"
+                            onClick={() => showAllVendorList()}
+                            loading={isLoading}
+                            icon={isLoading ? <LoadingOutlined /> : null}
+                        >
+                            Refresh
+                        </Button>
+                    </Space>
                 </div>
                 <div className="pro_selector">
                     <Space>
@@ -353,7 +455,7 @@ function DeliveryPartner() {
                 </div>
                 <div className="content">
                     <div className="shoo_recent_order">
-                        {!isLoading ? (
+                        {isLoading ? (
                             <div className="loader_main"><span className="loader2"></span></div>
                         ) : (
                             <Table

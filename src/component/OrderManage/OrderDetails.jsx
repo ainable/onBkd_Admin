@@ -800,7 +800,7 @@ function OrderDetails() {
               </div>
 
               {orderData?.deliveryOption != "PICKUP" ? <div className="show_delivery_partner">
-                <h6>Delivery Partner Details</h6>
+                <h6>Vendor Details</h6>
                 {orderData?.vendorId ? <Card
                   size="small"
                   cover={
@@ -832,7 +832,7 @@ function OrderDetails() {
                       image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
                       description={
                         <Typography.Text>
-                          Delivery Partner Not Assign
+                          Vendor Not Assign
                         </Typography.Text>
                       }
                     >

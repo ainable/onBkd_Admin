@@ -7,6 +7,7 @@ import { deleteRecipe, fetchRacipeList } from "../../service/api_services";
 import { useAuth } from "../../authentication/context/authContext";
 import AddNewRecipe from "./AddNewRecipe";
 import DefaultLogo from "../../assest/png/racipe.png"
+import { LoadingOutlined } from '@ant-design/icons';
 
 
 function RecipeList() {
@@ -136,6 +137,7 @@ function RecipeList() {
     };
 
     const showAllRacipeList = async () => {
+        setIsLoading(true)
         try {
             await fetchRacipeList(token, current)
                 .then((res) => {
@@ -143,18 +145,20 @@ function RecipeList() {
                     if (res.status == 200) {
                         setRacipeList(res.data.data.data);
                         setTotalPage(res.data.data.totalPage)
-                        setIsLoading(true)
+                        setIsLoading(false)
                     } else if (res.data.code == 283) {
                         message.error(res.data.message)
+                        setIsLoading(false)
                         logout()
                     }
                 })
                 .catch((err) => {
                     console.log(err.message);
+                    setIsLoading(false)
                 });
         } catch (error) {
             console.log(error);
-            setIsLoading(true)
+            setIsLoading(false)
         }
     };
 
@@ -163,15 +167,17 @@ function RecipeList() {
     }, [current]);
 
     const deleteRecipeHandler = async (id) => {
+        setIsLoading(true)
         try {
             const res = await deleteRecipe(id, token);
             if (res.status === 201) {
                 message.success(res.data.message);
                 showAllRacipeList();
+                setIsLoading(false)
             }
         } catch (error) {
             console.log(error);
-            setIsLoading(true);
+            setIsLoading(false)
         }
     };
     return (
@@ -191,13 +197,22 @@ function RecipeList() {
                     <div className="content_title">
                         <Title level={4}>Recipe List</Title>
                     </div>
-                    <div className="content_add">
+                    <div className="content_add" style={{ display: 'flex', gap: "10px" }}>
                         <AddNewRecipe showAllRacipeList={showAllRacipeList} />
+                        <Button
+                            type="primary"
+                            shape="round"
+                            onClick={() => showAllRacipeList()}
+                            loading={isLoading}
+                            icon={isLoading ? <LoadingOutlined /> : null}
+                        >
+                            Refresh
+                        </Button>
                     </div>
                 </div>
                 <div className="content">
                     <div className="shoo_recent_order">
-                        {!isLoading ? <div className="loader_main"> <span class="loader2"></span></div> : <Table columns={columns} dataSource={racipeList} scroll={{ x: true }} pagination={false}
+                        {isLoading ? <div className="loader_main"> <span class="loader2"></span></div> : <Table columns={columns} dataSource={racipeList} scroll={{ x: true }} pagination={false}
                             footer={() => <div className="pagination">
                                 <Pagination current={current} onChange={onChange} total={totalPage * 10} />
                             </div>} />}

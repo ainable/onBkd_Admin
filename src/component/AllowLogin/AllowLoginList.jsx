@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Breadcrumb, Button, Dropdown, Form, Input, Pagination, Space, Typography, message } from "antd";
 import { Table } from 'antd';
-import { CloseOutlined, EditFilled, MoreOutlined, SearchOutlined } from '@ant-design/icons';
+import { CloseOutlined, EditFilled, LoadingOutlined, MoreOutlined, SearchOutlined } from '@ant-design/icons';
 import { DeleteRestrictedLogin, fetchRestrictedLoginList } from "../../service/api_services";
 import DeleteModal from "../../kit/DeleteModal/DeleteModal";
 import { useAuth } from "../../authentication/context/authContext";
@@ -111,13 +111,14 @@ function AllowLoginList() {
     ];
 
     const ShowAllAllowLoginList = async () => {
+        setIsLoading(true)
         try {
             await fetchRestrictedLoginList(token, current, searchInput)
                 .then((res) => {
                     if (res.status == 200) {
                         setAllowLoginData(res.data.data.data);
                         setTotalPage(res.data.data.totalPages);
-                        setIsLoading(true)
+                        setIsLoading(false)
                     } else if (res.data.code == 283) {
                         message.error(res.data.message)
                         logout()
@@ -125,11 +126,11 @@ function AllowLoginList() {
                 })
                 .catch((err) => {
                     message.error(err.message);
-                    setIsLoading(true)
+                    setIsLoading(false)
                 });
         } catch (error) {
             message.error(error);
-            setIsLoading(true)
+            setIsLoading(false)
         }
     };
 
@@ -202,12 +203,23 @@ function AllowLoginList() {
                                 <Form.Item>
                                     <AddUpdateAllowLogin ShowAllAllowLoginList={ShowAllAllowLoginList} />
                                 </Form.Item>
+                                <Form.Item>
+                                    <Button
+                                        type="primary"
+                                        shape="round"
+                                        onClick={() => ShowAllAllowLoginList()}
+                                        loading={isLoading}
+                                        icon={isLoading ? <LoadingOutlined /> : null}
+                                    >
+                                        Refresh
+                                    </Button>
+                                </Form.Item>
                             </Space>
                         </div>
                     </div>
                     <div className="content">
                         <div className="shoo_recent_order">
-                            {!isLoading ?
+                            {isLoading ?
                                 <div className="loader_main"><span class="loader2"></span></div>
                                 :
                                 <Table

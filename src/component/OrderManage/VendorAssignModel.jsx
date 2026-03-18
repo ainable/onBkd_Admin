@@ -93,7 +93,7 @@ const VendorAssignModel = ({ orderId, status, ShowOrderList, title }) => {
 
             <Modal
                 style={{ top: 20, padding: 0 }}
-                title="Delivery Partner List"
+                title="Vendor List"
                 open={isModalOpen}
                 onCancel={handleCancel}
                 footer={
@@ -103,7 +103,7 @@ const VendorAssignModel = ({ orderId, status, ShowOrderList, title }) => {
                                 loading={isvendorAssign}
                                 onClick={() => assignVendorHandler()}
                             >
-                                Assign Delivery Partner
+                                Assign Vendor
                             </Button>
                         }
                     </div>
@@ -114,7 +114,7 @@ const VendorAssignModel = ({ orderId, status, ShowOrderList, title }) => {
                         null
                     ) : (
                         <Collapse expandIconPosition='right' >
-                            <Collapse.Panel header="Delivery Partner Tracks" key="1">
+                            <Collapse.Panel header="Vendor Tracks" key="1">
                                 <Steps
                                     className='custom-steps'
                                     progressDot

@@ -13,6 +13,7 @@ import EditRole from "./EditRole";
 import { Col, Row } from "react-bootstrap";
 import AddRole from "./AddRole";
 import EditAdminUser from "./EditAdminUser";
+import { LoadingOutlined } from '@ant-design/icons';
 
 
 function RoleManagement() {
@@ -201,7 +202,7 @@ function RoleManagement() {
       render: (_, { roleId, password, email, fullName, _id, permissions }) => (
         <Space>
           <EditAdminUser ShowAdminUserList={ShowAdminUserList} editData={{ roleId: roleId, password: password, email: email, fullName: fullName, id: _id, permissions: permissions }} roleData={roleData} />
-          <Popconfirm
+          {/* <Popconfirm
             title="Delete the user"
             description="Are you sure to delete this user?"
             onConfirm={() => handleUserDelete(_id)}
@@ -210,7 +211,7 @@ function RoleManagement() {
             cancelText="No"
           >
             <Button danger shape="round">Delete</Button>
-          </Popconfirm>
+          </Popconfirm> */}
         </Space>
       ),
     },
@@ -451,7 +452,22 @@ function RoleManagement() {
 
         {tab === "1" && (
           <Card
-            title={<div className="text-end"><AddRole ShowAllRoleList={ShowAllRoleList} /></div>}
+            title={
+              <div className="text-end">
+                <Space>
+                  <AddRole ShowAllRoleList={ShowAllRoleList} />
+                  <Button
+                    type="primary"
+                    shape="round"
+                    onClick={() => ShowAllRoleList()}
+                    loading={isLoading}
+                    icon={isLoading ? <LoadingOutlined /> : null}
+                  >
+                    Refresh
+                  </Button>
+                </Space>
+              </div>
+            }
           >
             {isLoading ? (
               <div className="loader_main"><span className="loader2"></span></div>
@@ -463,7 +479,21 @@ function RoleManagement() {
 
         {tab === "2" && (
           <Card
-            title={<div className="text-end"><AdminRoleProvide ShowAdminAccessKeyList={ShowAdminAccessKeyList} /></div>}
+            title={
+              <div className="text-end">
+                <Space>
+                  <AdminRoleProvide ShowAdminAccessKeyList={ShowAdminAccessKeyList} />
+                  <Button
+                    type="primary"
+                    shape="round"
+                    onClick={() => ShowAdminAccessKeyList()}
+                    loading={isLoading}
+                    icon={isLoading ? <LoadingOutlined /> : null}
+                  >
+                    Refresh
+                  </Button>
+                </Space>
+              </div>}
           >
             {isLoading ? (
               <div className="loader_main"><span className="loader2"></span></div>
@@ -475,9 +505,22 @@ function RoleManagement() {
 
         {tab === "3" && (
           <Card
-            title={<div className="text-end">
-              <CreateAdmin ShowAdminUserList={ShowAdminUserList} accessKeyData={accessKeyData} roleData={accessKeyData} />
-            </div>}
+            title={
+              <div className="text-end">
+                <Space>
+                  <CreateAdmin ShowAdminUserList={ShowAdminUserList} accessKeyData={accessKeyData} roleData={accessKeyData} />
+                  <Button
+                    type="primary"
+                    shape="round"
+                    onClick={() => ShowAdminUserList()}
+                    loading={isLoading}
+                    icon={isLoading ? <LoadingOutlined /> : null}
+                  >
+                    Refresh
+                  </Button>
+                </Space>
+              </div>
+            }
           >
             {isLoading ? (
               <div className="loader_main"><span className="loader2"></span></div>

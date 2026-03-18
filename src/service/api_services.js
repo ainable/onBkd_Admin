@@ -49,6 +49,11 @@ export const DiscountType = [
   { key: 2, values: "freeDelivery", label: "Free Delivery" },
 ];
 
+export const DISCOUNTYPE = [
+  { key: 1, values: "FLAT", label: "Flat" },
+  { key: 2, values: "PERCENTAGE", label: "Percentage" },
+];
+
 export const EligibleCustomerType = [
   { key: 1, values: "allUsers", label: "All Users" },
   { key: 2, values: "firstTimeUsers", label: "First Time Users" },
@@ -280,6 +285,10 @@ export const Services = {
   actionOrderStatusUrl: rootUrl('/order-status'),
   vendorAssignUrl: rootUrl('/vendor-assigned'),
   vendorReassignOTPVerifyUrl: rootUrl('/vendor-reassign-otp-verified'),
+  adminVendorBlockUrl: rootUrl('/vendor/block-unblock'),
+  adminUserBlockUrl: rootUrl('/user/block-unblock'),
+  fetchDetailDiscountUrl: rootUrl('/discount'),
+  EditDiscountUrl: rootUrl('/discount'),
 };
 
 //login section
@@ -1256,7 +1265,7 @@ export const fetchSegmentProdcut = async (
   SegmentId,
   barachCode,
   current,
-  limit=25
+  limit = 25
 ) => {
   const segmentPro = await axios.get(
     `${baseURL}/static-custom-segment-product/${SegmentId}?branchCode=${barachCode}&currentPage=${current}&itemsPerPage=${limit}`,
@@ -2102,4 +2111,32 @@ export const fetchAnalytics = async (token) => {
     }
   );
   return customer;
+};
+
+export const AdminVendorBlockAction = async (body, token) => {
+  const adminBlock = await axios.put(Services.adminVendorBlockUrl, body, {
+    headers: { Authorization: token },
+  });
+  return adminBlock;
+};
+
+export const AdminUserBlockAction = async (body, token) => {
+  const adminUserBlock = await axios.put(Services.adminUserBlockUrl, body, {
+    headers: { Authorization: token },
+  });
+  return adminUserBlock;
+};
+
+export const fetchDiscountDetails = async (id, token) => {
+  const details = await axios.get(`${Services.fetchDetailDiscountUrl}/${id}`, {
+    headers: { Authorization: token },
+  });
+  return details;
+};
+
+export const EditDiscount = async (body, token) => {
+  const setting = await axios.put(`${Services.EditDiscountUrl}`, body, {
+    headers: { Authorization: token },
+  });
+  return setting;
 };

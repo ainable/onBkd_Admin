@@ -239,7 +239,7 @@ function RestrictedProductsList() {
                     </div>
                     <div className="content_add">
                         <Space>
-                            {/* <Form.Item name="Search Brand">
+                            <Form.Item name="Search Brand">
                                 <Input
                                     style={{ width: '220px' }}
                                     allowClear
@@ -247,7 +247,7 @@ function RestrictedProductsList() {
                                     suffix={<SearchOutlined />}
                                     onChange={handleSearchChange}
                                 />
-                            </Form.Item> */}
+                            </Form.Item>
                             <Form.Item>
                                 <AddRestrictedProduct ShowAllProductsList={ShowAllProductsList} />
                             </Form.Item>

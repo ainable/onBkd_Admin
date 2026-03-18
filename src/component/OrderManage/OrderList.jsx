@@ -8,7 +8,7 @@ import { deliveryTypes, FetchOrderList, fetchOrderStatusCount, OrderCacelByAdmin
 import OrderSendBranch from "./OrderSendBranch";
 import Logo from "../../assest/png/bkdlogo.png";
 
-import { CloseOutlined, EyeOutlined, MoreOutlined, SearchOutlined, SendOutlined } from '@ant-design/icons';
+import { CloseOutlined, EyeOutlined, MoreOutlined, LoadingOutlined, SearchOutlined, SendOutlined } from '@ant-design/icons';
 
 import { ExclamationCircleFilled } from '@ant-design/icons';
 import { useScreen } from "../../authentication/context/AuthScreen";
@@ -326,6 +326,7 @@ function OrderList() {
 
 
     const shhowAllOrderList = async () => {
+        setIsLoading(true)
         try {
             await FetchOrderList(
                 token,
@@ -340,7 +341,7 @@ function OrderList() {
                 if (res.status == 200) {
                     seOrderData(res.data.data.data);
                     setTotalPage(res.data.data.totalPage)
-                    setIsLoading(true)
+                    setIsLoading(false)
                 } else if (res.data.code == 283) {
                     message.error(res.data.message)
                     logout()
@@ -352,7 +353,7 @@ function OrderList() {
                 });
         } catch (error) {
             console.log(error);
-            setIsLoading(true)
+            setIsLoading(false)
         }
     };
 
@@ -387,13 +388,14 @@ function OrderList() {
     */
 
     const showOrderCount = async () => {
+        setIsLoading(true)
         try {
             await fetchOrderStatusCount(token)
                 .then((res) => {
                     console.log(" order count ", res);
                     if (res.status == 200) {
                         setStatusCount(res.data.data);
-                        setIsLoading(true)
+                        setIsLoading(false)
                     } else if (res.data.code == 283) {
                         message.error(res.data.message)
                         logout()
@@ -401,10 +403,11 @@ function OrderList() {
                 })
                 .catch((err) => {
                     console.log(err);
+                    setIsLoading(false)
                 });
         } catch (error) {
             console.log(error);
-            setIsLoading(true)
+            setIsLoading(false)
         }
     };
 
@@ -427,7 +430,18 @@ function OrderList() {
             <div className="content_title">
                 <div className="content_head">
                     <div className="order_title">
-                        Live Order List
+                        <div style={{ width: "100%", display: 'flex', justifyContent: 'space-between', gap: "10px" }}>
+                            Live Order List
+                            <Button
+                                type="primary"
+                                shape="round"
+                                onClick={() => shhowAllOrderList()}
+                                loading={isLoading}
+                                icon={isLoading ? <LoadingOutlined /> : null}
+                            >
+                                Refresh
+                            </Button>
+                        </div>
                     </div>
                     <div className="pro_selector">
                         <Form form={form}>
@@ -524,7 +538,7 @@ function OrderList() {
                 </div>
                 <div className="content">
                     <div className="shoo_recent_order">
-                        {!isLoading ? <div className="loader_main"> <span class="loader2"></span></div> :
+                        {isLoading ? <div className="loader_main"> <span class="loader2"></span></div> :
                             <Table columns={columns} dataSource={orderData}
                                 scroll={{ x: true }}
                                 pagination={false}

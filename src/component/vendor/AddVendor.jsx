@@ -120,7 +120,7 @@ const AddVendor = ({ showAllVendorList }) => {
                 </Button>
             </div>
             <Drawer
-                title="Add Delivery Partner"
+                title="Add Vendor"
                 onClose={cartClose}
                 open={open}
                 placement="right"

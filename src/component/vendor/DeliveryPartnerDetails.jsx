@@ -52,7 +52,7 @@ function DeliveryPartnerDetails() {
 
     const vendorApprove = () => {
         Modal.success({
-            title: 'Approve Delivery Partner',
+            title: 'Approve Vendor',
 
             content: 'Are you check all information and document',
             onOk() {
@@ -65,10 +65,10 @@ function DeliveryPartnerDetails() {
     };
     const vendorReject = () => {
         Modal.error({
-            title: 'Delivery Partner Reject',
+            title: 'Vendor Reject',
             cancelText: 'No',
             content: <div>
-                <p>why are you reject Delivery Partner request </p>
+                <p>why are you reject Vendor request </p>
                 <Form layout="vertical">
 
                     <Form.Item
@@ -209,7 +209,7 @@ function DeliveryPartnerDetails() {
                         <div className="hear_title">
                             <Space>
                                 <Button type="circle" onClick={() => navigate(-1)}> <MdKeyboardBackspace className="back_icon" /></Button>
-                                <Title level={4}>Delivery Partner Details</Title>
+                                <Title level={4}>Vendor Details</Title>
                             </Space>
                         </div>
 
@@ -312,7 +312,7 @@ function DeliveryPartnerDetails() {
                                     <div className="del_boy_details">
                                         {vendorInfo?.isReUpload === true ? <Badge.Ribbon text="Reupload" style={{ zIndex: "1" }} color="blue" /> : null}
 
-                                        <Card title="Delivery Partner Details">
+                                        <Card title="Vendor Details">
 
                                             <Tabs defaultActiveKey="1" type="card" size="medium" tabBarExtraContent={<div className="vendor_actions">
                                                 <Space>

@@ -2,11 +2,11 @@
 
 
 import React, { useEffect, useState, useCallback } from "react";
-import { Avatar, Breadcrumb, Button, Card, Descriptions, Empty, Image, Pagination, Statistic, Typography, message, Form, Input, DatePicker, Tooltip } from "antd";
+import { Avatar, Breadcrumb, Button, Card, Descriptions, Empty, Image, Pagination, Statistic, Typography, message, Form, Input, DatePicker, Tooltip, Popconfirm } from "antd";
 import '../../style/master.css';
 import { useLocation, useNavigate } from "react-router-dom";
 import { Space, Table, Tag } from 'antd';
-import { fetchAllUserList, fetchUserDetails, updateAllUserReferralCode } from "../../service/api_services";
+import { AdminUserBlockAction, fetchAllUserList, fetchUserDetails, updateAllUserReferralCode } from "../../service/api_services";
 import { useAuth } from "../../authentication/context/authContext";
 import { FaRegUser, FaUser } from "react-icons/fa";
 import { jsonToCSV, usePapaParse } from 'react-papaparse';
@@ -31,7 +31,9 @@ function UserList() {
   const navigate = useNavigate();
   const { token, logout } = useAuth();
   const [userData, setUserData] = useState([]);
+  const [totalUsers, setTotalUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isBlockLoading, setIsBlockLoading] = useState(false);
   const [totalPage, setTotalPage] = useState(null);
   const [current, setCurrent] = useState(1);
   const [searchInput, setSearchInput] = useState("");
@@ -100,6 +102,25 @@ function UserList() {
 
     },
     {
+      title: 'Last order date',
+      dataIndex: 'lastOrderDate',
+      key: 'lastOrderDate',
+      ellipsis: true,
+      render: (lastOrderDate) => lastOrderDate != null ? new Date(lastOrderDate).toLocaleDateString() : "N/A"
+    },
+    {
+      title: 'Last order amount',
+      dataIndex: 'lastOrderAmount',
+      key: 'lastOrderAmount',
+      ellipsis: true,
+    },
+    {
+      title: 'Avg Order Amount',
+      dataIndex: 'averageOrderAmount',
+      key: 'averageOrderAmount',
+      ellipsis: true,
+    },
+    {
       title: 'Total Revenue',
       dataIndex: 'totalCompletedOrderRevenue',
       key: 'totalCompletedOrderRevenue',
@@ -107,7 +128,7 @@ function UserList() {
 
     },
     {
-      title: ' Delivery Partner Rating',
+      title: 'Vendor Rating',
       dataIndex: 'totalVendorRating',
       key: 'totalVendorRating',
       ellipsis: true,
@@ -168,14 +189,49 @@ function UserList() {
       dataIndex: '_id',
       key: '_id',
       fixed: "right",
-      render: (_id) => (
+      render: (_, { isBlocked, _id }) => (
         <Space>
+          <Popconfirm
+            title="Block the customer"
+            description="Are you sure to block the customer?"
+            onConfirm={() => blockHandle(isBlocked, _id)}
+            okText="Yes"
+            cancelText="No"
+          >
+            <Button danger shape="round">{isBlocked === true ? "Un-Block" : "Block"}</Button>
+          </Popconfirm>
           <Button shape="round" className="view_details" onClick={() => navigate(`/dashboard/user-details/${_id}`)}> View</Button>
           <ViewRating userId={_id} />
         </Space>
       )
     },
   ];
+
+  const blockHandle = async (isBlocked, _id) => {
+    const body = {
+      userId: _id,
+      isBlocked: !isBlocked,
+    }
+    setIsBlockLoading(true)
+    try {
+      await AdminUserBlockAction(body, token)
+        .then((res) => {
+          console.log("djgfsdjhf", res)
+          if (res.status == 200) {
+            message.success(res.data.message);
+            fetchAllUsers()
+            setIsBlockLoading(false)
+          }
+        })
+        .catch((err) => {
+          message.error(err.response.data.message)
+          setIsBlockLoading(false)
+        });
+    } catch (error) {
+      message.error(error);
+      setIsBlockLoading(false)
+    }
+  };
 
   const onChange = (page) => {
     setCurrent(page);
@@ -189,6 +245,7 @@ function UserList() {
       const res = await fetchAllUserList(token, current, limit, searchInput, startDate, endDate);
       if (res.status === 200) {
         setUserData(res.data.data.data);
+        setTotalUsers(res.data.data.totalUsers)
         setTotalPage(res.data.data.totalPage);
         setIsLoading(true);
       } else if (res.data.code === 283) {
@@ -252,7 +309,7 @@ function UserList() {
       <div className="content_title">
         <div className="content_head">
           <div className="content_title">
-            <Title level={4}>CUSTOMER LIST</Title>
+            <Title level={4}>CUSTOMER LIST ({totalUsers ? totalUsers : 0})</Title>
           </div>
           <div className="content_add">
             <Space>
@@ -266,14 +323,14 @@ function UserList() {
               />
               <ExportData />
               <Button type="primary" onClick={handleRefreshReferralCode} loading={refreshLoading} icon={refreshLoading ? <LoadingOutlined /> : null}>
-                Refresh Referral Code
+                Refresh
               </Button>
             </Space>
           </div>
         </div>
         <div className="content">
           <div className="shoo_recent_order">
-            {!isLoading ? (
+            {(!isLoading || isBlockLoading) ? (
               <div className="loader_main">
                 <span className="loader2"></span>
               </div>

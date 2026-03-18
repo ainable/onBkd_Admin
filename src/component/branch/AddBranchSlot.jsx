@@ -4,6 +4,7 @@ import {
     Button,
     Card,
     Checkbox,
+    DatePicker,
     Divider,
     Drawer,
     Form,
@@ -24,6 +25,7 @@ import GooglePlacesAutocomplete, {
 import { useAuth } from "../../authentication/context/authContext";
 import { deliveryTypes, InsertNewBranch, InsertNewBranchSlote, SlotDeliveryTypes } from "../../service/api_services";
 import { BranchHook } from "../../pages/CustomHooks";
+import { MdDeleteOutline } from "react-icons/md";
 
 
 const AddBranchSlot = ({ shhowAllBranchSlote }) => {
@@ -52,6 +54,20 @@ const AddBranchSlot = ({ shhowAllBranchSlote }) => {
 
 
     const onFinish = async (value) => {
+
+        const formattedSlots = value.slots.map((slot) => ({
+            date: slot.date?.format("YYYY-MM-DD"),
+            timeSlotFrom: slot.timeSlotFrom?.format("h:mm a"),
+            timeSlotTo: slot.timeSlotTo?.format("h:mm a"),
+        }));
+
+        const payload = {
+            ...value,
+            timeSlotTo: totime,
+            timeSlotFrom: fromTime,
+            slots: formattedSlots,
+        };
+
         setIsSubmit(true)
         try {
 
@@ -254,11 +270,75 @@ const AddBranchSlot = ({ shhowAllBranchSlote }) => {
                                         pattern: /^[0-9]*$/,
                                         message: 'Please Enter only Numbers!',
                                     },
-                                ]}>
+                                ]}
+                                style={{ marginBottom: '0px' }}
+                            >
                                 <Input maxLength={10} placeholder='Enter Maximum Delivery ' />
                             </Form.Item>
 
                         </Col>
+
+                        {/* <div style={{ margin: '16px 0px', borderBottom: "1px solid #eee" }} />
+
+                        <Form.List name="slots" initialValue={[{}]}>
+                            {(fields, { add, remove }) => (
+                                <>
+                                    {fields.map((field, index) => (
+                                        <div key={field.key} className="position-relative border rounded bg-light p-3 mb-3">
+                                            {fields.length > 1 && (
+                                                <div
+                                                    onClick={() => remove(field.name)}
+                                                    className="position-absolute top-0 end-0 m-2 p-1 rounded-circle bg-light"
+                                                    style={{ cursor: "pointer", zIndex: 10, }}
+                                                >
+                                                    <MdDeleteOutline className="text-danger fs-5" />
+                                                </div>
+                                            )}
+
+                                            <Form.Item
+                                                {...field}
+                                                name={[field.name, "date"]}
+                                                label="Select Date"
+                                                rules={[{ required: true, message: "Please select date" }]}
+                                            >
+                                                <DatePicker style={{ width: "100%" }} />
+                                            </Form.Item>
+
+                                            <Row gutter={10}>
+                                                <Col span={12}>
+                                                    <Form.Item
+                                                        {...field}
+                                                        name={[field.name, "timeSlotFrom"]}
+                                                        label="From Slot"
+                                                        rules={[{ required: true, message: "Required" }]}
+                                                        style={{ marginBottom: '0px' }}
+                                                    >
+                                                        <TimePicker use12Hours format="h:mm a" style={{ width: "100%" }} />
+                                                    </Form.Item>
+                                                </Col>
+                                                <Col span={12}>
+                                                    <Form.Item
+                                                        {...field}
+                                                        name={[field.name, "timeSlotTo"]}
+                                                        label="To Slot"
+                                                        rules={[{ required: true, message: "Required" }]}
+                                                        style={{ marginBottom: '0px' }}
+                                                    >
+                                                        <TimePicker use12Hours format="h:mm a" style={{ width: "100%" }} />
+                                                    </Form.Item>
+                                                </Col>
+                                            </Row>
+                                        </div>
+                                    ))}
+
+                                    <div style={{ marginBottom: 16, borderBottom: "1px solid #eee", paddingBottom: 10 }}>
+                                        <Button type="dashed" onClick={() => add()} block >
+                                            + Add Slot
+                                        </Button>
+                                    </div>
+                                </>
+                            )}
+                        </Form.List> */}
                         <Form.Item>
                             <div className="add_address_btn">
 

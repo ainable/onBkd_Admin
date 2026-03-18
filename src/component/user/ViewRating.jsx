@@ -62,7 +62,7 @@ const ViewRating = ({ userId }) => {
             <Button shape="round" className="view_details" onClick={showModal}>
                 Rating
             </Button>
-            <Modal title="Customer Rating By Delivery Partner" footer={false} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+            <Modal title="Customer Rating By Vendor" footer={false} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
                 {userRating?.length === 0 ? <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /> :
                     <List
                         loading={isLoading}

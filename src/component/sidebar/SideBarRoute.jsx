@@ -136,7 +136,7 @@ const routes = [
     keys: uuidv4(),
     path: "/dashboard/delivery-partner",
     icons: Icons.delivery,
-    label: "Delivery Partner",
+    label: "Vendor",
     component: DeliveryBoy,
     permission: "deliveryPartner",
   },
@@ -455,7 +455,7 @@ export const BranchRoutes = [
   },
   {
     keys: 7,
-    label: "Delivery Partner",
+    label: "Vendor",
     persission: "deliveryPartner",
 
   },

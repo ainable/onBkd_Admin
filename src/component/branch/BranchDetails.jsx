@@ -238,7 +238,7 @@ function BranchDetails() {
                             <Card className="mb-2">
                                 <div className="total_order">
                                     <img src={deliveryPartner} />
-                                    <Statistic className="h4" title={<span className="h5"> Delivery Partner</span>} value={brandInfo?.totalVendor} formatter={formatter} />
+                                    <Statistic className="h4" title={<span className="h5"> Vendor</span>} value={brandInfo?.totalVendor} formatter={formatter} />
                                 </div>
                             </Card>
                         </div>

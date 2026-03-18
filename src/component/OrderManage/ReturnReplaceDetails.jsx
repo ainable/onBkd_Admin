@@ -476,7 +476,7 @@ function ReturnReplaceDetails() {
                         </div>}
                       />
                     </Card>
-                    <h6>Delivery Partner Details</h6>
+                    <h6>Vendor Details</h6>
                     {orderData?.vendorId != null ? <Card size="small"
 
                       cover={
@@ -506,7 +506,7 @@ function ReturnReplaceDetails() {
 
                         description={
                           <Typography.Text>
-                            Delivery Partner Not Assign
+                            Vendor Not Assign
                           </Typography.Text>
                         }
                       >

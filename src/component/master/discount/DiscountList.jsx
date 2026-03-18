@@ -140,7 +140,7 @@ function DiscountList() {
             key: "_id",
             fixed: "right",
             render: (_, { _id }) => (
-                <div className="action">
+                <Space>
                     <Popconfirm
                         title="Delete the Discount"
                         description="Are you sure to delete this Discount?"
@@ -151,11 +151,8 @@ function DiscountList() {
                     >
                         <Button type="primary" shape="round" danger>Delete</Button>
                     </Popconfirm>
-
-
-
-                </div>
-
+                    <AddNewDiscount discountId={_id} ShowAllDiscountList={ShowAllDiscountList} />
+                </Space>
             ),
         },
     ];
