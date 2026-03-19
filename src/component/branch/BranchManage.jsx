@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Space, Table, Tag } from 'antd';
 import AddBranch from "./AddBranch";
 import { Col, Row } from "react-bootstrap";
-import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
+import { EditOutlined, EllipsisOutlined, LoadingOutlined, SettingOutlined } from '@ant-design/icons';
 import { Avatar, Card } from 'antd';
 import { fetchAllBranchList } from "../../service/api_services";
 import { useAuth } from "../../authentication/context/authContext";
@@ -28,12 +28,13 @@ function BranchManage() {
     const location = useLocation();
     const { token, logout } = useAuth()
     const [isLoading, setIsLoading] = useState(false)
-    const [brandList, setBranchList] = useState(false)
+    const [brandList, setBranchList] = useState([])
     const [IsAutharize, setIsAutharize] = useState(false)
     const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 
 
     const shhowAllBranchList = async () => {
+        setIsLoading(true)
         try {
             await fetchAllBranchList(token)
                 .then((res) => {
@@ -41,7 +42,7 @@ function BranchManage() {
                     if (res.status == 200) {
                         setBranchList(res.data.data.data);
                         // setTotalPage(res.data.data.totalPage)
-                        setIsLoading(true)
+                        setIsLoading(false)
                     } else if (res.data.code == 283) {
                         message.error(res.data.message)
                         logout()
@@ -50,10 +51,11 @@ function BranchManage() {
                 })
                 .catch((err) => {
                     console.log(err.message);
+                    setIsLoading(false)
                 });
         } catch (error) {
             console.log(error);
-            setIsLoading(true)
+            setIsLoading(false)
         }
     };
 
@@ -83,18 +85,28 @@ function BranchManage() {
                     <div className="content_title">
 
                         <Title level={4}>
-                        Manage Branches</Title>
+                            Manage Branches</Title>
 
 
                     </div>
                     <div className="content_add">
-                        <AddBranch shhowAllBranchList={shhowAllBranchList} />
-
+                        <Space>
+                            <AddBranch shhowAllBranchList={shhowAllBranchList} />
+                            <Button
+                                type="primary"
+                                shape="round"
+                                onClick={() => shhowAllBranchList()}
+                                loading={isLoading}
+                                icon={isLoading ? <LoadingOutlined /> : null}
+                            >
+                                Refresh
+                            </Button>
+                        </Space>
                     </div>
                 </div>
                 <div className="Branch_content">
-                    <div className={isLoading ? "show_all_branch_list" :""}>
-                        {!isLoading ? <div className="loader_main"> <span class="loader2"></span></div> : brandList.map((item) => (
+                    <div className={!isLoading ? "show_all_branch_list" : ""}>
+                        {isLoading ? <div className="loader_main"> <span class="loader2"></span></div> : brandList.map((item) => (
                             <Card
                                 actions={[<BranchAuthentication branchData={item} shhowAllBranchList={shhowAllBranchList} />, <EditBranch branchData={item} shhowAllBranchList={shhowAllBranchList} />]}
                                 hoverable
@@ -110,8 +122,8 @@ function BranchManage() {
                                 }
                             >
 
-                                <Meta 
-                                        onClick={() => navigate(`/dashboard/branch-details/${item._id}`)}
+                                <Meta
+                                    onClick={() => navigate(`/dashboard/branch-details/${item._id}`)}
 
                                     // avatar={<Avatar src={item.url} />}
                                     title={<div className="branch_name"><p>{capitalize(item.branchName)}</p>
@@ -129,7 +141,7 @@ function BranchManage() {
                                             expanded={false}
                                             truncatedEndingComponent={"... "}
                                         >
-                                            {capitalize(item.fullAddress) } 
+                                            {capitalize(item.fullAddress)}
                                         </ShowMoreText>
                                         <p>{capitalize(item.state)}</p>
 

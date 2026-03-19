@@ -11,6 +11,7 @@ import DefaultImg from "../../assest/png/defaut_img.jpg"
 import AddProductBaseDelivery from "./AddProductBaseDelivery";
 import ExcelFormate from "../master/segment/ExcelFormate";
 import MinimumCart from "./MinimumCart";
+import { LoadingOutlined } from '@ant-design/icons';
 
 
 function ProductDeliveryCharge() {
@@ -212,7 +213,15 @@ function ProductDeliveryCharge() {
                     <MinimumCart />
                     <ExcelFormate title="Delivery" />
                     <AddProductBaseDelivery showProductDelvieryCharge={showProductDelvieryCharge} />
-
+                    <Button
+                        type="primary"
+                        shape="round"
+                        onClick={() => showProductDelvieryCharge()}
+                        loading={isLoading}
+                        icon={isLoading ? <LoadingOutlined /> : null}
+                    >
+                        Refresh
+                    </Button>
                 </Space>
 
 

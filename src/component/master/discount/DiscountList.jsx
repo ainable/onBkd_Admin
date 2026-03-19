@@ -5,6 +5,7 @@ import { Space, Table, Tag } from 'antd';
 import AddNewDiscount from "./AddNewDiscount";
 import { DeleteDisocunt, fetchDiscountList } from "../../../service/api_services";
 import { useAuth } from "../../../authentication/context/authContext";
+import { LoadingOutlined } from '@ant-design/icons';
 const { Title } = Typography;
 
 function DiscountList() {
@@ -158,13 +159,14 @@ function DiscountList() {
     ];
 
     const ShowAllDiscountList = async () => {
+        setIsLoading(true)
         try {
             await fetchDiscountList(token)
                 .then((res) => {
                     console.log(" discount  list ", res);
                     if (res.status == 200) {
                         setDiscountData(res.data.data);
-                        setIsLoading(true)
+                        setIsLoading(false)
                     } else if (res.data.code == 283) {
                         message.error(res.data.message)
                         logout()
@@ -172,10 +174,11 @@ function DiscountList() {
                 })
                 .catch((err) => {
                     console.log(err.message);
+                    setIsLoading(false)
                 });
         } catch (error) {
             console.log(error);
-            setIsLoading(true)
+            setIsLoading(false)
         }
     };
 
@@ -225,12 +228,23 @@ function DiscountList() {
                         <Title level={4}>Discount List</Title>
                     </div>
                     <div className="content_add">
-                        <AddNewDiscount ShowAllDiscountList={ShowAllDiscountList} />
+                        <Space>
+                            <AddNewDiscount ShowAllDiscountList={ShowAllDiscountList} />
+                            <Button
+                                type="primary"
+                                shape="round"
+                                onClick={() => ShowAllDiscountList()}
+                                loading={isLoading}
+                                icon={isLoading ? <LoadingOutlined /> : null}
+                            >
+                                Refresh
+                            </Button>
+                        </Space>
                     </div>
                 </div>
                 <div className="content">
                     <div className="shoo_recent_order">
-                        {!isLoading ? <div className="loader_main"> <span class="loader2"></span></div> : <Table columns={columns} dataSource={discountData} scroll={{ x: true }} />}
+                        {isLoading ? <div className="loader_main"> <span class="loader2"></span></div> : <Table columns={columns} dataSource={discountData} scroll={{ x: true }} />}
                     </div>
                 </div>
 

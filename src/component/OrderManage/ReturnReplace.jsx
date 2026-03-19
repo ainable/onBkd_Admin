@@ -7,7 +7,7 @@ import { useAuth } from "../../authentication/context/authContext";
 import { fetchReturnReplacement, fetchReturnReplacementStatusCount } from "../../service/api_services";
 
 import Logo from "../../assest/png/bkdlogo.png"
-import { SearchOutlined } from '@ant-design/icons';
+import { LoadingOutlined, SearchOutlined } from '@ant-design/icons';
 // import { onMessage } from "firebase/messaging"; // DISABLED - FIREBASE CAUSING ERRORS
 // import { messaging } from "../../firebase"; // DISABLED - FIREBASE CAUSING ERRORS
 
@@ -215,6 +215,7 @@ function ReturnReplace() {
 
 
     const returnReplaceOrderList = async () => {
+        setIsLoading(true)
         try {
             await fetchReturnReplacement(token, current, searchInput, orderAction, orderStatus === "ALL" ? null : orderStatus)
                 .then((res) => {
@@ -222,7 +223,7 @@ function ReturnReplace() {
                     if (res.status == 200) {
                         seOrderData(res.data.data.data);
                         setTotalPage(res.data.data.totalPage)
-                        setIsLoading(true)
+                        setIsLoading(false)
                     } else if (res.data.code == 283) {
                         message.error(res.data.message)
                         logout()
@@ -231,10 +232,11 @@ function ReturnReplace() {
                 })
                 .catch((err) => {
                     console.log(err);
+                    setIsLoading(false)
                 });
         } catch (error) {
             console.log(error);
-            setIsLoading(true)
+            setIsLoading(false)
         }
     };
 
@@ -268,13 +270,14 @@ function ReturnReplace() {
     */
 
     const showOrderCount = async () => {
+        setIsLoading(true)
         try {
             await fetchReturnReplacementStatusCount(token, orderAction)
                 .then((res) => {
                     console.log("return history order count ", res);
                     if (res.status == 200) {
                         setCountList(res.data.data);
-                        setIsLoading(true)
+                        setIsLoading(false)
                     } else if (res.data.code == 283) {
                         message.error(res.data.message)
                         logout()
@@ -282,10 +285,11 @@ function ReturnReplace() {
                 })
                 .catch((err) => {
                     console.log(err);
+                    setIsLoading(false)
                 });
         } catch (error) {
             console.log(error);
-            setIsLoading(true)
+            setIsLoading(false)
         }
     };
 
@@ -317,6 +321,14 @@ function ReturnReplace() {
 
                             <Segmented options={["RETURN", "REPLACEMENT"]} onChange={(value) => setOrderAction(value)} />
                             <Input allowClear style={{ width: '200px' }} placeholder="Search Order ID " suffix={<SearchOutlined />} onChange={(e) => setSearchInput(e.target.value)} />
+                            <Button
+                                type="primary"
+                                onClick={() => returnReplaceOrderList()}
+                                loading={isLoading}
+                                icon={isLoading ? <LoadingOutlined /> : null}
+                            >
+                                Refresh
+                            </Button>
                         </Space>
 
 
@@ -350,7 +362,7 @@ function ReturnReplace() {
                 </div>
                 <div className="content">
                     <div className="shoo_recent_order">
-                        {!isLoading ? <div className="loader_main"> <span class="loader2"></span></div> :
+                        {isLoading ? <div className="loader_main"> <span class="loader2"></span></div> :
                             <Table columns={columns} dataSource={orderData} scroll={{ x: true }}
                                 pagination={false}
                                 footer={() => <div className="pagination">

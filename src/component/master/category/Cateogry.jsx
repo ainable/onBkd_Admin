@@ -6,7 +6,7 @@ import { Space, Table, Tag } from 'antd';
 import { FetchAllBrandList, FetchAllCategoryList } from "../../../service/api_services";
 import { useAuth } from "../../../authentication/context/authContext";
 import { FaUser } from "react-icons/fa";
-import { SearchOutlined } from '@ant-design/icons';
+import { LoadingOutlined, SearchOutlined } from '@ant-design/icons';
 import { CopyOutlined } from "@ant-design/icons";
 import BKDLogo from "../../../assest/chat/logo.png"
 
@@ -92,6 +92,7 @@ function Cateogry() {
     };
 
     const shhowAllBrandList = async () => {
+        setIsLoading(true);
         try {
             await FetchAllCategoryList(token, current, searchInput)
                 .then((res) => {
@@ -99,7 +100,7 @@ function Cateogry() {
                     if (res.status == 200) {
                         setBrandList(res.data.data.paginatedData);
                         setTotalPage(res.data.data.totalPage)
-                        setIsLoading(true)
+                        setIsLoading(false)
                     } else if (res.data.code == 283) {
                         message.error(res.data.message)
                         logout()
@@ -108,10 +109,11 @@ function Cateogry() {
                 })
                 .catch((err) => {
                     console.log(err.message);
+                    setIsLoading(false)
                 });
         } catch (error) {
             console.log(error);
-            setIsLoading(true)
+            setIsLoading(false)
         }
     };
 
@@ -138,20 +140,33 @@ function Cateogry() {
                     </div>
                     <div className="content_add">
                         {/* <AddCategory /> */}
-                        <Form.Item>
-                            <Input
-                                style={{ width: '200px' }}
-                                allowClear
-                                placeholder="Search Category"
-                                suffix={<SearchOutlined />}
-                                onChange={(e) => setSearchInput(e.target.value)}
-                            />
-                        </Form.Item>
+                        <Space>
+                            <Form.Item>
+                                <Input
+                                    style={{ width: '200px' }}
+                                    allowClear
+                                    placeholder="Search Category"
+                                    suffix={<SearchOutlined />}
+                                    onChange={(e) => setSearchInput(e.target.value)}
+                                />
+                            </Form.Item>
+                            <Form.Item>
+                                <Button
+                                    type="primary"
+                                    shape="round"
+                                    onClick={() => shhowAllBrandList()}
+                                    loading={isLoading}
+                                    icon={isLoading ? <LoadingOutlined /> : null}
+                                >
+                                    Refresh
+                                </Button>
+                            </Form.Item>
+                        </Space>
                     </div>
                 </div>
                 <div className="content">
                     <div className="shoo_recent_order">
-                        {!isLoading ? <div className="loader_main"> <span class="loader2"></span></div> : <Table columns={columns} dataSource={brandList} scroll={{ x: true }} pagination={false}
+                        {isLoading ? <div className="loader_main"> <span class="loader2"></span></div> : <Table columns={columns} dataSource={brandList} scroll={{ x: true }} pagination={false}
                             footer={() => <div className="pagination">
                                 <Pagination current={current} onChange={onChange} total={totalPage * 10} />
                             </div>} />}

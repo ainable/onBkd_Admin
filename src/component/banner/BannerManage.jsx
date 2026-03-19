@@ -11,6 +11,7 @@ import { MdOutlineDeleteOutline } from "react-icons/md";
 import UpdateBanner from "./UpdateBanner";
 import BannerWebsite from "./BannerWebsite";
 import BannerMobile from "./BannerMobile";
+import { LoadingOutlined } from '@ant-design/icons';
 // import AddProduct from "./AddProduct";
 const { Title } = Typography;
 const { Meta } = Card;
@@ -29,21 +30,23 @@ function BannerManage() {
 
 
     const ShowAllBannerList = async () => {
+        setIsLoading(true)
         try {
             await fetchBannerList(token, viewType)
                 .then((res) => {
                     console.log(" all banner list ", res);
                     if (res.status == 200) {
                         setBannerList(res.data.data);
-                        setIsLoading(true)
+                        setIsLoading(false)
                     }
                 })
                 .catch((err) => {
                     console.log(err.message);
+                     setIsLoading(false)
                 });
         } catch (error) {
             console.log(error);
-            setIsLoading(true)
+             setIsLoading(false)
         }
     };
 
@@ -51,13 +54,13 @@ function BannerManage() {
         ShowAllBannerList()
     }, [viewType])
 
-   
+
     let bannerSegment;
 
     if (viewType === "WEB") {
         bannerSegment = <BannerWebsite bannerList={bannerList} isLoading={isLoading} ShowAllBannerList={ShowAllBannerList} />
     } else if (viewType === "MOBILE") {
-        bannerSegment = <BannerMobile bannerList={bannerList} isLoading={isLoading} ShowAllBannerList={ShowAllBannerList}/>
+        bannerSegment = <BannerMobile bannerList={bannerList} isLoading={isLoading} ShowAllBannerList={ShowAllBannerList} />
     }
 
     return (
@@ -92,6 +95,15 @@ function BannerManage() {
                         <div className="content_add">
                             <AddBanner ShowAllBannerList={ShowAllBannerList} />
                         </div>
+                        <Button
+                            type="primary"
+                            shape="round"
+                            onClick={() => ShowAllBannerList()}
+                            loading={isLoading}
+                            icon={isLoading ? <LoadingOutlined /> : null}
+                        >
+                            Refresh
+                        </Button>
                     </Space>
                 </div>
                 <div className="content">

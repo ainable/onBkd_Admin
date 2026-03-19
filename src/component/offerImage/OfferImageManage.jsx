@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Breadcrumb, message, Typography } from "antd";
+import { Breadcrumb, Button, message, Typography } from "antd";
 import '../../style/banner.css'
 import { Space } from 'antd';
 import { fetchOfferBannerList } from "../../service/api_services";
 import { useAuth } from "../../authentication/context/authContext";
 import OfferImageList from "./OfferImageList";
 import AddOfferImage from "./AddOfferImage";
+import { LoadingOutlined } from '@ant-design/icons';
 
 const { Title } = Typography;
 
@@ -16,22 +17,23 @@ function OfferImageManage() {
     const [viewType, setViewType] = useState("WEB")
 
     const ShowAllOfferBannerList = async () => {
+        setIsLoading(true)
         try {
             await fetchOfferBannerList(token, viewType)
                 .then((res) => {
                     console.log(" all banner list ", res);
                     if (res.status == 200) {
                         setOfferBannerList(res.data.data);
-                        setIsLoading(true)
+                        setIsLoading(false)
                     }
                 })
                 .catch((err) => {
                     message.error(err.message);
-                    setIsLoading(true)
+                    setIsLoading(false)
                 });
         } catch (error) {
             message.error(error);
-            setIsLoading(true)
+            setIsLoading(false)
         }
     };
 
@@ -60,7 +62,18 @@ function OfferImageManage() {
                     </div>
                     <Space>
                         <div className="content_add">
-                            <AddOfferImage ShowAllOfferBannerList={ShowAllOfferBannerList} />
+                            <Space>
+                                <AddOfferImage ShowAllOfferBannerList={ShowAllOfferBannerList} />
+                                <Button
+                                    type="primary"
+                                    shape="round"
+                                    onClick={() => ShowAllOfferBannerList()}
+                                    loading={isLoading}
+                                    icon={isLoading ? <LoadingOutlined /> : null}
+                                >
+                                    Refresh
+                                </Button>
+                            </Space>
                         </div>
                     </Space>
                 </div>

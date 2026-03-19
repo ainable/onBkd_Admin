@@ -12,6 +12,7 @@ import DefaultImg from "../../assest/icon/default-image.jpg"
 import AddStockLimit from "./AddStockLimit";
 import ExcelFormate from "../master/segment/ExcelFormate";
 // import EditSegment from "./EditSegment";
+import { LoadingOutlined } from '@ant-design/icons';
 
 
 
@@ -121,13 +122,14 @@ function ProductStockLimit() {
     ];
 
     const showProductStockLimit = async () => {
+         setIsLoading(true)
         try {
             await fetchProductStockLimit(token)
                 .then((res) => {
                     console.log(" stock limit list ", res);
                     if (res.status == 200) {
                         setSegmentList(res.data.data.data);
-                        setIsLoading(true)
+                        setIsLoading(false)
                     } else if (res.data.code == 283) {
                         message.error(res.data.message)
                         logout()
@@ -136,12 +138,12 @@ function ProductStockLimit() {
                 })
                 .catch((err) => {
                     console.log(err.message);
-                    setIsLoading(true)
+                    setIsLoading(false)
 
                 });
         } catch (error) {
             console.log(error);
-            setIsLoading(true)
+            setIsLoading(false)
 
         }
     };
@@ -199,6 +201,15 @@ function ProductStockLimit() {
                     <Space>
                         <ExcelFormate title="stock_limit" />
                         <AddStockLimit showProductStockLimit={showProductStockLimit} />
+                        <Button
+                            type="primary"
+                            shape="round"
+                            onClick={() => showProductStockLimit()}
+                            loading={isLoading}
+                            icon={isLoading ? <LoadingOutlined /> : null}
+                        >
+                            Refresh
+                        </Button>
                     </Space>
 
                 </div>
@@ -210,7 +221,7 @@ function ProductStockLimit() {
 
                 <div className="content">
                     <div className="shoo_recent_order">
-                        {!isLoading ? <div className="loader_main"> <span class="loader2"></span></div> :
+                        {isLoading ? <div className="loader_main"> <span class="loader2"></span></div> :
                             <Table columns={columns} dataSource={segmentList} scroll={{ x: true }} />}
                     </div>
                 </div>

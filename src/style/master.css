@@ -129,11 +129,11 @@
     /* Lift the card on hover */
 }
 
-.product_table .ant-table-cell{
+.product_table .ant-table-cell {
     padding: 8px 16px !important;
 }
 
-.productlist_header{
+.productlist_header {
     display: flex;
     flex-direction: row;
     gap: 10px;
@@ -141,15 +141,19 @@
 }
 
 @media (max-width:768px) {
-    .syn_buttons {
-        margin-left: 20px;
+    .syn_buttons .ant-btn {
+        padding: 2px 5px;
     }
 
-    .productlist_header{
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    align-items: start;
-    width: 100%;
-}
+    .syn_buttons .ant-btn .ant-btn-icon {
+        margin-right: 4px !important;
+    }
+
+    .productlist_header {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: start;
+        width: 100%;
+    }
 }

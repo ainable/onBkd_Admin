@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Breadcrumb, Button, Form, Modal, Select, Space, Typography, message } from "antd";
 import '../../style/master.css'
 import { AiOutlineSync } from "react-icons/ai";
-import { elasticSyncBranch, elasticSyncProduct, fetchAllBranchList } from "../../service/api_services";
+import { elasticSyncBranch, elasticSyncProduct, elasticSyncPromo, fetchAllBranchList } from "../../service/api_services";
 import { useAuth } from "../../authentication/context/authContext";
 import { useScreen } from "../../authentication/context/AuthScreen";
 
@@ -15,6 +15,7 @@ function ElasticSearchProduct() {
     const { form } = Form.useForm()
 
     const [isProduct, setIsProduct] = useState(false)
+    const [isPromoLoading, setIsPromoLoading] = useState(false)
     const { token, logout } = useAuth()
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isBranch, setIsBranch] = useState(false);
@@ -75,6 +76,30 @@ function ElasticSearchProduct() {
         }
     };
 
+    const handlleSyncPromo = async () => {
+        setIsPromoLoading(true)
+        try {
+            await elasticSyncPromo(token)
+                .then((res) => {
+                    if (res.status === 201) {
+                        message.success(res.data.message)
+                        setIsPromoLoading(false)
+
+                    } else if (res.data.code == 283) {
+                        message.error(res.data.message)
+                        logout()
+                    }
+                })
+                .catch((err) => {
+                    setIsPromoLoading(false)
+
+                });
+        } catch (error) {
+            setIsPromoLoading(false)
+
+        }
+    };
+
     const onFinish = async (value) => {
         setIsBranch(true)
         try {
@@ -111,6 +136,16 @@ function ElasticSearchProduct() {
         <Space className="syn_buttons">
             <Button loading={isProduct} icon={<AiOutlineSync />} size={isMobile ? "middle" : "large"} type="primary" ghost onClick={handlleSyncProduct}>Sync Product </Button>
             <Button icon={<AiOutlineSync />} size={isMobile ? "middle" : "large"} type="primary" ghost onClick={showModal}>Sync Branch</Button>
+            <Button
+                loading={isPromoLoading}
+                icon={<AiOutlineSync />}
+                size={isMobile ? "middle" : "large"}
+                type="primary"
+                ghost
+                onClick={handlleSyncPromo}
+            >
+                Sync Promo
+            </Button>
             <>
                 <Modal width={400} footer={false} title="Sync Branch" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
                     <Form

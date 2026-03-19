@@ -3,7 +3,7 @@ import { Avatar, Breadcrumb, Button, Form, Image, Pagination, Typography, messag
 import { useLocation } from "react-router-dom";
 import { FaRegUser } from "react-icons/fa";
 import '../../../style/product.css';
-import { SearchOutlined } from '@ant-design/icons';
+import { LoadingOutlined, SearchOutlined } from '@ant-design/icons';
 import { useAuth } from "../../../authentication/context/authContext";
 import { DeleteRestrictedProduct, FetchAllRestrictedProductList } from "../../../service/api_services";
 import AddRestrictedProduct from "./AddRestrictedProduct";
@@ -250,6 +250,16 @@ function RestrictedProductsList() {
                             </Form.Item>
                             <Form.Item>
                                 <AddRestrictedProduct ShowAllProductsList={ShowAllProductsList} />
+                            </Form.Item>
+                            <Form.Item>
+                                <Button
+                                    type="primary"
+                                    onClick={() => ShowAllProductsList()}
+                                    loading={isLoading}
+                                    icon={isLoading ? <LoadingOutlined /> : null}
+                                >
+                                    Refresh
+                                </Button>
                             </Form.Item>
                         </Space>
                     </div>

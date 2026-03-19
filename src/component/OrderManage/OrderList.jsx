@@ -430,23 +430,12 @@ function OrderList() {
             <div className="content_title">
                 <div className="content_head">
                     <div className="order_title">
-                        <div style={{ width: "100%", display: 'flex', justifyContent: 'space-between', gap: "10px" }}>
-                            Live Order List
-                            <Button
-                                type="primary"
-                                shape="round"
-                                onClick={() => shhowAllOrderList()}
-                                loading={isLoading}
-                                icon={isLoading ? <LoadingOutlined /> : null}
-                            >
-                                Refresh
-                            </Button>
-                        </div>
+                        Live Order List
                     </div>
                     <div className="pro_selector">
                         <Form form={form}>
                             <Row gutter={[8, 0]}>
-                                <Col xs={12} sm={12} md={8}>
+                                <Col xs={12} sm={12} md={7}>
                                     <Form.Item
                                         name="delivery_type"
                                         className="order_filter_input"
@@ -463,7 +452,7 @@ function OrderList() {
                                         </Select>
                                     </Form.Item>
                                 </Col>
-                                <Col xs={12} sm={12} md={8}>
+                                <Col xs={12} sm={12} md={7}>
                                     <Form.Item
                                         name="payment_mode"
                                         className="order_filter_input"
@@ -483,7 +472,7 @@ function OrderList() {
                                         </Select>
                                     </Form.Item>
                                 </Col>
-                                <Col xs={24} sm={24} md={8}>
+                                <Col xs={24} sm={24} md={7}>
                                     <Form.Item
                                         name="customer"
                                         className="order_filter_input"
@@ -491,6 +480,18 @@ function OrderList() {
                                         <Input allowClear placeholder="Search Order ID " suffix={<SearchOutlined />} onChange={(e) => setSearchInput(e.target.value)} />
                                     </Form.Item>
                                 </Col>
+                                {!isMobile &&
+                                    <Col xs={24} sm={24} md={3}>
+                                        <Button
+                                            type="primary"
+                                            onClick={() => shhowAllOrderList()}
+                                            loading={isLoading}
+                                            icon={isLoading ? <LoadingOutlined /> : null}
+                                        >
+                                            Refresh
+                                        </Button>
+                                    </Col>
+                                }
                             </Row>
                         </Form>
 
@@ -536,6 +537,18 @@ function OrderList() {
                         </Radio.Group>
                     )}
                 </div>
+
+                {isMobile &&
+                    <Button
+                        type="primary"
+                        onClick={() => shhowAllOrderList()}
+                        loading={isLoading}
+                        icon={isLoading ? <LoadingOutlined /> : null}
+                        style={{ width: '100%',marginTop:'10px' }}
+                    >
+                        Refresh
+                    </Button>}
+
                 <div className="content">
                     <div className="shoo_recent_order">
                         {isLoading ? <div className="loader_main"> <span class="loader2"></span></div> :

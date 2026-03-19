@@ -6,7 +6,7 @@ import { Space, Table, Tag } from 'antd';
 import { useAuth } from "../../authentication/context/authContext";
 import { deliveryTypes, FetchReturnReplaceHistory, fetchReturnReplacementhistoryStatusCount, paymentModes } from "../../service/api_services";
 
-import { SearchOutlined } from '@ant-design/icons';
+import { LoadingOutlined, SearchOutlined } from '@ant-design/icons';
 
 
 
@@ -237,6 +237,7 @@ function ReturnReplaceHistory() {
 
 
     const showReturnReplaceHistory = async () => {
+        setIsLoading(true)
         try {
             await FetchReturnReplaceHistory(token, current, orderType, retRepType, paymentMode, orderStatus, searchInput)
                 .then((res) => {
@@ -244,7 +245,7 @@ function ReturnReplaceHistory() {
                     if (res.status == 200) {
                         seOrderData(res.data.data.data);
                         setTotalPage(res.data.data.totalPage)
-                        setIsLoading(true)
+                        setIsLoading(false)
                     } else if (res.data.code == 283) {
                         message.error(res.data.message)
                         logout()
@@ -253,10 +254,11 @@ function ReturnReplaceHistory() {
                 })
                 .catch((err) => {
                     console.log(err);
+                    setIsLoading(false)
                 });
         } catch (error) {
             console.log(error);
-            setIsLoading(true)
+            setIsLoading(false)
         }
     };
 
@@ -269,13 +271,14 @@ function ReturnReplaceHistory() {
 
 
     const showOrderCount = async () => {
+        setIsLoading(true)
         try {
             await fetchReturnReplacementhistoryStatusCount(token, orderType, retRepType)
                 .then((res) => {
                     console.log("return history order count ", res);
                     if (res.status == 200) {
                         setCountList(res.data.data);
-                        setIsLoading(true)
+                        setIsLoading(false)
                     } else if (res.data.code == 283) {
                         message.error(res.data.message)
                         logout()
@@ -283,10 +286,11 @@ function ReturnReplaceHistory() {
                 })
                 .catch((err) => {
                     console.log(err);
+                    setIsLoading(false)
                 });
         } catch (error) {
             console.log(error);
-            setIsLoading(true)
+            setIsLoading(false)
         }
     };
 
@@ -364,7 +368,16 @@ function ReturnReplaceHistory() {
 
                             <Segmented options={["RETURN", "REPLACEMENT"]} onChange={(value) => setOrderType(value)} />
                         </Form.Item>
-
+                        <Form.Item>
+                            <Button
+                                type="primary"
+                                onClick={() => showReturnReplaceHistory()}
+                                loading={isLoading}
+                                icon={isLoading ? <LoadingOutlined /> : null}
+                            >
+                                Refresh
+                            </Button>
+                        </Form.Item>
                     </Space>
                 </div>
                 <div className="retun_history_filter">
@@ -383,7 +396,7 @@ function ReturnReplaceHistory() {
 
                 <div className="content">
                     <div className="shoo_recent_order">
-                        {!isLoading ? <div className="loader_main"> <span class="loader2"></span></div> :
+                        {isLoading ? <div className="loader_main"> <span class="loader2"></span></div> :
                             <Table columns={columns} dataSource={orderData} scroll={{ x: true }}
                                 pagination={false}
                                 footer={() => <div className="pagination">

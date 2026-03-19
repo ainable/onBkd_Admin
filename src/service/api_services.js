@@ -289,6 +289,7 @@ export const Services = {
   adminUserBlockUrl: rootUrl('/user/block-unblock'),
   fetchDetailDiscountUrl: rootUrl('/discount'),
   EditDiscountUrl: rootUrl('/discount'),
+  syncPromoUrl: rootUrl('/promo-indexing-segment'),
 };
 
 //login section
@@ -2139,4 +2140,11 @@ export const EditDiscount = async (body, token) => {
     headers: { Authorization: token },
   });
   return setting;
+};
+
+export const elasticSyncPromo = async (token) => {
+  const product = await axios.post(Services.syncPromoUrl, {}, {
+    headers: { Authorization: token },
+  });
+  return product;
 };

@@ -154,7 +154,7 @@ import { Space, Table, Tag } from 'antd';
 import { exportBrandList, FetchAllBrandList } from "../../../service/api_services";
 import { useAuth } from "../../../authentication/context/authContext";
 import { FaUser } from "react-icons/fa";
-import { SearchOutlined } from '@ant-design/icons';
+import { LoadingOutlined, SearchOutlined } from '@ant-design/icons';
 import _ from 'lodash'; // Import lodash
 import { CopyOutlined } from "@ant-design/icons";
 import BKDLogo from "../../../assest/chat/logo.png"
@@ -249,20 +249,21 @@ function BrandListing() {
     ];
 
     const fetchAllBrandList = async () => {
+        setIsLoading(true);
         try {
             const res = await FetchAllBrandList(token, current, searchInput);
             console.log("all brand list", res);
             if (res.status === 200) {
                 setBrandList(res.data.data.paginatedData);
                 setTotalPage(res.data.data.totalPage);
-                setIsLoading(true);
+                setIsLoading(false);
             } else if (res.data.code === 283) {
                 message.error(res.data.message);
                 logout();
             }
         } catch (error) {
             console.log(error);
-            setIsLoading(true);
+            setIsLoading(false);
         }
     };
 
@@ -325,12 +326,21 @@ function BrandListing() {
                                 onChange={(e) => setSearchInput(e.target.value)}
                             />
                             <Button type="primary" shape="round" loading={isExportLoading} onClick={() => handelExportData()}>Export Brand</Button>
+                            <Button
+                                type="primary"
+                                shape="round"
+                                onClick={() => fetchAllBrandList()}
+                                loading={isLoading}
+                                icon={isLoading ? <LoadingOutlined /> : null}
+                            >
+                                Refresh
+                            </Button>
                         </Space>
                     </div>
                 </div>
                 <div className="content">
                     <div className="shoo_recent_order">
-                        {!isLoading ? (
+                        {isLoading ? (
                             <div className="loader_main">
                                 <span className="loader2"></span>
                             </div>

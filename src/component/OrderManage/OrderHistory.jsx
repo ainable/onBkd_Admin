@@ -6,7 +6,7 @@ import { Space, Table, Tag } from 'antd';
 import { useAuth } from "../../authentication/context/authContext";
 import { deliveryTypes, fetchHistoryStatusCount, FetchOrderHistoryList, paymentModes } from "../../service/api_services";
 
-import { SearchOutlined } from '@ant-design/icons';
+import { LoadingOutlined, SearchOutlined } from '@ant-design/icons';
 import moment from "moment";
 import ExportOrderHistory from "./ExportOrderHistory";
 import { useScreen } from "../../authentication/context/AuthScreen";
@@ -224,6 +224,7 @@ function OrderHistory() {
 
 
     const shhowAllOrderList = async () => {
+        setIsLoading(true)
         try {
             await FetchOrderHistoryList(token, current, pageSize, deliveryType, paymentMode, orderStatus, searchInput, startDate,
                 endDate)
@@ -232,7 +233,7 @@ function OrderHistory() {
                     if (res.status == 200) {
                         seOrderData(res.data.data.data);
                         setTotalPage(res.data.data.totalPage)
-                        setIsLoading(true)
+                        setIsLoading(false)
                     } else if (res.data.code == 283) {
                         message.error(res.data.message)
                         logout()
@@ -241,10 +242,11 @@ function OrderHistory() {
                 })
                 .catch((err) => {
                     console.log(err);
+                    setIsLoading(false)
                 });
         } catch (error) {
             console.log(error);
-            setIsLoading(true)
+            setIsLoading(false)
         }
     };
 
@@ -265,13 +267,14 @@ function OrderHistory() {
 
 
     const showOrderCount = async () => {
+        setIsLoading(true)
         try {
             await fetchHistoryStatusCount(token, deliveryType)
                 .then((res) => {
                     console.log("history order count ", res);
                     if (res.status == 200) {
                         setCountList(res.data.data);
-                        setIsLoading(true)
+                        setIsLoading(false)
                     } else if (res.data.code == 283) {
                         message.error(res.data.message)
                         logout()
@@ -279,10 +282,11 @@ function OrderHistory() {
                 })
                 .catch((err) => {
                     console.log(err);
+                    setIsLoading(false)
                 });
         } catch (error) {
             console.log(error);
-            setIsLoading(true)
+            setIsLoading(false)
         }
     };
 
@@ -361,9 +365,21 @@ function OrderHistory() {
                                 </Form.Item>
 
                                 {!isMobile &&
-                                    <Form.Item className="order_filter_input">
-                                        <ExportOrderHistory />
-                                    </Form.Item>
+                                    <>
+                                        <Form.Item className="order_filter_input">
+                                            <ExportOrderHistory />
+                                        </Form.Item>
+                                        <Form.Item className="order_filter_input">
+                                            <Button
+                                                type="primary"
+                                                onClick={() => shhowAllOrderList()}
+                                                loading={isLoading}
+                                                icon={isLoading ? <LoadingOutlined /> : null}
+                                            >
+                                                Refresh
+                                            </Button>
+                                        </Form.Item>
+                                    </>
                                 }
                             </Space>
                         </Form>
@@ -409,11 +425,22 @@ function OrderHistory() {
                     )}
                 </div>
                 {isMobile &&
-                    <ExportOrderHistory />
+                    <div style={{display:'flex',gap:'10px'}}>
+                        <ExportOrderHistory />
+                        <Button
+                            type="primary"
+                            onClick={() => shhowAllOrderList()}
+                            loading={isLoading}
+                            icon={isLoading ? <LoadingOutlined /> : null}
+                            style={{width:'100%'}}
+                        >
+                            Refresh
+                        </Button>
+                    </div>
                 }
                 <div className="content">
                     <div className="shoo_recent_order">
-                        {!isLoading ? <div className="loader_main"> <span class="loader2"></span></div> :
+                        {isLoading ? <div className="loader_main"> <span class="loader2"></span></div> :
                             <Table columns={columns} dataSource={orderData} scroll={{ x: true }}
                                 pagination={false}
                                 footer={() => <div className="pagination">

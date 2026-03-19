@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Badge, Breadcrumb, Button, Card, Popconfirm, Switch, Table, Tag, Typography, message } from "antd";
+import { Badge, Breadcrumb, Button, Card, Popconfirm, Space, Switch, Table, Tag, Typography, message } from "antd";
 import { useLocation } from "react-router-dom";
 import AddReferralReward from "./AddReferralReward";
 import { fetchReferralRewardList, toggleReferralRewardStatus, deleteReferralReward } from "../../../service/api_services";
 import { useAuth } from "../../../authentication/context/authContext";
+import { LoadingOutlined } from '@ant-design/icons';
 
 const { Title } = Typography;
 
@@ -180,8 +181,8 @@ function ReferralRewardList() {
     ];
 
     const showAllReferralRewards = async (page = 1, pageSize = 10) => {
+        setIsLoading(true);
         try {
-            setIsLoading(false);
             const params = {
                 currentPage: page,
                 itemsPerPage: pageSize
@@ -198,7 +199,7 @@ function ReferralRewardList() {
                     pageSize: pageSize,
                     total: res.data?.data?.totalRecord || 0  // Use totalRecord instead of totalItems
                 });
-                setIsLoading(true);
+                setIsLoading(false);
             } else if (res.data?.code === 283) {
                 message.error(res.data.message);
                 logout();
@@ -207,7 +208,7 @@ function ReferralRewardList() {
             console.error("Fetch rewards error:", error);
             // Set empty array on error to prevent table errors
             setRewardData([]);
-            setIsLoading(true);
+            setIsLoading(false);
         }
     };
 
@@ -240,12 +241,22 @@ function ReferralRewardList() {
                         <Title level={4}>Referral Reward List</Title>
                     </div>
                     <div className="content_add">
-                        <AddReferralReward showAllReferralRewards={showAllReferralRewards} />
+                        <Space>
+                            <AddReferralReward showAllReferralRewards={showAllReferralRewards} />
+                            <Button
+                                type="primary"
+                                onClick={() => showAllReferralRewards()}
+                                loading={isLoading}
+                                icon={isLoading ? <LoadingOutlined /> : null}
+                            >
+                                Refresh
+                            </Button>
+                        </Space>
                     </div>
                 </div>
                 <div className="content">
                     <div className="shoo_recent_order">
-                        {!isLoading ? (
+                        {isLoading ? (
                             <div className="loader_main">
                                 <span className="loader2"></span>
                             </div>

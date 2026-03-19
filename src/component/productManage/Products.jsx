@@ -7,7 +7,7 @@ import { FaRegUser } from "react-icons/fa";
 import { fetchAllBranchList, FetchAllCategorItemList, FetchAllProductList } from "../../service/api_services";
 import SelectBrandData from "./SelectBrandData";
 import '../../style/product.css';
-import { SearchOutlined } from '@ant-design/icons';
+import { LoadingOutlined, SearchOutlined } from '@ant-design/icons';
 import CategoryFilter from "./CategoryFilter";
 import ExportProductList from "./ExportProductList";
 import { CopyOutlined } from "@ant-design/icons";
@@ -141,6 +141,7 @@ function Products() {
     const [catgoryItem, setCategoryItem] = useState([]);
     const [current, setCurrent] = useState(1);
     const [firstLoadDone, setFirstLoadDone] = useState(false);
+    const [isRefreshing, setIsRefreshing] = useState(false);
 
     const [isMoreLoading, setIsMoreLoading] = useState(false)
     const [isLoading, setIsLoading] = useState(false);
@@ -255,7 +256,7 @@ function Products() {
         if (!firstLoadDone) return;
         if (observer.current) observer.current.disconnect();
         observer.current = new IntersectionObserver(entries => {
-            if (entries[0].isIntersecting && hasMore && !isMoreLoading) {
+            if (entries[0].isIntersecting && hasMore && !isMoreLoading && !isRefreshing && current > 1) {
                 setCurrent(prevPage => {
                     const nextPage = prevPage + 1;
                     ShowAllProductsList(nextPage); // Fetch next page of products
@@ -275,6 +276,21 @@ function Products() {
 
     const handleSearchChange = (e) => {
         debounceSearch(e.target.value);
+    };
+
+    const handleRefresh = async () => {
+        setIsRefreshing(true);   // 🚫 block observer
+        setCurrent(1);
+        setFilterProduct([]);
+        setFirstLoadDone(false);
+
+        await ShowAllProductsList(1);
+
+        setFirstLoadDone(true);
+
+        setTimeout(() => {
+            setIsRefreshing(false); // ✅ allow observer again
+        }, 500); // small delay to stabilize UI
     };
 
     return (
@@ -310,7 +326,16 @@ function Products() {
                             </Form.Item>
                             <Form.Item>
                                 <ExportProductList />
-
+                            </Form.Item>
+                            <Form.Item>
+                                <Button
+                                    type="primary"
+                                    onClick={handleRefresh}
+                                    loading={isLoading}
+                                    icon={isLoading ? <LoadingOutlined /> : null}
+                                >
+                                    Refresh
+                                </Button>
                             </Form.Item>
                         </Space>
                     </div>

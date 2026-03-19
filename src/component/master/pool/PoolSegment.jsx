@@ -13,6 +13,7 @@ import CategoryFilter from "../../productManage/CategoryFilter";
 import AddPoolProduct from "./AddPoolProduct";
 import ExcelFormate from "../segment/ExcelFormate";
 import SelectedCategory from "./SelectedCategory";
+import { LoadingOutlined } from '@ant-design/icons';
 // import SelecteBrandData from "../../productManage/SelectBrandData";
 // import BulKProductUpload from "./BulKProductUpload";
 
@@ -310,6 +311,17 @@ function PoolSegment() {
                             </Form.Item>
                             <Form.Item>
                                 <ExcelFormate title="pool" />
+                            </Form.Item>
+                            <Form.Item>
+                                <Button
+                                    type="primary"
+                                    shape="round"
+                                    onClick={() => showPoolSegment()}
+                                    loading={isLoading}
+                                    icon={isLoading ? <LoadingOutlined /> : null}
+                                >
+                                    Refresh
+                                </Button>
                             </Form.Item>
                         </Space>
                     </Form>

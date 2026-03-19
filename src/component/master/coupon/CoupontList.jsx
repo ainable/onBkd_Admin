@@ -5,7 +5,7 @@ import { DeleteCoupon, Discount, fetchCoupontList, Status, updateStatusCoupon } 
 import { useAuth } from "../../../authentication/context/authContext";
 import AddNewCoupon from "./AddNewCoupon";
 import moment from "moment";
-import { CloseOutlined, EditFilled, MoreOutlined } from '@ant-design/icons';
+import { CloseOutlined, EditFilled, LoadingOutlined, MoreOutlined } from '@ant-design/icons';
 import DeleteModal from "../../../kit/DeleteModal/DeleteModal";
 import { CopyOutlined } from "@ant-design/icons";
 
@@ -70,7 +70,7 @@ function CoupontList() {
                         <Button type="dashed">{couponCode}</Button>
                     </div>
 
-                    <CopyOutlined style={{ cursor: "pointer", color: "#5AC268" }}/>
+                    <CopyOutlined style={{ cursor: "pointer", color: "#5AC268" }} />
                 </Space>
             ),
         },
@@ -218,13 +218,14 @@ function CoupontList() {
     };
 
     const ShowAllCouponList = async () => {
+        setIsLoading(true);
         try {
             await fetchCoupontList(token, current)
                 .then((res) => {
                     if (res.status == 200) {
                         setCouponData(res.data.data);
                         setTotalPage(res.data.data.totalPages);
-                        setIsLoading(true)
+                        setIsLoading(false)
                     } else if (res.data.code == 283) {
                         message.error(res.data.message)
                         logout()
@@ -232,10 +233,11 @@ function CoupontList() {
                 })
                 .catch((err) => {
                     message.error(err.message);
+                    setIsLoading(false)
                 });
         } catch (error) {
             message.error(error);
-            setIsLoading(true)
+            setIsLoading(false)
         }
     };
 
@@ -284,12 +286,23 @@ function CoupontList() {
                             <Title level={4}>Coupon List</Title>
                         </div>
                         <div className="content_add">
-                            <AddNewCoupon ShowAllCouponList={ShowAllCouponList} />
+                            <Space>
+                                <AddNewCoupon ShowAllCouponList={ShowAllCouponList} />
+                                <Button
+                                    type="primary"
+                                    shape="round"
+                                    onClick={() => ShowAllCouponList()}
+                                    loading={isLoading}
+                                    icon={isLoading ? <LoadingOutlined /> : null}
+                                >
+                                    Refresh
+                                </Button>
+                            </Space>
                         </div>
                     </div>
                     <div className="content">
                         <div className="shoo_recent_order">
-                            {!isLoading ?
+                            {isLoading ?
                                 <div className="loader_main"><span class="loader2"></span></div>
                                 :
                                 <Table

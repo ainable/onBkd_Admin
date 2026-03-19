@@ -9,6 +9,7 @@ import { BranchHook } from "../../pages/CustomHooks";
 import { deletedSlot, deliveryTypes, FetchAllbranchSlote, slotActionHandle, SlotDeliveryTypes } from "../../service/api_services";
 import AddBranchSlot from "./AddBranchSlot";
 import UpdateSlot from "./UpdateSlot";
+import { LoadingOutlined } from '@ant-design/icons';
 
 
 
@@ -294,6 +295,15 @@ function BranchSlote() {
                         </Form>
                     </div>
                     <AddBranchSlot shhowAllBranchSlote={shhowAllBranchSlote} />
+                    <Button
+                        type="primary"
+                        shape="round"
+                        onClick={() => shhowAllBranchSlote()}
+                        loading={isLoading}
+                        icon={isLoading ? <LoadingOutlined /> : null}
+                    >
+                        Refresh
+                    </Button>
 
                 </Space>
 

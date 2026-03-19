@@ -1,4 +1,4 @@
-import { Collapse, Empty, Segmented, Space } from "antd";
+import { Button, Collapse, Empty, Segmented, Space } from "antd";
 import React, { useEffect, useState } from "react";
 import "../../../style/location.css"
 import { Col, Row } from "react-bootstrap";
@@ -6,6 +6,7 @@ import AddFaq from "./AddFaq";
 import { useAuth } from "../../../authentication/context/authContext";
 import FaqAction from "./FaqAction";
 import { FetchFAQList } from "../../../service/api_services";
+import { LoadingOutlined } from '@ant-design/icons';
 
 function FaqList() {
     const { token } = useAuth();
@@ -47,6 +48,15 @@ function FaqList() {
                     <Space>
                         <Segmented options={['USER', 'VENDOR']} value={types} onChange={setTypes} />
                         <AddFaq ShowAllFAQList={ShowAllFAQList} />
+                        <Button
+                            type="primary"
+                            shape="round"
+                            onClick={() => ShowAllFAQList()}
+                            loading={isLoading}
+                            icon={isLoading ? <LoadingOutlined /> : null}
+                        >
+                            Refresh
+                        </Button>
                     </Space>
                 </div>
             </div>
@@ -63,7 +73,7 @@ function FaqList() {
                             <Collapse
                                 accordion
                                 className="faq_custom"
-                                 expandIconPosition="start"
+                                expandIconPosition="start"
                             >
                                 {faqData.map((item, index) => (
                                     <Collapse.Panel

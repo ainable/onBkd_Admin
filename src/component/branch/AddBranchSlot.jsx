@@ -271,7 +271,7 @@ const AddBranchSlot = ({ shhowAllBranchSlote }) => {
                                         message: 'Please Enter only Numbers!',
                                     },
                                 ]}
-                                style={{ marginBottom: '0px' }}
+                                // style={{ marginBottom: '0px' }}
                             >
                                 <Input maxLength={10} placeholder='Enter Maximum Delivery ' />
                             </Form.Item>

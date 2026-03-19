@@ -7,7 +7,7 @@ import { useAuth } from "../../../authentication/context/authContext";
 import { CategoryHook } from "../../../pages/CustomHooks";
 import { FetchAllCategorItemList, FetchAllCategorItemListDefault, FetchAllCategoryList } from "../../../service/api_services";
 import { FaRegUser } from "react-icons/fa";
-import { SearchOutlined } from '@ant-design/icons';
+import { LoadingOutlined, SearchOutlined } from '@ant-design/icons';
 import { CopyOutlined } from "@ant-design/icons";
 import BKDLogo from "../../../assest/chat/logo.png"
 
@@ -101,6 +101,7 @@ function CategoryItem() {
 
 
     const shhowAllCaytegoryItemList = async () => {
+        setIsLoading(true)
         try {
             await FetchAllCategorItemListDefault(token, categoryId, defaultCatId, current,
                 searchInput)
@@ -109,7 +110,7 @@ function CategoryItem() {
                     if (res.status == 200) {
                         setCategoryItemList(res.data.data);
                         setTotalPage(res.data.data.totalPage);
-                        setIsLoading(true)
+                        setIsLoading(false)
                     } else if (res.data.code == 283) {
                         message.error(res.data.message)
                         logout()
@@ -118,12 +119,12 @@ function CategoryItem() {
                 })
                 .catch((err) => {
                     console.log(err.message);
-                    setIsLoading(true)
+                    setIsLoading(false)
 
                 });
         } catch (error) {
             console.log(error);
-            setIsLoading(true)
+            setIsLoading(false)
 
         }
     };
@@ -160,38 +161,41 @@ function CategoryItem() {
                         <div className="content_title">
                             <Title level={4}> Category Item List</Title>
                         </div>
-                        <div className="content_add">
+                        <div className="content_add" style={{ display: 'flex', gap: '10px' }}>
 
-                            <Space>
 
-                                <Form form={form}>
-                                    <Form.Item
-                                        name="categoryId"
+                            <Form form={form}>
+                                <Form.Item
+                                    name="categoryId"
+                                >
+                                    <Select
+                                        showSearch
+                                        placeholder="Select Category "
+                                        optionFilterProp="children"
+                                        onChange={handleCategoryChange}
+                                        style={{ width: '220px' }}
                                     >
-                                        <Select
-                                            showSearch
-                                            placeholder="Select Category "
-                                            optionFilterProp="children"
-                                            onChange={handleCategoryChange}
-                                            style={{ width: '220px' }}
-                                        >
-                                            {categoryList?.map((option) => (
-                                                <Select.Option
-                                                    key={option.categoryID}
-                                                    level={option.categoryName}
-                                                    value={option.categoryID}
-                                                >
-                                                    {option.categoryName}
-                                                </Select.Option>
-                                            ))}
-                                        </Select>
-                                    </Form.Item>
-                                </Form>
-
-                            </Space>
-
-
-
+                                        {categoryList?.map((option) => (
+                                            <Select.Option
+                                                key={option.categoryID}
+                                                level={option.categoryName}
+                                                value={option.categoryID}
+                                            >
+                                                {option.categoryName}
+                                            </Select.Option>
+                                        ))}
+                                    </Select>
+                                </Form.Item>
+                            </Form>
+                            <Button
+                                type="primary"
+                                shape="round"
+                                onClick={() => shhowAllCaytegoryItemList()}
+                                loading={isLoading}
+                                icon={isLoading ? <LoadingOutlined /> : null}
+                            >
+                                Refresh
+                            </Button>
                         </div>
                     </div>
 
@@ -200,7 +204,7 @@ function CategoryItem() {
             <div className="content_title">
                 <div className="content">
                     <div className="shoo_recent_order">
-                        {!isLoading ? <div className="loader_main"> <span class="loader2"></span></div> :
+                        {isLoading ? <div className="loader_main"> <span class="loader2"></span></div> :
                             <Table columns={columns} dataSource={categoryItemList} scroll={{ x: true }}
                             />}
                     </div>

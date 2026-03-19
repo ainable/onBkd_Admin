@@ -5,7 +5,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Space, Table, Tag } from 'antd';
 import { useAuth } from "../../authentication/context/authContext";
 import { fetchAllBranchList, fetchOrderRefund } from "../../service/api_services";
-import { SearchOutlined } from '@ant-design/icons';
+import { LoadingOutlined, SearchOutlined } from '@ant-design/icons';
 import ViewPaymentCredential from "./ViewPaymentCredential";
 
 function OrderRefund() {
@@ -186,7 +186,7 @@ function OrderRefund() {
 
 
         },
-       
+
         {
             title: 'Refund Date Time',
             dataIndex: 'paidDateTime',
@@ -225,7 +225,7 @@ function OrderRefund() {
         {
             title: 'Action',
             key: '_id',
-            render: (_, { _id, status, actionOn, refundOn, userOrderId, userOrderReturnAndReplacementId,returnAmount }) => (
+            render: (_, { _id, status, actionOn, refundOn, userOrderId, userOrderReturnAndReplacementId, returnAmount }) => (
                 <Space size="middle">
                     <ViewPaymentCredential returnAmount={returnAmount} status={status} userPaymentDetailsId={_id} refundType={refundOn} shhowAllOrderRefundList={shhowAllOrderRefundList} />
                     <Button shape="round" className="view_details" onClick={() => actionOn !== "RETURN" ? navigate(`/dashboard/orders-details/${userOrderId}`) : navigate(`/dashboard/return-replace-details/${userOrderReturnAndReplacementId}`)}>View </Button>
@@ -239,6 +239,7 @@ function OrderRefund() {
 
 
     const shhowAllOrderRefundList = async () => {
+        setIsLoading(true)
         try {
             await fetchOrderRefund(token, current, searchInput, branchId)
                 .then((res) => {
@@ -246,7 +247,7 @@ function OrderRefund() {
                     if (res.status == 200) {
                         seOrderData(res.data.data.data);
                         setTotalPage(res.data.data.totalPage)
-                        setIsLoading(true)
+                        setIsLoading(false)
                     } else if (res.data.code == 283) {
                         message.error(res.data.message)
                         logout()
@@ -255,10 +256,11 @@ function OrderRefund() {
                 })
                 .catch((err) => {
                     console.log(err);
+                    setIsLoading(false)
                 });
         } catch (error) {
             console.log(error);
-            setIsLoading(true)
+            setIsLoading(false)
         }
     };
 
@@ -344,6 +346,14 @@ function OrderRefund() {
                                 </Select>
                                 {/* <Segmented options={["REMOVED", "CANCELLED"]} block onChange={(value) => setOrderAction(value)} /> */}
                                 <Input allowClear style={{ width: '200px' }} placeholder="Search Order ID " suffix={<SearchOutlined />} onChange={(e) => setSearchInput(e.target.value)} />
+                                <Button
+                                    type="primary"
+                                    onClick={() => shhowAllOrderRefundList()}
+                                    loading={isLoading}
+                                    icon={isLoading ? <LoadingOutlined /> : null}
+                                >
+                                    Refresh
+                                </Button>
                             </Space>
                         </div>
 
@@ -352,7 +362,7 @@ function OrderRefund() {
                 </div>
                 <div className="content">
                     <div className="shoo_recent_order">
-                        {!isLoading ? <div className="loader_main"> <span class="loader2"></span></div> :
+                        {isLoading ? <div className="loader_main"> <span class="loader2"></span></div> :
                             <Table columns={columns} dataSource={orderData} scroll={{ x: true }}
                                 pagination={false}
                                 footer={() => <div className="pagination">

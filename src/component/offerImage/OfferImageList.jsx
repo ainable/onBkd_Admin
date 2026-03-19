@@ -38,7 +38,7 @@ function OfferImageList({ bannerList, ShowAllOfferBannerList, isLoading }) {
             <div className="content">
                 <div className="banner_list">
                     <Row>
-                        {!isLoading ?
+                        {isLoading ?
                             <div className="loader_main"> <span class="loader2"></span></div>
                             :
                             bannerList.length == 0 ?

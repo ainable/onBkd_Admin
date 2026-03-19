@@ -8,6 +8,7 @@ import { useAuth } from "../../../authentication/context/authContext";
 import { deleteTrendingBrand, fetchTrendingBrand } from "../../../service/api_services";
 import DefaultImg from "../../../assest/icon/default-image.jpg"
 import AddTrendingBrand from "./AddTrendingBrand";
+import { LoadingOutlined } from '@ant-design/icons';
 
 
 function TrendingBrand() {
@@ -120,13 +121,14 @@ function TrendingBrand() {
     };
 
     const showTrendingBrnad = async () => {
+        setIsLoading(true)
         try {
             await fetchTrendingBrand(token)
                 .then((res) => {
                     console.log(" trending brand list ", res);
                     if (res.status == 200) {
                         setSegmentList(res.data.data);
-                        setIsLoading(true)
+                        setIsLoading(false)
                     } else if (res.data.code == 283) {
                         message.error(res.data.message)
                         logout()
@@ -135,12 +137,12 @@ function TrendingBrand() {
                 })
                 .catch((err) => {
                     console.log(err.message);
-                    setIsLoading(true)
+                    setIsLoading(false)
 
                 });
         } catch (error) {
             console.log(error);
-            setIsLoading(true)
+            setIsLoading(false)
 
         }
     };
@@ -179,8 +181,18 @@ function TrendingBrand() {
                     </div>
                 </div>
                 <div className="content_add">
-                    <AddTrendingBrand showTrendingBrnad={showTrendingBrnad} />
-
+                    <Space>
+                        <AddTrendingBrand showTrendingBrnad={showTrendingBrnad} />
+                        <Button
+                            type="primary"
+                            shape="round"
+                            onClick={() => showTrendingBrnad()}
+                            loading={isLoading}
+                            icon={isLoading ? <LoadingOutlined /> : null}
+                        >
+                            Refresh
+                        </Button>
+                    </Space>
                 </div>
 
 
@@ -190,7 +202,7 @@ function TrendingBrand() {
 
                 <div className="content">
                     <div className="shoo_recent_order">
-                        {!isLoading ? <div className="loader_main"> <span class="loader2"></span></div> :
+                        {isLoading ? <div className="loader_main"> <span class="loader2"></span></div> :
                             <Table columns={columns} dataSource={segmentList} scroll={{ x: true }} />}
                     </div>
                 </div>

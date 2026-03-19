@@ -56,7 +56,7 @@ function BannerWebsite({ bannerList, ShowAllBannerList, isLoading }) {
                 <div className="banner_list">
                     <Row>
 
-                        {!isLoading ? <div className="loader_main"> <span class="loader2"></span></div> : bannerList.length == 0 ? <Empty /> : bannerList.map((ban) => (
+                        {isLoading ? <div className="loader_main"> <span class="loader2"></span></div> : bannerList.length == 0 ? <Empty /> : bannerList.map((ban) => (
                             <Col md={4}>
                                 <div className="banner_card">
                                     <Card

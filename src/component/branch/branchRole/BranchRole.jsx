@@ -10,6 +10,7 @@ import { BranchRoleDelete, fetchBranchRole } from "../../../service/api_services
 import { useAuth } from "../../../authentication/context/authContext";
 import AddBranchRoleAccess from "./AddBranchRoleAccess";
 import EditBranchRole from "./EditBranchRole";
+import { LoadingOutlined } from '@ant-design/icons';
 
 
 
@@ -179,7 +180,18 @@ function BranchRole() {
         <section className="container">
             <div className="content_head">
                 <Title level={4}>Branch Role</Title>
-                <AddBranchRoleAccess ShowAdminAccessKeyList={ShowBranchRole} />
+                <Space>
+                    <AddBranchRoleAccess ShowAdminAccessKeyList={ShowBranchRole} />
+                    <Button
+                        type="primary"
+                        shape="round"
+                        onClick={() => ShowBranchRole()}
+                        loading={isLoading}
+                        icon={isLoading ? <LoadingOutlined /> : null}
+                    >
+                        Refresh
+                    </Button>
+                </Space>
             </div>
             <div className="content">
                 {isLoading ? <div className="loader_main"> <span class="loader2"></span></div> :
