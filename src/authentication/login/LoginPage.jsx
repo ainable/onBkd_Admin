@@ -6,7 +6,7 @@ import { useAuth } from "../context/authContext";
 import LoginLogo from "../../assest/chat/logo.png";
 import { Col, Row } from "react-bootstrap";
 import { LoginAdmin } from "../../service/api_services";
-import LoginImage from "../../assest/png/login_img.avif"
+import LoginImage from "../../assest/png/login_img.png"
 
 function LoginPage() {
   const { login, fcmtoken } = useAuth();

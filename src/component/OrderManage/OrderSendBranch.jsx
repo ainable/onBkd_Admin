@@ -121,7 +121,7 @@ const OrderSendBranch = ({ status, orderId, shhowAllOrderList, branchCode, branc
     return (
         <div className='assign_models'>
 
-            {(status === "PENDING" || status === "ACCEPTED") ? (
+            {(status === "PENDING") ? (
                 buttonVariant === "button" ? (
                     <Button
                         type={buttonType}
@@ -138,6 +138,25 @@ const OrderSendBranch = ({ status, orderId, shhowAllOrderList, branchCode, branc
                         disabled={deliveryOption !== "DELIVERY"}
                     >
                         Send to Branch
+                    </span>
+                )
+            ) : (status === "ASSIGNED") ? (
+                buttonVariant === "button" ? (
+                    <Button
+                        type={buttonType}
+                        shape={buttonShape}
+                        onClick={showModal}
+                        disabled={deliveryOption !== "DELIVERY"}
+                        size={isMobile ? 'small' : 'middle'}
+                    >
+                        ReAssign to Branch {" "}<span style={{color:'lightgray',marginLeft:'5px'}}>({branchCode})</span>
+                    </Button>
+                ) : (
+                    <span
+                        onClick={showModal}
+                        disabled={deliveryOption !== "DELIVERY"}
+                    >
+                        ReAssign to Branch <span style={{color:'lightgray',marginLeft:'5px'}}>({branchCode})</span>
                     </span>
                 )
             ) : (

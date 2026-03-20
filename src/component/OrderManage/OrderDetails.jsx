@@ -417,7 +417,7 @@ function OrderDetails() {
                       </Button>
                     )}
                   {!isLoading &&
-                    (orderData?.status === 'PENDING' ? (
+                    ((orderData?.status === 'PENDING' || orderData?.status === 'ASSIGNED') ? (
                       <OrderSendBranch
                         branchCode={orderData?.branchCode}
                         branchId={orderData?.branchId}
